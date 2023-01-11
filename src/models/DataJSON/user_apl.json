@@ -1,0 +1,58 @@
+[{
+  "_id": {
+    "$oid": "63b57c23e877753d1e1546d4"
+  },
+  "username": "superadmin@constellation-group.co",
+  "password": "$2b$10$2aKz8tObNVhvIbN2UxKSHuMi9uKPyXvRyhWY2z3t0iC/HDON.UD.O",
+  "role": {
+    "$oid": "637b9069785483474fb91357"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1672838179021"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1672838179021"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "63b57faee877753d1e1547f2"
+  },
+  "username": "drh@constellation-group.co",
+  "password": "$2b$10$1CHsz.U6CoDFbkI7WpVKgO6T4VI14YFDy3gamSUr/PtxQCMInDpGy",
+  "role": {
+    "$oid": "637b9069785483474fb91358"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1672839086577"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1672839143023"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "63b58025e877753d1e154892"
+  },
+  "username": "francisco@constellation-group.co",
+  "password": "$2b$10$.WB6Lb4BSZHAorDoWI0x3ep0/IRZYqOtSh0q42dQDYPi1UvzGMiVK",
+  "role": {
+    "$oid": "637b9069785483474fb9135a"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1672839205793"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1672839497601"
+    }
+  }
+}]

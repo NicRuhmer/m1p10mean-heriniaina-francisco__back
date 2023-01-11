@@ -1,0 +1,44 @@
+[
+    {
+        "description": "Appel rejeté"
+    },
+    {
+        "description": "Changement de poste / Société"
+    },
+    {
+        "description": "Connecté"
+    },
+    {
+        "description": "Fausse manipulation"
+    },
+    {
+        "description": "Faux numéro"
+    },
+    {
+        "description": "Hors cible"
+    },
+    {
+        "description": "NRP"
+    },
+    {
+        "description": "Référent"
+    },
+    {
+        "description": "Secrétaire mevo"
+    },
+    {
+        "description": "Secrétaire: Actions à suivre"
+    },
+    {
+        "description": "Secrétaire: Refus"
+    },
+    {
+        "description": "Standard/Acceuil Barrage"
+    },
+    {
+        "description": "Standard/Acceuil Suspect"
+    },
+    {
+        "description": "Suspect mevo"
+    }
+]

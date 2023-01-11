@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 // contact
 var UserSchema = new mongoose.Schema({
+    nicname:{
+        type:String,
+        required:true,
+    },
     username:{
         type: String,
         required: true,
@@ -13,7 +17,7 @@ var UserSchema = new mongoose.Schema({
     },
     role:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'c_role',
+        ref:'roles',
         require:true
     }
 });

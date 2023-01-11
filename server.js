@@ -1,5 +1,16 @@
 //require('dotenv').config();
 
+
+// Use redirection 
+const redirectionWeb = require('./src/render/redirection');
+
+// Use model 
+const Userdb = require('./src/models/User');
+
+
+
+
+
 const express = require('express');
 const app = express();
 
@@ -18,14 +29,11 @@ const corsOptions = {
 
 moment.suppressDeprecationWarnings = true;
 
+/*
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
-app.set('view engine', 'ejs');
+app.use(cors(corsOptions));*/
 
-//================================== URL Import CONTROLLER ===================================
-
-const Userdb = require('./src/models/User');
 
 // ================================== AUTHENTIFICATION =====================================
 
@@ -47,24 +55,23 @@ passport.serializeUser(Userdb.serializeUser());
 passport.deserializeUser(Userdb.deserializeUser());
 
 
+
+app.set('view engine', 'ejs');
+
 app.use(express.json());
+app.use(express.static("views"));
 
-// Use function call twilio
-app.use(express.static("server/function_js"));
-
-app.use(express.static("views/call"));
+app.use('/js',express.static("public/js"));
 app.use('/css', express.static("public/css"));
-app.use('/css2', express.static("assets/css"));
+app.use('/scss', express.static("public/scss"));
 
-
-/*
-
-// ================================ CONNECTION DATABASE =========================
-const connectDB = require('./server/database/connection');
+// ================================ IMPORTATION =========================
+// Use connection Database
+const connectDB = require('./src/database/connection');
 connectDB();
 
 // Use router
-app.use('/', require('./server/routes/router'));
+app.use('/', require('./src/routes/api'));
 
 
 // ================================ AUTHENTIFICATION D'UTILISATEUR =========================
@@ -91,6 +98,7 @@ passport.use(new localStrategy(function (email, password, done) {
       if (!user) {
         return done(null, false, { message: "Identification incorrecte" });
       }
+      console.log(user);
       bcrypt.compare(password, user.password, function (err, res) {
         if (err) {
           return done(err);
@@ -113,25 +121,24 @@ function isLoggedOut(req, res, next) {
   res.redirect('/');
 }
 
-app.post('/reset_password', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
-  bcrypt.compare(req.body.lastpassword, req.user.password, function (err, result) {
-    if (err) {
-      res.send({ status: 404, message: err.message });
-    }
-    else if (result === false) {
-      res.send({ status: 404, message: "Information incorrecte" });
-    }
-    else {
-      cUser.reset_password(req.user._id, req.body.lastpassword, req.body.confirmpassword).then((result) => {
-        res.send(result);
-      }).catch((err) => {
-        res.send({ status: 404, message: err.message });
-      });
-    }
-  });
+
+
+
+
+
+
+
+
+app.get('/8767545233123456787654SDFGKJXSgvgdey53636',(req,res)=>{
+  res.render('spa/new_sap');
 });
 
-app.get('/login', isLoggedOut, services.loginRoutes);
+
+app.get('/', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+  // services.getData(req, res);
+  res.render('index',{title:'home',role:'aaa'})
+});
+app.get('/login', isLoggedOut, redirectionWeb.loginRoutes);
 
 app.get("/logout", (req, res) => {
   req.logout(req.user, err => {
@@ -153,6 +160,25 @@ app.post("/login", passport.authenticate("local", {
 }), function (req, res) {
 });
 
-app.get('/user-connected', connectEnsureLogin.ensureLoggedIn(), cGestionUtilisateur.userConnected);
-*/
+
+
+app.post('/reset_password', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+  bcrypt.compare(req.body.lastpassword, req.user.password, function (err, result) {
+    if (err) {
+      res.send({ status: 404, message: err.message });
+    }
+    else if (result === false) {
+      res.send({ status: 404, message: "Information incorrecte" });
+    }
+    else {
+      cUser.reset_password(req.user._id, req.body.lastpassword, req.body.confirmpassword).then((result) => {
+        res.send(result);
+      }).catch((err) => {
+        res.send({ status: 404, message: err.message });
+      });
+    }
+  });
+});
+
+
 server.listen(PORT, () => console.log(`App is listening at ${PORT}`));

@@ -1,0 +1,25 @@
+[{
+    "_id": {
+      "$oid": "637b9069785483474fb91357"
+    },
+    "role": "isSuperAdmin",
+    "description": "Super admin"
+  },{
+    "_id": {
+      "$oid": "637b9069785483474fb91358"
+    },
+    "role": "isAtelied",
+    "description": "Responsable atelier"
+  },{
+    "_id": {
+      "$oid": "637b9069785483474fb91359"
+    },
+    "role": "isFinancied",
+    "description": "Responsable financier"
+  },{
+    "_id": {
+      "$oid": "637b9069785483474fb9135a"
+    },
+    "role": "isClient",
+    "description": "Client"
+  }]
