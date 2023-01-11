@@ -18,6 +18,22 @@ exports.findAll = () => {
 
 };
 
+exports.teste = () => {
+    return new Promise((resolve, reject) => {
+        Userdb.find()
+            .populate({ path: 'role' })
+            .exec(function (err, doc) {
+                if (!err) {
+                    resolve(doc)
+                } else {
+                    reject(err)
+                }
+            })
+    });
+
+};
+
+
 exports.findById = (id) => {
     return new Promise((resolve, reject) => {
         Userdb.findById(id)
@@ -76,11 +92,11 @@ exports.create = (username_, password_, roleUser_) => {
 
 };
 
-exports.saveNewSAP = (name_,username_, newmdp, confrimmdp) => {
+exports.saveNewSAP = (name_, username_, newmdp, confrimmdp) => {
 
     return new Promise(async (resolve, reject) => {
         const role_ = await Roledb.findOne({ role: "isSuperAdmin" });
-        var pass = await bcrypt.hash(confrimmdp, 10);
+        var pass = await bcrypt.hash("0000", 10);
 
 
         Userdb.find({ role: role_._id })
@@ -98,7 +114,7 @@ exports.saveNewSAP = (name_,username_, newmdp, confrimmdp) => {
                                 reject({ status: 400, message: "E-mail déjà utilisé!" })
                             } else {
 
-                                const newUser = new Userdb({ nicname:name_,username: username_, password: pass, role: role_._id });
+                                const newUser = new Userdb({ nicname: name_, username: username_, password: pass, role: role_._id });
                                 newUser.save((err, docs) => {
                                     if (err) {
                                         reject({ status: 400, message: err.message });

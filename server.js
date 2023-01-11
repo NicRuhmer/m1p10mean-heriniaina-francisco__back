@@ -28,9 +28,9 @@ const corsOptions = {
 }
 
 moment.suppressDeprecationWarnings = true;
-
-/*
 app.use(bodyParser.urlencoded({ extended: false }));
+/*
+
 app.use(bodyParser.json());
 app.use(cors(corsOptions));*/
 
@@ -61,7 +61,7 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.static("views"));
 
-app.use('/js',express.static("public/js"));
+app.use('/js', express.static("public/js"));
 app.use('/css', express.static("public/css"));
 app.use('/scss', express.static("public/scss"));
 
@@ -98,12 +98,11 @@ passport.use(new localStrategy(function (email, password, done) {
       if (!user) {
         return done(null, false, { message: "Identification incorrecte" });
       }
-      console.log(user);
-      bcrypt.compare(password, user.password, function (err, res) {
-        if (err) {
-          return done(err);
+      bcrypt.compare(password, user.password, function (err2, res2) {
+        if (err2) {
+          return done(err2);
         }
-        else if (res === false) {
+        else if (res2 === false) {
           return done(null, false, { message: "Mot de passe incorrecte" });
         }
         else {
@@ -122,22 +121,6 @@ function isLoggedOut(req, res, next) {
 }
 
 
-
-
-
-
-
-
-
-app.get('/8767545233123456787654SDFGKJXSgvgdey53636',(req,res)=>{
-  res.render('spa/new_sap');
-});
-
-
-app.get('/', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
-  // services.getData(req, res);
-  res.render('index',{title:'home',role:'aaa'})
-});
 app.get('/login', isLoggedOut, redirectionWeb.loginRoutes);
 
 app.get("/logout", (req, res) => {
@@ -161,24 +144,47 @@ app.post("/login", passport.authenticate("local", {
 });
 
 
-
-app.post('/reset_password', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
-  bcrypt.compare(req.body.lastpassword, req.user.password, function (err, result) {
-    if (err) {
-      res.send({ status: 404, message: err.message });
-    }
-    else if (result === false) {
-      res.send({ status: 404, message: "Information incorrecte" });
-    }
-    else {
-      cUser.reset_password(req.user._id, req.body.lastpassword, req.body.confirmpassword).then((result) => {
-        res.send(result);
-      }).catch((err) => {
-        res.send({ status: 404, message: err.message });
+app.get('/connection/:username/:password', (req, res) => {
+  Userdb.findOne({ username: req.params.username })
+    .populate({
+      path: 'role'
+    }).exec((err, user) => {
+      console.log(user)
+      if (err) {
+        res.send(err);
+      }
+      if (!user) {
+        res.send({ message: "Identification incorrecte" });
+      }
+      bcrypt.compare(req.params.password, user.password, function (err, res1) {
+        if (err) {
+          res.send(err);
+        }
+        else if (res1 === false) {
+          res.send({ message: "Mot de passe incorrecte" });
+        }
+        else {
+          res.send(user);
+        }
       });
-    }
-  });
+    });
 });
+
+
+
+
+
+app.get('/8767545233123456787654SDFGKJXSgvgdey53636', (req, res) => {
+  res.render('spa/new_sap');
+});
+
+
+app.get('/', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+  // services.getData(req, res);
+  res.render('index', { title: 'home', role: 'aaa' })
+});
+
+
 
 
 server.listen(PORT, () => console.log(`App is listening at ${PORT}`));

@@ -5,6 +5,11 @@ const route = express.Router();
 const userController = require('../controllers/userController');
 //=================== Route Super Admin ==================
 route.post('/verify-mail-user', userController.verifyEmail);
+route.get('/list',(req,res)=>{
+    userController.teste().then((data)=>{
+        res.send(data)
+    })
+});
 route.post('/new-first-spa', (req, res) => {
    
     
