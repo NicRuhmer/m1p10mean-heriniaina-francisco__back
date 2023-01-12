@@ -9,60 +9,63 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Responsable</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Nouveau
-                            </li>
+                        </li>
                     </ol>
+                </div>
             </div>
-        </div>
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-5">
-               
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-5">
+
                 </nav>
 
 
                 <div class=" shadow p-3 mb-5 bg-body rounded" id="form-new-spa">
-                    <h3>Nouveau Responsable</h3>
+                    <h5>Nouveau Responsable</h5>
 
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1"
-                            class="form-label">Nom Complet<span
+                    <form action="/new_responsable" method="POST">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1"
+                            class="form-label">Choisir...<span
                                 class="text-danger">*</span></label>
-                        <input type="text" required class="form-control"
-                            id="name"
-                            placeholder="Nom complet">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1"
-                            class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="Email" class="form-control"
-                            id="email" required
-                            placeholder="Email">
-                        <span class="text-danger" id="email_error"></span>
-                    </div>
+                            <select class="form-select" aria-label="Default select example">
+                                <% for(var id=0;id<roles.length;id++){%>
+                                    <option value="<%=roles[id].description%>"><%=roles[id].description%></option>
+                                    <%}%>
+                              </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1"
+                                class="form-label">Nom Complet<span
+                                    class="text-danger">*</span></label>
+                            <input type="text" required class="form-control"
+                                id="name"
+                                placeholder="Nom complet">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1"
+                                class="form-label">Email <span
+                                    class="text-danger">*</span></label>
+                            <input type="Email" class="form-control"
+                                id="email" required
+                                placeholder="Email">
+                            <span class="text-danger" id="email_error"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1"
+                                class="form-label">Mot de passe <span
+                                    class="text-danger">*</span></label>
+                            <input type="password" class="form-control"
+                                id="new_password" required
+                                placeholder="Nouveau mot de passe">
+                        </div>
 
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1"
-                            class="form-label">Contact <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control"
-                            id="contact" required
-                            placeholder="Contact">
-                        <span class="text-danger" id="email_error"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1"
-                            class="form-label">Mot de passe <span
-                                class="text-danger">*</span></label>
-                        <input type="password" class="form-control"
-                            id="new_password" required
-                            placeholder="Nouveau mot de passe">
-                    </div>
-                    
-                    <span class="text-danger" id="message_error"></span>
-                    <span class="text-success" id="message_success"></span>
-                    <div class="mb-3 d-flex justify-content-center">
-                        <button type="button" class="btn btn-success "
-                            id="submit_spa">Enregistrer</button>
-                    </div>
+                        <span class="text-danger" id="message_error"></span>
+                        <span class="text-success" id="message_success"></span>
+                        <div class="mb-3 d-flex justify-content-center">
+                            <button type="button" class="btn btn-success "
+                                id="submit_spa">Enregistrer</button>
+                        </div>
+                    </form>
                 </div>
 
             </div>

@@ -3,10 +3,13 @@
 
 // Use redirection 
 const redirectionWeb = require('./src/render/redirection');
+const redirectionWebSuperAdmin = require('./src/render/redirectionSuperAdmin');
+
 
 // Use model 
 const Userdb = require('./src/models/User');
 
+// Use Controllers 
 
 
 
@@ -145,48 +148,14 @@ app.post("/login", passport.authenticate("local", {
 });
 
 
-app.get('/connection/:username/:password', (req, res) => {
-  Userdb.findOne({ username: req.params.username })
-    .populate({
-      path: 'role'
-    }).exec((err, user) => {
-      console.log(user)
-      if (err) {
-        res.send(err);
-      }
-      if (!user) {
-        res.send({ message: "Identification incorrecte" });
-      }
-      bcrypt.compare(req.params.password, user.password, function (err, res1) {
-        if (err) {
-          res.send(err);
-        }
-        else if (res1 === false) {
-          res.send({ message: "Mot de passe incorrecte" });
-        }
-        else {
-          res.send(user);
-        }
-      });
-    });
-});
-
-
 
 
 //=================== Redirection Page Web ==========================
-app.get('/8767545233123456787654SDFGKJXSgvgdey53636', (req, res) => {
-  res.render('spa/new_sap');
-});
-
-app.get('/', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
-  redirectionWeb.getData(req, res);
- 
-});
-
-app.get('/liste_responsable', connectEnsureLogin.ensureLoggedIn(), redirectionWeb.listResponsable);
-
-app.get('/nouveau_responsable', connectEnsureLogin.ensureLoggedIn(),redirectionWeb.nouveauResponsable);
+app.get('/', connectEnsureLogin.ensureLoggedIn(),redirectionWeb.getData);
+app.get('/8767545233123456787654SDFGKJXSgvgdey53636', redirectionWebSuperAdmin.new_spa);
+app.get('/reset_password/986874R234657898ZZ54545', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.reset_password);
+app.get('/liste_responsable', connectEnsureLogin.ensureLoggedIn(), redirectionWebSuperAdmin.listResponsable);
+app.get('/nouveau_responsable', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.nouveauResponsable);
 
 
 server.listen(PORT, () => console.log(`App is listening at ${PORT}`));

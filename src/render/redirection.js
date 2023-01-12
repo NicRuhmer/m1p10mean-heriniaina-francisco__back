@@ -45,10 +45,3 @@ exports.getData = (req, res) => {
 };
 
 
-exports.listResponsable = (req, res) => {
-    res.render('spa/liste_responsable', { role: req.user.role.role, moment: moment, title: 'Gestion Panel- liste responsable' });
-};
-
-exports.nouveauResponsable = (req, res) => {
-    res.render('spa/nouveau_responsable', { role: req.user.role.role, moment: moment, title: 'Gestion Panel- nouveau responsable' });
-};
