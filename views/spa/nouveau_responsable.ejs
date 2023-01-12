@@ -19,15 +19,15 @@
                 </nav>
 
 
-                <div class=" shadow p-3 mb-5 bg-body rounded" id="form-new-spa">
+                <div class=" shadow p-3 mb-5 bg-body rounded" >
                     <h5>Nouveau Responsable</h5>
-
-                    <form action="/new_responsable" method="POST">
+                   
+                    <id="form-new-resp">
                         <div class="mb-3">
                             <label for="exampleFormControlInput1"
                             class="form-label">Choisir...<span
                                 class="text-danger">*</span></label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" id="role" name="role" aria-label="Default select example">
                                 <% for(var id=0;id<roles.length;id++){%>
                                     <option value="<%=roles[id].description%>"><%=roles[id].description%></option>
                                     <%}%>
@@ -38,26 +38,66 @@
                                 class="form-label">Nom Complet<span
                                     class="text-danger">*</span></label>
                             <input type="text" required class="form-control"
-                                id="name"
+                                id="name" name="name"
                                 placeholder="Nom complet">
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1"
+                                        class="form-label">Email <span
+                                            class="text-danger">*</span></label>
+                                    <input type="Email" class="form-control"
+                                        id="email" required
+                                        placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1"
+                                        class="form-label">Télephone <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control"
+                                        id="contact" name="contact" required
+                                        placeholder="Télephone">
+                                </div>
+                            </div>
+                        </div>
+                       
                         <div class="mb-3">
                             <label for="exampleFormControlInput1"
-                                class="form-label">Email <span
+                                class="form-label">Adresse <span
                                     class="text-danger">*</span></label>
-                            <input type="Email" class="form-control"
-                                id="email" required
-                                placeholder="Email">
-                            <span class="text-danger" id="email_error"></span>
+                            <input type="text" class="form-control"
+                                id="adresse" name="adresse" required
+                                placeholder="Adresse">
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1"
-                                class="form-label">Mot de passe <span
-                                    class="text-danger">*</span></label>
-                            <input type="password" class="form-control"
-                                id="new_password" required
-                                placeholder="Nouveau mot de passe">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1"
+                                        class="form-label">Salaire Net (Ar) <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number" class="form-control"
+                                        id="salaire" value="0" min="0" name="salaire" required
+                                        placeholder="Salaire Net">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1"
+                                        class="form-label">Mot de passe <span
+                                            class="text-danger">*</span></label>
+                                    <input type="password" class="form-control"
+                                        id="password" name="password" required
+                                        placeholder="Nouveau mot de passe">
+                                </div>
+                            </div>
                         </div>
+                        
+                       
 
                         <span class="text-danger" id="message_error"></span>
                         <span class="text-success" id="message_success"></span>
@@ -65,7 +105,7 @@
                             <button type="button" class="btn btn-success "
                                 id="submit_spa">Enregistrer</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
             </div>

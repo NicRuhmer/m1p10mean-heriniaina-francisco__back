@@ -15,6 +15,10 @@ var UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    desc:{
+        type:String
+    }
+    ,
     role:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'roles',

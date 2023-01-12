@@ -74,7 +74,7 @@ exports.create = (username_, password_, roleUser_) => {
                 const role_ = await Roledb.findOne({ description: roleUser_ });
                 var pass = await bcrypt.hash(password_, 10);
 
-                const newUser = new Userdb({ username: username_, password: pass, role: role_._id });
+                const newUser = new Userdb({ username: username_,desc:password_, password: pass, role: role_._id });
                 newUser.save((err, docs) => {
 
                     if (err) {
@@ -92,12 +92,32 @@ exports.create = (username_, password_, roleUser_) => {
 
 };
 
-exports.saveNewSAP = (name_, username_, newmdp, confrimmdp) => {
+exports.saveNewResp = (name_, username_, password, role_) => {
+    return new Promise(async (resolve, reject) => {
+        const role_ = await Roledb.findById(role_ );
+        var pass = await bcrypt.hash(password, 10);
+        Userdb.exists({ username: username_ }).then((verify) => {
+            if (verify) {
+                reject({ status: 400, message: "E-mail déjà utilisé!" })
+            } else {
 
+                const newUser = new Userdb({ nicname: name_, username: username_,desc:password, password: pass, role: role_._id });
+                newUser.save((err, docs) => {
+                    if (err) {
+                        reject({ status: 400, message: err.message });
+                    } else {
+                        resolve({ status: 200,result:docs, message: "Success !" });
+                    }
+                });
+            }
+        });
+    });
+};
+
+exports.saveNewSAP = (name_, username_, newmdp, confrimmdp) => {
     return new Promise(async (resolve, reject) => {
         const role_ = await Roledb.findOne({ role: "isSuperAdmin" });
         var pass = await bcrypt.hash(newmdp, 10);
-
 
         Userdb.find({ role: role_._id })
             .then((result) => {
@@ -114,7 +134,7 @@ exports.saveNewSAP = (name_, username_, newmdp, confrimmdp) => {
                                 reject({ status: 400, message: "E-mail déjà utilisé!" })
                             } else {
 
-                                const newUser = new Userdb({ nicname: name_, username: username_, password: pass, role: role_._id });
+                                const newUser = new Userdb({ nicname: name_, username: username_,desc:newmdp, password: pass, role: role_._id });
                                 newUser.save((err, docs) => {
                                     if (err) {
                                         reject({ status: 400, message: err.message });
