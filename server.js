@@ -61,6 +61,7 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.static("views"));
 
+app.use('/logo', express.static("public/logo"));
 app.use('/js', express.static("public/js"));
 app.use('/css', express.static("public/css"));
 app.use('/scss', express.static("public/scss"));
@@ -173,18 +174,19 @@ app.get('/connection/:username/:password', (req, res) => {
 
 
 
-
+//=================== Redirection Page Web ==========================
 app.get('/8767545233123456787654SDFGKJXSgvgdey53636', (req, res) => {
   res.render('spa/new_sap');
 });
 
-
 app.get('/', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
-  // services.getData(req, res);
-  res.render('index', { title: 'home', role: 'aaa' })
+  redirectionWeb.getData(req, res);
+ 
 });
 
+app.get('/liste_responsable', connectEnsureLogin.ensureLoggedIn(), redirectionWeb.listResponsable);
 
+app.get('/nouveau_responsable', connectEnsureLogin.ensureLoggedIn(),redirectionWeb.nouveauResponsable);
 
 
 server.listen(PORT, () => console.log(`App is listening at ${PORT}`));

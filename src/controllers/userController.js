@@ -96,7 +96,7 @@ exports.saveNewSAP = (name_, username_, newmdp, confrimmdp) => {
 
     return new Promise(async (resolve, reject) => {
         const role_ = await Roledb.findOne({ role: "isSuperAdmin" });
-        var pass = await bcrypt.hash("0000", 10);
+        var pass = await bcrypt.hash(newmdp, 10);
 
 
         Userdb.find({ role: role_._id })
