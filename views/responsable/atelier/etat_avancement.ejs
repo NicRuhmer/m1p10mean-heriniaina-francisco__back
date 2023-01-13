@@ -18,94 +18,67 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 shadow-sm my-2 p-2 bg-body rounded">
-               
-                    <h5 class="card-title mb-2">À Faire</h5>
-                    <div ondragover="return over(event)" ondrop="return drop(event)" ondragstart="start(event)" ondragleave="leave(event)">
-                        <div class="p-1" id="1"  draggable="true">
-                            <p class="card-text">Filtre à Air</p>
-                            <p class="card-text">Il faut changer le
-                                filtre à Air</p>
-                        </div>
-                        <div class="p-1" id="2"  draggable="true">
-                            <p class="card-text">Filtre à Air</p>
-                            <p class="card-text">Il faut changer le
-                                filtre à Air</p>
-                        </div>
-                    </div>
-                    <!--<table class="table table-striped">
+            <div class="col-md-4 card p-0" ondragover="return over(event)"
+                ondrop="return drop(event,'à faire')" ondragstart="start(event)"
+                ondragleave="leave(event)">
 
-                        <tbody ondragstart="start(event)">
-                            <tr id="1">
-                                <td>
-                                    <div class="p-1"  draggable="true">
-                                        <p class="card-text">Filtre à Air</p>
-                                        <p class="card-text">Il faut changer le
-                                            filtre à Air</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn
-                                        btn-primary">Detail</button>
-                                </td>
-                            </tr>
-
-                            <tr id="2">
-                                <td>
-                                    <div class="p-1" draggable="true">
-                                        <p class="card-text">Filtre à Air</p>
-                                        <p class="card-text">Il faut changer le
-                                            filtre à Air</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn
-                                        btn-primary">Detail</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>-->
-              
-
-            </div>
-            <div class="col-md-4 shadow-sm my-2 p-2 bg-body rounded">
-               
-                    <h5 class="card-title mb-2">En cours</h5>
-
-               
-                    <div ondragover="return over(event)" ondrop="return drop(event)" ondragstart="start(event)" ondragleave="leave(event)">
-                        <div class="p-1" id="3"  draggable="true">
-                            <p class="card-text">Filtre à Air</p>
-                            <p class="card-text">Il faut changer le
-                                filtre à Air</p>
-                        </div>
-                        <div class="p-1" id="4"  draggable="true">
-                            <p class="card-text">Filtre à Air</p>
-                            <p class="card-text">Il faut changer le
-                                filtre à Air</p>
-                        </div>
-                    </div>
-
-               
-
-            </div>
-
-
-            <div class="col-md-4">
-                <div class="shadow-sm my-2 p-2 bg-body rounded">
-                    <h5 class="card-title mb-2">Terminé</h5>
-
-                    <table class="table table-striped">
-
-                        <tbody ondragstart="start()">
-                            
-                        </tbody>
-                    </table>
-
+                <div class="card-header px-2">
+                    À Faire
                 </div>
+                <ul class="list-group list-group-flush px-1">
+                    <li class="list-group-item" id="1" data-id="1" draggable="true">
+                        <div class="d-flex justify-content-between">
+                            <p>An item <br>
+                                estimation:1heure <br>
+                                quantité:1
+                            </p> 
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                description
+                              </button>
+                        </div>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                              Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                            </div>
+                          </div>
+                        <hr>
+                    </li>
+                    <li class="list-group-item" id="2"  data-id="2" draggable="true">
+                        <div class="d-flex justify-content-between">
+                            <p>An second</p> <button>voir</button>
+                        </div>
+                        <hr>
+                    </li>
+                    <li class="list-group-item" id="3"  data-id="3" draggable="true">
+                        <div class="d-flex justify-content-between">
+                            <p>An three</p> <button>voir</button>
+                        </div>
+                        <hr>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-md-4 card p-0" ondragover="return over(event)"
+                ondrop="return drop(event,'en cours')" ondragstart="start(event)"
+                ondragleave="leave(event)">
+                <div class="card-header px-2">
+                    En Cours
+                </div>
+                <ul class="list-group list-group-flush">
+
+                </ul>
+            </div>
 
 
+            <div class="col-md-4 card p-0" ondragover="return over(event)"
+                ondrop="return drop(event,'terminer')" ondragstart="start(event)"
+                ondragleave="leave(event)">
+                <div class="card-header px-2">
+                    Terminer
+                </div>
+                <ul class="list-group list-group-flush">
 
+                </ul>
 
             </div>
 

@@ -1,0 +1,14 @@
+[
+    {
+        "identifiant":"isTache",
+        "description":"à faire"
+    },
+    {
+        "identifiant":"isEnCour",
+        "description":"en cours"
+    },
+    {
+        "identifiant":"isTerminer",
+        "description":"terminer"
+    }
+]

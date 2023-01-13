@@ -31,23 +31,26 @@ function start(e){
   e.dataTransfer.setData("dns",e.target.getAttribute("id"));
 }
 
-function over(e){
+function over(e,action){
+
   // e.preventDefault();
-  e.currentTarget.className="border border-primary";
+ 
+  //e.currentTarget.classList=" border border-primary";
   return false;
 }
 
 
-function drop(e){
-  const ob = e.dataTransfer.getData("dns");
-  e.currentTarget.appendChild(document.getElementById(ob));
-  e.currentTarget.className="border border-none";
+function drop(e,action){
+  const objectId = e.dataTransfer.getData("dns");
+ console.log(objectId,action)
+  e.currentTarget.appendChild(document.getElementById(objectId));
+  //e.currentTarget.addClassName=" border border-none";
   e.stopPropagation();
   return false;
 }
 
 function leave(e){
-  e.currentTarget.className="border border-none";
+ // e.currentTarget.addClassName=" border border-none";
 }
     </script>
   </body>
