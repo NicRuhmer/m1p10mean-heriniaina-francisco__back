@@ -193,19 +193,3 @@ $('#submit_new_resp').click( function(){
             } 
 });
 
-
-function start(e){
-    e.dataTransfer.effectAllowed="move";
-    e.dataTransfer.setData("text",e.target.getAttribute("id"));
-}
-
-function over(e){
-    // e.preventDefault();
-    return false;
-}
-
-
-function drop(e){
-    const ob = e.dataTransfer.getData("text");
-    e.currentTarget.appendChild(document.getElementById(ob));
-}

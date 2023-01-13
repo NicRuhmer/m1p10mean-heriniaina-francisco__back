@@ -23,6 +23,32 @@
     <!--===================================================================-->
     
     <script src="js/responsable/responsable.js"></script>
-    
+
+    <script>
+
+function start(e){
+  e.dataTransfer.effectAllowed="move";
+  e.dataTransfer.setData("dns",e.target.getAttribute("id"));
+}
+
+function over(e){
+  // e.preventDefault();
+  e.currentTarget.className="border border-primary";
+  return false;
+}
+
+
+function drop(e){
+  const ob = e.dataTransfer.getData("dns");
+  e.currentTarget.appendChild(document.getElementById(ob));
+  e.currentTarget.className="border border-none";
+  e.stopPropagation();
+  return false;
+}
+
+function leave(e){
+  e.currentTarget.className="border border-none";
+}
+    </script>
   </body>
 </html>

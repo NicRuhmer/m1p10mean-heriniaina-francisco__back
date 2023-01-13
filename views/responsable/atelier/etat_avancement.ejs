@@ -18,16 +18,27 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4">
-                <div class=" shadow-sm my-2 p-2 bg-body rounded">
+            <div class="col-md-4 shadow-sm my-2 p-2 bg-body rounded">
+               
                     <h5 class="card-title mb-2">À Faire</h5>
+                    <div ondragover="return over(event)" ondrop="return drop(event)" ondragstart="start(event)" ondragleave="leave(event)">
+                        <div class="p-1" id="1"  draggable="true">
+                            <p class="card-text">Filtre à Air</p>
+                            <p class="card-text">Il faut changer le
+                                filtre à Air</p>
+                        </div>
+                        <div class="p-1" id="2"  draggable="true">
+                            <p class="card-text">Filtre à Air</p>
+                            <p class="card-text">Il faut changer le
+                                filtre à Air</p>
+                        </div>
+                    </div>
+                    <!--<table class="table table-striped">
 
-                    <table class="table table-striped">
-
-                        <tbody onDragStart="start(event)">
+                        <tbody ondragstart="start(event)">
                             <tr id="1">
                                 <td>
-                                    <div class="p-1">
+                                    <div class="p-1"  draggable="true">
                                         <p class="card-text">Filtre à Air</p>
                                         <p class="card-text">Il faut changer le
                                             filtre à Air</p>
@@ -41,7 +52,7 @@
 
                             <tr id="2">
                                 <td>
-                                    <div class="p-1">
+                                    <div class="p-1" draggable="true">
                                         <p class="card-text">Filtre à Air</p>
                                         <p class="card-text">Il faut changer le
                                             filtre à Air</p>
@@ -53,25 +64,29 @@
                                 </td>
                             </tr>
                         </tbody>
-                    </table>
-                </div>
-
+                    </table>-->
+              
 
             </div>
-            <div class="col-md-4">
-                <div class="shadow-sm my-2 p-2 bg-body rounded" onDragOver="return over(event)" onDrop="return drop(event)">
+            <div class="col-md-4 shadow-sm my-2 p-2 bg-body rounded">
+               
                     <h5 class="card-title mb-2">En cours</h5>
 
-                    <table class="table table-striped">
+               
+                    <div ondragover="return over(event)" ondrop="return drop(event)" ondragstart="start(event)" ondragleave="leave(event)">
+                        <div class="p-1" id="3"  draggable="true">
+                            <p class="card-text">Filtre à Air</p>
+                            <p class="card-text">Il faut changer le
+                                filtre à Air</p>
+                        </div>
+                        <div class="p-1" id="4"  draggable="true">
+                            <p class="card-text">Filtre à Air</p>
+                            <p class="card-text">Il faut changer le
+                                filtre à Air</p>
+                        </div>
+                    </div>
 
-                        <tbody  id="data_en_cour">
-                            
-                        </tbody>
-                    </table>
-                </div>
-
-
-
+               
 
             </div>
 
