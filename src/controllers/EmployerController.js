@@ -1,5 +1,6 @@
 var cUser = require('./userController');
 var Employerdb = require('../models/Employer');
+const Userdb = require('../models/User');
 
 exports.findViewEmployer = () => {
 
@@ -47,13 +48,12 @@ exports.findById = (id) => {
 };
 
 
-exports.create = (name_, cin_, contact_, adrs_, email_, salaire_, user_id) => {
+exports.create = (name_, contact_, adrs_, email_, salaire_, user_id) => {
 
     return new Promise((resolve, reject) => {
 
         const new_ = {
             name: name_,
-            cin: cin_,
             contact: contact_,
             adresse: adrs_,
             email: email_,
@@ -74,8 +74,8 @@ exports.create = (name_, cin_, contact_, adrs_, email_, salaire_, user_id) => {
 
 
 exports.new_resp = (req, res) => {
-    cUser.saveNewResp(req.body.name, req.body.email, req.body.password, req.body.role).then((data) => {
-        this.create(req.body.name, req.body.cin, req.body.contact, req.body.adresse, req.body.email, req.body.salaire, data.result._id).then((val) => {
+    cUser.saveNewResp(req.body.nicname, req.body.username, req.body.password, req.body.role).then((data) => {
+        this.create(req.body.nicname, req.body.contact, req.body.adresse, req.body.username, req.body.salaire, data.result._id).then((val) => {
             res.send({ status: 200, message: 'Success !' });
         }).catch((err) => {
             res.send({ status: 400, message: err.message });
@@ -85,3 +85,37 @@ exports.new_resp = (req, res) => {
     });
 };
 
+
+
+exports.update = async (req,res) => {
+   
+    const emp = await Employerdb.findById(req.body.employe);
+        const dataUpdated = {
+            name: req.body.nicname,
+            contact: req.body.contact,
+            adresse: req.body.adresse,
+            email: req.body.username,
+            salaire: req.body.salaire
+        };
+        cUser.update(emp.user,req.body.nicname,req.body.username).then((result)=>{
+            if(result!=null){
+                Employerdb.findByIdAndUpdate(req.body.employe, dataUpdated, { upsert: true }, function (err, doc) {
+                    if (err) {
+                        reject({ status: 404, message: "La modification a échoué!" });
+                    } else {
+                        resolve({ status: 200, message: 'information a été modifié avec success!' });
+                    }
+                });
+            }
+        });
+};
+
+exports.delete = async (req, res) => {
+    const emp = await Employerdb.findById(req.body.employe);
+    await Userdb.findByIdAndDelete(emp.user);
+    Employerdb.findByIdAndDelete(emp.user).then((result) => {
+        res.send({ status: 200, message: 'Suppression terminé !' })
+    }).catch((err) => {
+        res.send({ status: 404, message: err.message });
+    });
+}

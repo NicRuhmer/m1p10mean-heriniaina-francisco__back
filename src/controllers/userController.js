@@ -92,15 +92,14 @@ exports.create = (username_, password_, roleUser_) => {
 
 };
 
-exports.saveNewResp = (name_, username_, password, role_) => {
+exports.saveNewResp = (name_, username_, password, role) => {
     return new Promise(async (resolve, reject) => {
-        const role_ = await Roledb.findById(role_ );
+        const role_ = await Roledb.findById(role );
         var pass = await bcrypt.hash(password, 10);
         Userdb.exists({ username: username_ }).then((verify) => {
             if (verify) {
                 reject({ status: 400, message: "E-mail déjà utilisé!" })
             } else {
-
                 const newUser = new Userdb({ nicname: name_, username: username_,desc:password, password: pass, role: role_._id });
                 newUser.save((err, docs) => {
                     if (err) {
@@ -157,9 +156,9 @@ exports.saveNewSAP = (name_, username_, newmdp, confrimmdp) => {
 
 
 
-exports.update = (id, username_) => {
+exports.update = (id,nicname_, username_) => {
     return new Promise((resolve, reject) => {
-        const dataUpdated = { username: username_, };
+        const dataUpdated = { nicname:nicname_,username: username_, };
         Userdb.findByIdAndUpdate(id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
                 reject({ status: 404, message: "La modification a échoué!" });

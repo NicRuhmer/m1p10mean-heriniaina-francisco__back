@@ -29,7 +29,7 @@
                                 class="text-danger">*</span></label>
                             <select class="form-select" id="role" name="role" aria-label="Default select example">
                                 <% for(var id=0;id<roles.length;id++){%>
-                                    <option value="<%=roles[id].description%>"><%=roles[id].description%></option>
+                                    <option value="<%=roles[id]._id%>"><%=roles[id].description%></option>
                                     <%}%>
                               </select>
                         </div>
@@ -51,16 +51,18 @@
                                     <input type="Email" class="form-control"
                                         id="email" required
                                         placeholder="Email">
+                                        <span class="text-danger" id="email_error"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1"
-                                        class="form-label">Télephone <span
+                                        class="form-label">Contact <span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control"
                                         id="contact" name="contact" required
                                         placeholder="Télephone">
+                                        <span class="text-danger" id="contact_error"></span>
                                 </div>
                             </div>
                         </div>
@@ -72,6 +74,7 @@
                             <input type="text" class="form-control"
                                 id="adresse" name="adresse" required
                                 placeholder="Adresse">
+                                <span class="text-danger" id="adresse_error"></span>
                         </div>
 
                         <div class="row">
@@ -83,6 +86,7 @@
                                     <input type="number" class="form-control"
                                         id="salaire" value="0" min="0" name="salaire" required
                                         placeholder="Salaire Net">
+                                        <span class="text-danger" id="salaire_error"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -93,6 +97,7 @@
                                     <input type="password" class="form-control"
                                         id="password" name="password" required
                                         placeholder="Nouveau mot de passe">
+                                        <span class="text-danger" id="password_error"></span>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +108,7 @@
                         <span class="text-success" id="message_success"></span>
                         <div class="mb-3 d-flex justify-content-center">
                             <button type="button" class="btn btn-success "
-                                id="submit_spa">Enregistrer</button>
+                                id="submit_new_resp">Enregistrer</button>
                         </div>
                     </div>
                 </div>

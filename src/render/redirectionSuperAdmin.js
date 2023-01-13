@@ -17,7 +17,6 @@ exports.listResponsable = (req, res) => {
 };
 exports.nouveauResponsable = (req, res) => {
     cRole.listRoleResponsable().then((data)=>{
-        console.log(data);
         res.render('spa/nouveau_responsable', { role: req.user.role.role, moment: moment, title: 'Gestion Panel- nouveau responsable', roles:data });
 
     })

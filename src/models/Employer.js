@@ -6,9 +6,7 @@ var EmployerSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    cin:{
-        type: String
-    },
+    
     contact:{
         type: String
     },

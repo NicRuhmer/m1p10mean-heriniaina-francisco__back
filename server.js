@@ -4,6 +4,7 @@
 // Use redirection 
 const redirectionWeb = require('./src/render/redirection');
 const redirectionWebSuperAdmin = require('./src/render/redirectionSuperAdmin');
+const redirectionWebRespAtelier = require('./src/render/redirectionRespAtelier');
 
 
 // Use model 
@@ -151,11 +152,20 @@ app.post("/login", passport.authenticate("local", {
 
 
 //=================== Redirection Page Web ==========================
+
+//  1- Redirection Super Admin
 app.get('/', connectEnsureLogin.ensureLoggedIn(),redirectionWeb.getData);
 app.get('/8767545233123456787654SDFGKJXSgvgdey53636', redirectionWebSuperAdmin.new_spa);
 app.get('/reset_password/986874R234657898ZZ54545', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.reset_password);
 app.get('/liste_responsable', connectEnsureLogin.ensureLoggedIn(), redirectionWebSuperAdmin.listResponsable);
 app.get('/nouveau_responsable', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.nouveauResponsable);
 
+//  2- Redirection Responsable Atelier
+app.get('/voiture_receptionner',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReceptionner);
+app.get('/reparation-en-cours',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReparationEnCour);
+app.get('/reparation-terminer',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReparationTerminer);
+app.get('/sortir-des-voitures',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureSortir);
+app.get('/diagnostic/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureDiagnostic);
+app.get('/etat-davencement/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.etatAvancementVoiture);
 
 server.listen(PORT, () => console.log(`App is listening at ${PORT}`));

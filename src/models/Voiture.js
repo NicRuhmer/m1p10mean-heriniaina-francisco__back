@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 // contact
 var VoitureSchema = new mongoose.Schema({
+    description:{
+        type:String
+    },
     matricule:{
         type:String,
         required:true,

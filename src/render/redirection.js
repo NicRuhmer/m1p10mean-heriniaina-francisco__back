@@ -17,8 +17,9 @@ exports.redirectPageSPA = (role_, res) => {
     res.render('index', { role: role_, moment: moment, title: 'Gestion Panel- Administrateur' });
 };
 
-exports.redirectPageRespAtelier = (role_, res) => {
 
+exports.redirectPageRespAtelier = (role_, res) => {
+    res.render('responsable/atelier/index', { role: role_, moment: moment, title: 'Gestion Panel- reéception des voitures' });
 };
 
 exports.redirectPageRespFinancier = (role_, res) => {

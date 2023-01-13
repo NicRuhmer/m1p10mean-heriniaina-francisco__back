@@ -1,0 +1,106 @@
+<%- include('../../includes/header_responsable_atelier') %>
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Voiture
+                                réceptionner</a></li>
+                        <li class="breadcrumb-item"><a href="/">V-8</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">État
+                            d'avancement</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class=" shadow-sm my-2 p-2 bg-body rounded">
+                    <h5 class="card-title mb-2">À Faire</h5>
+
+                    <table class="table table-striped">
+
+                        <tbody onDragStart="start(event)">
+                            <tr id="1">
+                                <td>
+                                    <div class="p-1">
+                                        <p class="card-text">Filtre à Air</p>
+                                        <p class="card-text">Il faut changer le
+                                            filtre à Air</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn
+                                        btn-primary">Detail</button>
+                                </td>
+                            </tr>
+
+                            <tr id="2">
+                                <td>
+                                    <div class="p-1">
+                                        <p class="card-text">Filtre à Air</p>
+                                        <p class="card-text">Il faut changer le
+                                            filtre à Air</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn
+                                        btn-primary">Detail</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <div class="col-md-4">
+                <div class="shadow-sm my-2 p-2 bg-body rounded" onDragOver="return over(event)" onDrop="return drop(event)">
+                    <h5 class="card-title mb-2">En cours</h5>
+
+                    <table class="table table-striped">
+
+                        <tbody  id="data_en_cour">
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="shadow-sm my-2 p-2 bg-body rounded">
+                    <h5 class="card-title mb-2">Terminé</h5>
+
+                    <table class="table table-striped">
+
+                        <tbody ondragstart="start()">
+                            
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <style>
+            body{
+                background-color: antiquewhite;
+            }
+        </style>
+    <%- include('../../includes/footer_responsable_atelier') %>

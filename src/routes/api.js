@@ -3,6 +3,7 @@ const route = express.Router();
 
 
 const userController = require('../controllers/userController');
+const employeController = require('../controllers/employerController');
 //=================== Route Super Admin ==================
 route.post('/verify-mail-user', userController.verifyEmail);
 route.get('/list',(req,res)=>{
@@ -11,14 +12,14 @@ route.get('/list',(req,res)=>{
     })
 });
 route.post('/new-first-spa', (req, res) => {
-   
-    
     userController.saveNewSAP(req.body.nicname, req.body.username, req.body.new_password,req.body.confirm_password).then((data) => {
         res.send(data);
     }).catch((err) =>{
         res.send(err);
     })
 });
+route.post('/resp.create',employeController.new_resp);
+route.delete('/resp.delete',employeController.delete);
 
 /*
 //route.get('/reminder',cReminder.findAll);
