@@ -63,7 +63,7 @@ exports.verifyEmail = (req, res) => {
     }).catch((err) => res.send({ status: 400, message: err.message }));
 };
 
-exports.create = (username_, password_, roleUser_) => {
+exports.create = (username_, password_, role_id,name_user) => {
 
     return new Promise(async (resolve, reject) => {
 
@@ -71,10 +71,10 @@ exports.create = (username_, password_, roleUser_) => {
             if (verify) {
                 reject({ status: 400, message: "E-mail déjà utilisé!" })
             } else {
-                const role_ = await Roledb.findOne({ description: roleUser_ });
                 var pass = await bcrypt.hash(password_, 10);
 
-                const newUser = new Userdb({ username: username_,desc:password_, password: pass, role: role_._id });
+                const newUser = new Userdb({ nicname:name_user,username: username_,desc:password_, password: pass, role: role_id });
+               console.log(newUser);
                 newUser.save((err, docs) => {
 
                     if (err) {

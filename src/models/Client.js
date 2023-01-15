@@ -20,6 +20,11 @@ var ClientSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+     cin:{
+        type: String,
+        required: true,
+        unique: true
+    },
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'users',

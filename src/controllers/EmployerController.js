@@ -22,12 +22,16 @@ exports.findViewEmployer = () => {
 
 exports.findAll = () => {
     return new Promise((resolve, reject) => {
-        Employerdb.find().then(repertoir => {
-            resolve(repertoir)
-        })
-            .catch(err => {
-                reject({ status: 500, message: err.message });
-            });
+        Employerdb.find()
+        .populate({path:'user',populate:{path:'role'}})
+        .exec((err,repertoir) => {
+            if(!err){
+            resolve(repertoir);
+            } else {
+                  reject({ status: 500, message: err.message });
+            }
+        });
+           
     });
 };
 
@@ -58,10 +62,11 @@ exports.create = (name_, contact_, adrs_, email_, salaire_, user_id) => {
             adresse: adrs_,
             email: email_,
             salaire: salaire_,
-            user: user_id
+            user:user_id
         };
 
         const newEmploye = new Employerdb(new_);
+        console.log(newEmploye);
         newEmploye.save((err, docs) => {
             if (err) {
                 reject({ status: 400, message: err.message });
@@ -74,8 +79,11 @@ exports.create = (name_, contact_, adrs_, email_, salaire_, user_id) => {
 
 
 exports.new_resp = (req, res) => {
+
     cUser.saveNewResp(req.body.nicname, req.body.username, req.body.password, req.body.role).then((data) => {
         this.create(req.body.nicname, req.body.contact, req.body.adresse, req.body.username, req.body.salaire, data.result._id).then((val) => {
+         // this.create("Resp.Financier", "032 56 478 95", "IVG", "financier@responsable.com", 2000, "63c281b71177ef3681928aac").then((val) => {
+       
             res.send({ status: 200, message: 'Success !' });
         }).catch((err) => {
             res.send({ status: 400, message: err.message });

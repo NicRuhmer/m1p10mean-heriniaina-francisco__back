@@ -4,6 +4,8 @@ moment.suppressDeprecationWarnings = true;
 const Roledb = require('../models/Role');
 const Userdb = require('../models/User');
 
+const employeController = require('../controllers/EmployerController');
+
 
 exports.loginRoutes = (req, res) => {
     let response = {
@@ -13,8 +15,13 @@ exports.loginRoutes = (req, res) => {
     res.render('login', response);
 };
 
-exports.redirectPageSPA = (role_, res) => {
-    res.render('index', { role: role_, moment: moment, title: 'Gestion Panel- Administrateur' });
+exports.redirectPageSPA = async(role_, res) => {
+    empl = await employeController.findAll();
+    res.render('index', { role: role_, moment: moment, employes: empl, title: 'Gestion Panel- Administrateur' });
+};
+
+exports.redirectPageClient = async(role_, res) => {
+    res.render('client/list_voiture', { role: role_, moment: moment, title: 'Liste des voitures' });
 };
 
 
@@ -40,6 +47,9 @@ exports.getData = (req, res) => {
                 }
                 else if (connected.role.role == 'isFinancied') { //resp financier
                     this.redirectPageRespFinancier(connected.role.role, res);
+                }
+                else if(connected.role.role == 'isClient'){
+                    this.redirectPageClient(connected.role.role,res);
                 }
             }
         });

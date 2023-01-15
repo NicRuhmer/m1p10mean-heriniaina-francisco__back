@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 // contact
 var StatutReparationSchema = new mongoose.Schema({
+    identifiant:{
+        type:String,
+        required:true
+    },
     description:{
         type: String,
         required: true

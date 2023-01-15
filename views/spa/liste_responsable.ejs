@@ -15,7 +15,6 @@
                 <table class="table table-striped">
                     <thead class="bg-success text-white">
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Status</th>
                             <th scope="cool">Nom</th>
                             <th scope="col">Email</th>
@@ -24,12 +23,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <%for(var i=0; i<employes.length;i++){%>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Responsable atelier</td>
-                            <td>M. Rafaël</td>
-                            <td>rafael-atelier@responsable.com</td>
-                            <td>034 55 222 33/ 032 11 222 11</td>
+                            <td><%=employes[i].user.role.description%></td>
+                            <td><%=employes[i].name%></td>
+                            <td><%=employes[i].email%></td>
+                            <td><%=employes[i].contact%></td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-warning
@@ -48,7 +47,9 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <%}%>
+                        
+                        <!--<tr>
                             <th scope="row">2</th>
                             <td>Responsable financier</td>
                             <td>M. Tonton</td>
@@ -95,7 +96,7 @@
                                     </ul>
                                 </div>
                             </td>
-                        </tr>
+                        </tr>-->
                     </table>
                 </div>
             </div>

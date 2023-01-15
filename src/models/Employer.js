@@ -16,7 +16,6 @@ var EmployerSchema = new mongoose.Schema({
     email:{
         type: String,
         required: true,
-        unique: true
     },
     salaire:{
         type: Number,
