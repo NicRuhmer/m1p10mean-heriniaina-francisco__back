@@ -15,7 +15,6 @@ var RoleSchema = new mongoose.Schema({
 
 
 RoleSchema.set('timestamps', true); // ajout created_at et upated_at
-RoleSchema.plugin(passportLocalMongoose);
 
 const Roledb = mongoose.model('roles',RoleSchema);
 module.exports = Roledb;

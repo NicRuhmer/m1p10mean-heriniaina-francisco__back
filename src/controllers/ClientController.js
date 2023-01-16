@@ -51,6 +51,21 @@ exports.findById = (id) => {
     });
 };
 
+exports.findByClient = (idUser) => {
+    return new Promise((resolve, reject) => {
+        Clientdb.findOne({user:idUser})
+            .then(data => {
+                if (!data) {
+                    reject({ status: 404, message: "Client non trouvé!" });
+                } else {
+                    resolve(data);
+                }
+            })
+            .catch(err => {
+                reject({ status: 500, message: "Erreur lors de la récupération du contact avec l'identifiant :" + id });
+            });
+    });
+};
 
 exports.create = (name_,username_, contact_, adrs_, email_, cin_, user_id) => {
 

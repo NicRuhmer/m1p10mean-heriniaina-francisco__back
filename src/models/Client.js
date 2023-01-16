@@ -34,7 +34,6 @@ var ClientSchema = new mongoose.Schema({
 
 
 ClientSchema.set('timestamps', true); // ajout created_at et upated_at
-ClientSchema.plugin(passportLocalMongoose);
 
 const Clientdb = mongoose.model('clients',ClientSchema);
 module.exports = Clientdb;

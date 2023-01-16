@@ -30,7 +30,6 @@ var EmployerSchema = new mongoose.Schema({
 
 
 EmployerSchema.set('timestamps', true); // ajout created_at et upated_at
-EmployerSchema.plugin(passportLocalMongoose);
 
 const Employerdb = mongoose.model('employes',EmployerSchema);
 module.exports = Employerdb;

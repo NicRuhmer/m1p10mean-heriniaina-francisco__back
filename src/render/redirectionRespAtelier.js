@@ -1,8 +1,11 @@
 const moment = require('moment');
 moment.suppressDeprecationWarnings = true;
 
-exports.voitureReceptionner = (req, res) => {
-    res.render('responsable/atelier/liste_voiture_receptionner', { role: req.user.role.role, moment: moment, title: 'Gestion Panel- voitures réceptionnners' });
+const reparationController = require('../controllers/reparationController');
+
+exports.voitureReceptionner = async(req, res) => {
+    const repararation_ = await reparationController.findAllReparationReceptionner(req.user._id);
+    res.render('responsable/atelier/liste_voiture_receptionner', { role: req.user.role.role, moment: moment,receptionners:repararation_, title: 'Gestion Panel- voitures réceptionnners' });
 };
 exports.voitureReparationEnCour = (req, res) => {
     res.render('responsable/atelier/liste_reparation_en_cours', { role: req.user.role.role, moment: moment, title: 'Gestion Panel- réparation en cours' });

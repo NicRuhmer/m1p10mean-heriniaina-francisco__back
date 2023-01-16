@@ -1,4 +1,5 @@
 //require('dotenv').config();
+const reparationController = require('./src/controllers/reparationController');
 
 
 // Use redirection 
@@ -167,5 +168,12 @@ app.get('/reparation-terminer',connectEnsureLogin.ensureLoggedIn(),redirectionWe
 app.get('/sortir-des-voitures',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureSortir);
 app.get('/diagnostic/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureDiagnostic);
 app.get('/etat-davencement/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.etatAvancementVoiture);
+
+
+
+//================== API Reparation ===================
+
+app.post('/create/:id/reparation',reparationController.create);
+app.get('/accepter-la-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.update)
 
 server.listen(PORT, () => console.log(`App is listening at ${PORT}`));

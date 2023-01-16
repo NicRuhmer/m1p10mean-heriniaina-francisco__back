@@ -12,14 +12,17 @@ var ReparationSchema = new mongoose.Schema({
         ref:'clients',
         require:true
     },
+    employe:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'employes'
+    },
     status:{
-        type: String
+        type: Boolean,
+        default:false
     }
 });
 
 
 ReparationSchema.set('timestamps', true); // ajout created_at et upated_at
-ReparationSchema.plugin(passportLocalMongoose);
-
 const Reparationdb = mongoose.model('reparations',ReparationSchema);
 module.exports = Reparationdb;

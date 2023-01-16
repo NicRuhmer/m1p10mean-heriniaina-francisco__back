@@ -15,7 +15,6 @@
                 <table class="table table-striped">
                     <thead class="bg-success text-white">
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Déposition</th>
                             <th scope="col">Voiture</th>
                             <th scope="col">Matricule</th>
@@ -26,8 +25,36 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <% for(var id=0;id<receptionners.length;id++){%>
+                            <tr>
+                                <td><%=moment(receptionners[id].createdAt)%></td>
+                                <td><%=receptionners[id].voiture.name%></td>
+                                <td><%=receptionners[id].voiture.matricule%></td>
+                                <td><%=receptionners[id].voiture.num_serie%></td>
+                                <td> <span class="text-primary"><%=receptionners[id].voiture.genre%></span></td>
+                                <td> <div>
+                                        <p><%=receptionners[id].voiture.client.name+" "+receptionners[id].voiture.client.username%><br>
+                                            <%=receptionners[id].voiture.client.email%> <br>
+                                            <%=receptionners[id].voiture.client.contact%>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success
+                                            dropdown-toggle"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Plus
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="/accepter-la-reparation/<%=receptionners[id]._id%>">Faire des diagnostics</a></li>
+                                            </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        <%}%>
                         <tr>
-                            <td>1</td>
                             <td>12/11/2022</td>
                             <td><a href="/diagnostic/1">V-8</a></td>
                             <td><a href="/diagnostic/1">TBH-987645</a></td>
@@ -54,7 +81,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <!--<tr>
                             <td>2</td>
                             <td>12/11/2022</td>
                             <td><a href="/diagnostic/1">V-8</a></td>
@@ -109,7 +136,7 @@
                                     </ul>
                                 </div>
                             </td>
-                        </tr>
+                        </tr>-->
                     </table>
                 </div>
             </div>

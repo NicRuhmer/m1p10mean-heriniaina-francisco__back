@@ -15,7 +15,6 @@ var ReparationEncourSchema = new mongoose.Schema({
 
 
 ReparationEncourSchema.set('timestamps', true); // ajout created_at et upated_at
-ReparationEncourSchema.plugin(passportLocalMongoose);
 
 const ReparationEncourdb = mongoose.model('reparation_encours',ReparationEncourSchema);
 module.exports = ReparationEncourdb;

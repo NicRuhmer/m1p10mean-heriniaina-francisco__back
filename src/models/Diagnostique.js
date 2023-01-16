@@ -34,7 +34,6 @@ var DiagnostiqueSchema = new mongoose.Schema({
 
 
 DiagnostiqueSchema.set('timestamps', true); // ajout created_at et upated_at
-DiagnostiqueSchema.plugin(passportLocalMongoose);
 
 const Diagnostiquedb = mongoose.model('diagnostiques',DiagnostiqueSchema);
 module.exports = Diagnostiquedb;

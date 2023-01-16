@@ -21,7 +21,6 @@ var OtherDepenceSchema = new mongoose.Schema({
 
 
 OtherDepenceSchema.set('timestamps', true); // ajout created_at et upated_at
-OtherDepenceSchema.plugin(passportLocalMongoose);
 
 const OtherDepencedb = mongoose.model('other_depences',OtherDepenceSchema);
 module.exports = OtherDepencedb;

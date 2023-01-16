@@ -35,12 +35,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                       
+                       <%for(var id=0;id<voitures.lenght;id++){%>
                         <tr>
-                            <td><a href="/diagnostic/1">V-8</a></td>
-                            <td><a href="/diagnostic/1">TBH-987645</a></td>
-                            <td><a href="/diagnostic/1">8888-5577-8765-34566</a></td>
-                            <td> <span class="text-primary">Personnel</span></td>
+                            <td><a href="#"><%=voitures[id].name%></a></td>
+                            <td><a href="#"><%=voitures[id].matricule%>/a></td>
+                            <td><a href="#"><%=voitures[id].num_serie%></a></td>
+                            <td> <span class="text-primary"><%=voitures[id].genre%></span></td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-warning
@@ -58,34 +58,45 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td><a href="/diagnostic/1">Porche</a></td>
-                            <td><a href="/diagnostic/1">TBH-987645</a></td>
-                            <td><a href="/diagnostic/1">8888-5577-8765-34566</a></td>
-                            <td> <span class="text-primary">Professionnel</span></td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-warning
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Modifier</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger"
-                                                href="#">Rétiré</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
+                       <%}%>
+                        
                         
                     </table>
 
+                  
                      <h5>Formulaire pour les nouveaux voiture</h5>
-                         <h5>Liste des voitures à déposer pour les reparations</h5>
-                           <h5>Formulaire des dépostitions des voitures à réparer</h5>
+
+                     <span class="border border-primary">
+                        <form action="/voiture/"+client_id+"/create" method="post">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Nom de la voiture</label>
+                            <input type="text" class="form-control" name="name" placeholder="Nom de la voiture">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Matricule</label>
+                            <input type="text" class="form-control" name="matricule" placeholder="Matricule">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">N° de série</label>
+                            <input type="text" class="form-control" name="serie" placeholder="N° de série">
+                        </div>
+                          <div class="mb-3">
+                            <label for="exampleFormControlInput1" name="genre" class="form-label">Genre</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option value="Personnel">Personnel</option>
+                                <option value="Particulier">Particulier</option>
+                                <option value="Entreprise">Entreprise</option>
+                              </select>
+                          </div>
+                          <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-success">Enregistrer</button>
+                          </div>
+                        </form>
+                     </span>
+                     
+
+                        <h5>Liste des voitures à déposer pour les reparations</h5>
+                        <h5>Formulaire des dépostitions des voitures à réparer</h5>
                        
                        
                     </div>

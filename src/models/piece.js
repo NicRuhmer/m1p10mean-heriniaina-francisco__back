@@ -21,7 +21,6 @@ var PieceSchema = new mongoose.Schema({
 
 
 PieceSchema.set('timestamps', true); // ajout created_at et upated_at
-PieceSchema.plugin(passportLocalMongoose);
 
 const Piecedb = mongoose.model('pieces',PieceSchema);
 module.exports = Piecedb;

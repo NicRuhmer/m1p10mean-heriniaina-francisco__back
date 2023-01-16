@@ -26,7 +26,6 @@ var EncaissementSchema = new mongoose.Schema({
 
 
 EncaissementSchema.set('timestamps', true); // ajout created_at et upated_at
-EncaissementSchema.plugin(passportLocalMongoose);
 
 const Encaissementdb = mongoose.model('encaissements',EncaissementSchema);
 module.exports = Encaissementdb;

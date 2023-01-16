@@ -21,7 +21,6 @@ var LoyerSchema = new mongoose.Schema({
 
 
 LoyerSchema.set('timestamps', true); // ajout created_at et upated_at
-LoyerSchema.plugin(passportLocalMongoose);
 
 const Loyerdb = mongoose.model('loyers',LoyerSchema);
 module.exports = Loyerdb;

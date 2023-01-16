@@ -5,6 +5,7 @@ const Roledb = require('../models/Role');
 const Userdb = require('../models/User');
 
 const employeController = require('../controllers/EmployerController');
+const reparationController = require('../controllers/reparationController');
 
 
 exports.loginRoutes = (req, res) => {
@@ -25,8 +26,9 @@ exports.redirectPageClient = async(role_, res) => {
 };
 
 
-exports.redirectPageRespAtelier = (role_, res) => {
-    res.render('responsable/atelier/index', { role: role_, moment: moment, title: 'Gestion Panel- reéception des voitures' });
+exports.redirectPageRespAtelier = async(role_, res) => {
+    const reparations_ = await reparationController.findAllReparationAttente();
+    res.render('responsable/atelier/index', { role: role_, moment: moment,reparations:reparations_, title: 'Gestion Panel- reéception des voitures' });
 };
 
 exports.redirectPageRespFinancier = (role_, res) => {

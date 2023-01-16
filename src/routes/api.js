@@ -8,6 +8,7 @@ const userController = require('../controllers/userController');
 const employeController = require('../controllers/employerController');
 const defaultDataController = require('../controllers/DefaultDataController');
 const clientController = require('../controllers/ClientController');
+const voitureController = require('../controllers/VoitureController');
 //=================== Route Super Admin ==================
 route.get('/initialisation-role-status',defaultDataController.insertDefaultData);
 
@@ -28,11 +29,16 @@ route.post('/resp.create',employeController.new_resp);
 route.delete('/resp.delete',employeController.delete);
 
 
+//=========== Api voiture =============================
+route.get('/list/:id/voiture',voitureController.findAll);
+route.post('/create/:id/voiture',voitureController.create);
+route.get('/list/:id/voiture-reparation',(req,res)=>{});
+route.post('/create/:id/voiture-reparation',(req,res)=>{});
+//=========== Api Client ==============================
 route.post('/new.client',clientController.new_client);
 
-
 /*===================== APIT TESTE ===================*/
-
+ 
 route.get('/form-new-client',(req,res)=>{
     res.render('client/new_client');
 });

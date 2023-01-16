@@ -39,7 +39,6 @@ var FactureSchema = new mongoose.Schema({
 
 
 FactureSchema.set('timestamps', true); // ajout created_at et upated_at
-FactureSchema.plugin(passportLocalMongoose);
 
 const Facturedb = mongoose.model('factures',FactureSchema);
 module.exports = Facturedb;
