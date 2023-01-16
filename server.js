@@ -1,8 +1,10 @@
 //require('dotenv').config();
+// ================= Importation Controller Back Office============================
 const reparationController = require('./src/controllers/reparationController');
+const diagnostiqueController = require('./src/controllers/diagnostiqueController');
 
 
-// Use redirection 
+// ========================== Use redirection 
 const redirectionWeb = require('./src/render/redirection');
 const redirectionWebSuperAdmin = require('./src/render/redirectionSuperAdmin');
 const redirectionWebRespAtelier = require('./src/render/redirectionRespAtelier');
@@ -150,7 +152,15 @@ app.post("/login", passport.authenticate("local", {
 });
 
 
+//================== API Reparation ===================
 
+app.post('/create/:id/reparation',reparationController.create);
+app.get('/accepter-la-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.update)
+app.put('/start-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.startReparation);
+//=================== API Diagnotique ==============================================
+app.put('/modif/:id/reparation-diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.update)
+app.post('/create/:id/reparation-diagnostique',diagnostiqueController.create);
+app.delete('/delete/:id/reparation-diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.delete)
 
 //=================== Redirection Page Web ==========================
 
@@ -163,17 +173,13 @@ app.get('/nouveau_responsable', connectEnsureLogin.ensureLoggedIn(),redirectionW
 
 //  2- Redirection Responsable Atelier
 app.get('/voiture_receptionner',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReceptionner);
-app.get('/reparation-en-cours',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReparationEnCour);
+app.get('/reparation-en-cours/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReparationEnCour);
 app.get('/reparation-terminer',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReparationTerminer);
 app.get('/sortir-des-voitures',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureSortir);
 app.get('/diagnostic/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureDiagnostic);
-app.get('/etat-davencement/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.etatAvancementVoiture);
+app.get('/etat-davancement/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.etatAvancementVoiture);
 
 
 
-//================== API Reparation ===================
-
-app.post('/create/:id/reparation',reparationController.create);
-app.get('/accepter-la-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.update)
 
 server.listen(PORT, () => console.log(`App is listening at ${PORT}`));

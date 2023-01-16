@@ -2,6 +2,8 @@ const moment = require('moment');
 moment.suppressDeprecationWarnings = true;
 
 const reparationController = require('../controllers/reparationController');
+const diagnostiqueController = require('../controllers/diagnostiqueController');
+
 
 exports.voitureReceptionner = async(req, res) => {
     const repararation_ = await reparationController.findAllReparationReceptionner(req.user._id);
@@ -16,9 +18,14 @@ exports.voitureReparationTerminer = (req, res) => {
 exports.voitureSortir = (req, res) => {
     res.render('responsable/atelier/liste_sortir_voiture', { role: req.user.role.role, moment: moment, title: 'Gestion Panel- sortir des voitures' });
 };
-exports.voitureDiagnostic = (req,res)=>{
-    res.render('responsable/atelier/diagnostic', { role: req.user.role.role, moment: moment, title: 'Gestion Panel- diagnostic' });
+exports.voitureDiagnostic = async(req,res)=>{
+    const detail_ = await reparationController.findById(req.params.id);
+    const diagnostiques_ = await diagnostiqueController.findAll(req.params.id);
+    res.render('responsable/atelier/diagnostic', { detail:detail_,diagnostiques:diagnostiques_,role: req.user.role.role, moment: moment, title: 'Gestion Panel- diagnostic' });
 };
-exports.etatAvancementVoiture = (req,res)=>{
-    res.render('responsable/atelier/etat_avancement', { role: req.user.role.role, moment: moment, title: "Gestion Panel- état d'avancement" });
+exports.etatAvancementVoiture = async(req,res)=>{
+     const detail_ = await reparationController.findById(req.params.id);
+    const diagnostiques_ = await diagnostiqueController.findAll(req.params.id);
+
+    res.render('responsable/atelier/etat_avancement', {  detail:detail_,diagnostiques:diagnostiques_,role: req.user.role.role, moment: moment, title: "Gestion Panel- état d'avancement" });
 };

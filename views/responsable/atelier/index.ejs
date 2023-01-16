@@ -28,7 +28,7 @@
                         <% for(var id=0;id<reparations.length;id++){%>
                             <tr>
                                 <td><%=moment(reparations[id].createdAt)%></td>
-                                <td><%=reparations[id].voiture.name%></td>
+                                <td><%=reparations[id].voiture.description%></td>
                                 <td><%=reparations[id].voiture.matricule%></td>
                                 <td><%=reparations[id].voiture.num_serie%></td>
                                 <td> <span class="text-primary"><%=reparations[id].voiture.genre%></span></td>

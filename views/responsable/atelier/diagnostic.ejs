@@ -9,7 +9,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Voiture
                                 réceptionner</a></li>
-                        <li class="breadcrumb-item"><a href="/">V-8</a></li>
+                        <li class="breadcrumb-item"><a href="/"><%=detail.voiture.description%></a></li>
                         <li class="breadcrumb-item active" aria-current="page">Diagnostics</li>
                     </ol>
                 </nav>
@@ -21,27 +21,127 @@
                 <div class="card shadow-sm p-3 mb-5 bg-body rounded">
                     <div class="card-body">
                         <h5 class="card-title">Véhicule</h5>
-                        <p class="card-text mt-5">V-8</p>
-                        <p class="card-text">Matricule: TBF8979878</p>
-                        <p class="card-text">N°série: 9796-4547-8986-3547</p>
+                        <p class="card-text mt-5"><%=detail.voiture.description%></p>
+                        <p class="card-text">Matricule: <%=detail.voiture.matricule%></p>
+                        <p class="card-text">N°série: <%=detail.voiture.num_serie%></p>
                         <p>Personnel</a>
 
                         <h5 class="card-title">Client</h5>
-                        <p class="card-text mt-5">M. Raphaël</p>
-                        <p class="card-text">email: raphael@gmail.com</p>
-                        <p class="card-text">contact: 032 86 837 25/ 034 55 678
-                            90</p>
+                        <p class="card-text mt-5"><%=detail.voiture.client.name+" "+detail.voiture.client.username%></p>
+                        <p class="card-text">Email: <%=detail.voiture.client.email%></p>
+                        <p class="card-text">Contact: <%=detail.voiture.contact%></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card shadow-sm p-3 mb-5 bg-body rounded">
                     <div class="card-body">
+
+                        <button class="btn btn-primary" id="start_reparation" data-id="<%=detail._id%>">Lancez le projet</button>
                         <h5 class="card-title">A réparer</h5>
 
                         <table class="table mt-5">
                             <tbody>
-                                <tr>
+                                <%for(var id=0;id<diagnostiques.length;id++){%>
+
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <p>
+                                                    <%=diagnostiques[id].title%> <br>
+                                                    <%=diagnostiques[id].description%>
+                                                </p>
+                                            </div>
+                                           
+                                        </td>
+                                       <td>
+                                        <p>durée: <%=diagnostiques[id].duration+" heure"%> <br>
+                                            quantité pièce: <%=diagnostiques[id].qte%>
+                                        </p>
+                                       </td>
+                                        <td><%=diagnostiques[id].pu+"Ar"%></td>
+                                        <td>
+                                            <div class="d-flex
+                                                justify-content-between">
+                                                <button type="button" class="btn 
+                                                    btn-success" data-bs-toggle="modal" data-bs-target="#edit<%=diagnostiques[id]._id%>">Modifier</button>
+                                                <button type="button" onclick='supp_diagnostique(<%=JSON.stringify(diagnostiques[id]._id)%>)' id="delete_diagnostique" class="btn
+                                                    btn-warning delete_diagnostique">Rétirer</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <div class="modal fade" id="edit<%=diagnostiques[id]._id%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Modification de "<%=diagnostiques[id].title%>"</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                                <div class="mb-3 mt-3">
+                          
+                                                    <label for="exampleFormControlInput1"
+                                                        class="form-label">Tâches</label>
+                                                    <input type="text" class="form-control"
+                                                        id="titled" name="titled"
+                                                        required value="<%=diagnostiques[id].title%>"
+                                                        placeholder="Tâches">
+                                                    
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1"
+                                                        class="form-label">Description
+                                                    </label>
+                                                    <textarea class="form-control" placeholder="Description" id="descriptiond" name="descriptiond" rows="3">
+                                                    <%=diagnostiques[id].description%>
+                                                    </textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1"
+                                                        class="form-label">Estimation du duration(heure)
+                                                    </label>
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="durationd" name="durationd" min="0"
+                                                        required value="<%=diagnostiques[id].duration%>"
+                                                        placeholder="En heure">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1"
+                                                        class="form-label">Quantité
+                                                    </label>
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="qted" name="qted" min="0"
+                                                        required value="<%=diagnostiques[id].qte%>"
+                                                        placeholder="Quantité">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1"
+                                                        class="form-label">Estimation du prix
+                                                    </label>
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="montantd" name="montantd"
+                                                        required value="<%=diagnostiques[id].pu%>"
+                                                        placeholder="En Ar">
+
+                                                        <span class="text-danger" id="message_update_error"></span>
+                                                        <span class="text-success" id="message_update_success"></span>
+                                                </div>
+                                          </div>
+                                          <div class="modal-footer d-flex justify-content-between">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" id="modif_diagnostique" data-id="<%=diagnostiques[id]._id%>" class="btn btn-primary">Modifier</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                <%}%>
+
+                                <!--<tr>
                                     <td>
                                         <div>
                                             <p>
@@ -67,58 +167,8 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div>
-                                            <p>
-                                                Filtre à Air <br>
-                                                Il faut changer le filtre à Air
-                                            </p>
-                                        </div>
-                                       
-                                    </td>
-                                   <td>
-                                    <p>durée: 1heure <br>
-                                        quantité pièce: 0
-                                    </p>
-                                   </td>
-                                    <td>90 000Ar</td>
-                                    <td>
-                                        <div class="d-flex
-                                            justify-content-between">
-                                            <button type="button" class="btn
-                                                btn-outline-success">Modifier</button>
-                                            <button type="button" class="btn
-                                                btn-outline-warning">Rétirer</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div>
-                                            <p>
-                                                Filtre à Air <br>
-                                                Il faut changer le filtre à Air
-                                            </p>
-                                        </div>
-                                       
-                                    </td>
-                                   <td>
-                                    <p>durée: 1heure <br>
-                                        quantité pièce: 0
-                                    </p>
-                                   </td>
-                                    <td>60 000Ar</td>
-                                    <td>
-                                        <div class="d-flex
-                                            justify-content-between">
-                                            <button type="button" class="btn
-                                                btn-outline-success">Modifier</button>
-                                            <button type="button" class="btn
-                                                btn-outline-warning">Rétirer</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                -->
+
                             </tbody>
                         </table>
                     </div>
@@ -129,7 +179,7 @@
                 <div class="card shadow-sm p-3 mb-5 bg-body rounded">
                     <div class="card-body">
                         <h5 class="card-title">Ajout</h5>
-                        <div class="mb-3 mt-3">
+                                <div class="mb-3 mt-3">
                           
                                     <label for="exampleFormControlInput1"
                                         class="form-label">Tâches</label>
@@ -175,11 +225,13 @@
                                         id="montant" name="montant"
                                         required
                                         placeholder="En Ar">
+                                        <span class="text-danger" id="message_error"></span>
+                                        <span class="text-success" id="message_success"></span>
                                 </div>
                                 <div class="mb-3 d-flex
                                     justify-content-center">
-                                    <button type="submit" class="btn
-                                        btn-success " id="Connexion">Ajouter</button>
+                                    <button type="button" class="btn
+                                        btn-success " data-id="<%=detail._id%>" id="submit_diagnostique">Ajouter</button>
                                 </div>
                             </div>
                         </div>

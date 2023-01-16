@@ -27,7 +27,6 @@ var VoitureSchema = new mongoose.Schema({
 
 
 VoitureSchema.set('timestamps', true); // ajout created_at et upated_at
-VoitureSchema.plugin(passportLocalMongoose);
 
 const Voituredb = mongoose.model('voitures',VoitureSchema);
 module.exports = Voituredb;

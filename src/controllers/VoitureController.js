@@ -21,14 +21,14 @@ exports.findById = (req, res) => {
 
 exports.create = (req, res) => {
     const new_ = {
-        name: req.body.name,
+        description: req.body.name,
         num_serie: req.body.serie,
         matricule: req.body.matricule,
         genre: req.body.genre,
         client: req.params.id
     };
 
-    if (new_.name != null && new_.num_serie != null && new_.matricule != null && new_.genre != null && new_.client != null) {
+    if (new_.description != null && new_.num_serie != null && new_.matricule != null && new_.genre != null && new_.client != null) {
         const new__ = new Voituredb(new_);
         new__.save((err, docs) => {
             if (err) {

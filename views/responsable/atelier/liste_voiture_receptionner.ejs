@@ -21,6 +21,7 @@
                             <th scope="cool">N°série</th>
                             <th scope="cool">Genre</th>
                             <th scope="col">Client</th>
+                            <th scope="col">Estimation(static)</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -28,7 +29,7 @@
                         <% for(var id=0;id<receptionners.length;id++){%>
                             <tr>
                                 <td><%=moment(receptionners[id].createdAt)%></td>
-                                <td><%=receptionners[id].voiture.name%></td>
+                                <td><%=receptionners[id].voiture.description%></td>
                                 <td><%=receptionners[id].voiture.matricule%></td>
                                 <td><%=receptionners[id].voiture.num_serie%></td>
                                 <td> <span class="text-primary"><%=receptionners[id].voiture.genre%></span></td>
@@ -39,6 +40,7 @@
                                         </p>
                                     </div>
                                 </td>
+                                <td>---</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-success
@@ -48,95 +50,15 @@
                                             Plus
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="/accepter-la-reparation/<%=receptionners[id]._id%>">Faire des diagnostics</a></li>
+                                            <li><a class="dropdown-item" href="/diagnostic/<%=receptionners[id]._id%>">Faire des diagnostics</a></li>
+                                             <li><a class="dropdown-item" href="/etat-davancement/<%=receptionners[id]._id%>">L'état d'avancement</a></li>
                                             </ul>
                                     </div>
                                 </td>
                             </tr>
                         <%}%>
-                        <tr>
-                            <td>12/11/2022</td>
-                            <td><a href="/diagnostic/1">V-8</a></td>
-                            <td><a href="/diagnostic/1">TBH-987645</a></td>
-                            <td><a href="/diagnostic/1">8888-5577-8765-34566</a></td>
-                            <td> <span class="text-primary">Personnel</span></td>
-                            <td> <div>
-                                    <p>M. Raphaël <br>
-                                        rafael-atelier@responsable.com <br>
-                                        034 55 222 33/ 032 11 222 11
-                                    </p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/diagnostic/1">Faire des diagnostics</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <!--<tr>
-                            <td>2</td>
-                            <td>12/11/2022</td>
-                            <td><a href="/diagnostic/1">V-8</a></td>
-                            <td><a href="/diagnostic/1">TBH-987645</a></td>
-                            <td><a href="/diagnostic/1">8888-5577-8765-34566</a></td>
-                            <td> <span class="text-warning">Particulier</span></td>
-                            <td> <div>
-                                    <p>M. Raphaël <br>
-                                        rafael-atelier@responsable.com <br>
-                                        034 55 222 33/ 032 11 222 11
-                                    </p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/diagnostic/1">Faire des diagnostics</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>12/11/2022</td>
-                            <td><a href="/diagnostic/1">V-8</a></td>
-                            <td><a href="/diagnostic/1">TBH-987645</a></td>
-                            <td><a href="/diagnostic/1">8888-5577-8765-34566</a></td>
-                            <td> <span class="text-success">Professionnel</span></td>
-                            <td> <div>
-                                    <p>M. Raphaël<br>
-                                        rafael-atelier@responsable.com <br>
-                                        034 55 222 33/ 032 11 222 11
-                                    </p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/diagnostic/1">Faire des diagnostics</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>-->
+                        
+                       
                     </table>
                 </div>
             </div>
