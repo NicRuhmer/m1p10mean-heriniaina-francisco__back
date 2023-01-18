@@ -19,6 +19,10 @@ var ReparationSchema = new mongoose.Schema({
     status:{
         type: Boolean,
         default:false
+    },
+     start:{
+        type: Boolean,
+        default:false
     }
 });
 

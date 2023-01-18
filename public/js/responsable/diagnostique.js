@@ -139,7 +139,7 @@ $('#start_reparation').click( function(){
     $(this).html("Chargement du projet  en cours ...");
     const reponse_={};
 
- fetch('/start-reparation/'+diag_id, {
+ fetch('/start-reparation/'+reparation_id, {
         method: 'put',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reponse_)

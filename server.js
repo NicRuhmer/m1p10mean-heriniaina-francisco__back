@@ -161,7 +161,7 @@ app.put('/start-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationCo
 app.put('/modif/:id/reparation-diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.update)
 app.post('/create/:id/reparation-diagnostique',diagnostiqueController.create);
 app.delete('/delete/:id/reparation-diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.delete)
-
+app.post('/progress-reparation-diagnostiques',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.isProgress);
 //=================== Redirection Page Web ==========================
 
 //  1- Redirection Super Admin

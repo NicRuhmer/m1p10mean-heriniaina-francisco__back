@@ -27,32 +27,50 @@
 
     <script>
 
-function start(e){
-  e.dataTransfer.effectAllowed="move";
-  e.dataTransfer.setData("dns",e.target.getAttribute("id"));
-}
+      function start(e){
+        e.dataTransfer.effectAllowed="move";
+        e.dataTransfer.setData("dns",e.target.getAttribute("id"));
+      }
 
-function over(e,action){
+      function over(e,action){
 
-  // e.preventDefault();
- 
-  //e.currentTarget.classList=" border border-primary";
-  return false;
-}
+        // e.preventDefault();
+       
+        //e.currentTarget.classList=" border border-primary";
+        return false;
+      }
 
 
-function drop(e,action){
-  const objectId = e.dataTransfer.getData("dns");
- console.log(objectId,action)
-  e.currentTarget.appendChild(document.getElementById(objectId));
-  //e.currentTarget.addClassName=" border border-none";
-  e.stopPropagation();
-  return false;
-}
+      function drop(e,action){
+        const objectId = e.dataTransfer.getData("dns");
+        //console.log(objectId,action)
+        e.currentTarget.appendChild(document.getElementById(objectId));
 
-function leave(e){
- // e.currentTarget.addClassName=" border border-none";
-}
+        const reponse_={diagnostique:objectId, progress: action};
+        fetch('/progress-reparation-diagnostiques', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reponse_)
+        })
+        .then(res => {
+          if (res.ok) return res.json()
+        })
+          .then(response => {
+            
+          }).catch(err=>{
+              alert(err.message);
+             
+          });
+          
+
+        //e.currentTarget.addClassName=" border border-none";
+        e.stopPropagation();
+        return false;
+      }
+
+      function leave(e){
+       // e.currentTarget.addClassName=" border border-none";
+      }
     </script>
   </body>
 </html>

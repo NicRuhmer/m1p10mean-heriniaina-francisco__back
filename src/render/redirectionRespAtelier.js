@@ -25,7 +25,9 @@ exports.voitureDiagnostic = async(req,res)=>{
 };
 exports.etatAvancementVoiture = async(req,res)=>{
      const detail_ = await reparationController.findById(req.params.id);
-    const diagnostiques_ = await diagnostiqueController.findAll(req.params.id);
-
-    res.render('responsable/atelier/etat_avancement', {  detail:detail_,diagnostiques:diagnostiques_,role: req.user.role.role, moment: moment, title: "Gestion Panel- état d'avancement" });
+     const tasks_ = await diagnostiqueController.findData(req.params.id,"isTask");
+     const progress_ = await diagnostiqueController.findData(req.params.id,"isProgress");
+     const finish_ = await diagnostiqueController.findData(req.params.id,"isFinish");
+res.send({task:tasks_,progress:progress_});
+  // res.render('responsable/atelier/etat_avancement', {  detail:detail_,tasks:tasks_,progress:progress_,finish:finish_,role: req.user.role.role, moment: moment, title: "Gestion Panel- état d'avancement" });
 };

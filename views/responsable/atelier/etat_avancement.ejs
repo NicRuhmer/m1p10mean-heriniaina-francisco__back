@@ -44,7 +44,7 @@
 
         <div class="row">
             <div class="col-md-4 card p-0" ondragover="return over(event)"
-                ondrop="return drop(event,'à faire')" ondragstart="start(event)"
+                ondrop="return drop(event,'isTask')" ondragstart="start(event)"
                 ondragleave="leave(event)">
 
                 <div class="card-header px-2">
@@ -52,23 +52,23 @@
                 </div>
                 <ul class="list-group list-group-flush px-1">
 
-                    <%for(var id=0;id<diagnostiques.length;id++){%>
+                    <%for(var id=0;id<tasks.length;id++){%>
 
-                    <li class="list-group-item" id="1" data-id="1" draggable="true">
+                    <li class="list-group-item"  draggable="true" id="<%=tasks[id]._id%>" data-id="<%=tasks[id]._id%>" >
                         <div class="d-flex justify-content-between">
-                            <p>An item <br>
-                                estimation:<%=diagnostiques[id].duration+" heure"%> <br>
-                                quantité:<%=diagnostiques[id].qte"%>
+                            <p><%=tasks[id].title%> <br>
+                                estimation:<%=tasks[id].duration+" heure"%> <br>
+                                quantité:<%=tasks[id].qte%>
                             </p> 
-                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=diagnostiques[id]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=diagnostiques[id]._id%>">
+                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=tasks[id]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=tasks[id]._id%>">
                                 description
                               </a>
                         </div>
-                        <div class="collapse" id="coll<%=diagnostiques[id]._id%>">
+                        <div class="collapse" id="coll<%=tasks[id]._id%>">
                             <div class=" card-body">
-                              Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                             <%=tasks[id].description%>
                             </div>
-                          </div>
+                        </div>
                         <hr>
                     </li>
 
@@ -90,25 +90,65 @@
 
             </div>
             <div class="col-md-4 card p-0" ondragover="return over(event)"
-                ondrop="return drop(event,'en cours')" ondragstart="start(event)"
+                ondrop="return drop(event,'isProgress')" ondragstart="start(event)"
                 ondragleave="leave(event)">
                 <div class="card-header px-2">
                     En Cours
                 </div>
                 <ul class="list-group list-group-flush">
+                    <%for(var ids=0;ids<progress.length;ids++){%>
 
+                    <li class="list-group-item"  draggable="true" id="<%=progress[ids]._id%>" data-id="<%=progress[ids]._id%>" >
+                        <div class="d-flex justify-content-between">
+                            <p><%=progress[ids].title%> <br>
+                                estimation:<%=progress[ids].duration+" heure"%> <br>
+                                quantité:<%=progress[ids].qte%>
+                            </p> 
+                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=progress[ids]._ids%>" role="button" aria-expanded="false" aria-controls="coll<%=progress[ids]._ids%>">
+                                description
+                              </a>
+                        </div>
+                        <div class="collapse" id="coll<%=progress[ids]._id%>">
+                            <div class=" card-body">
+                             <%=progress[ids].description%>
+                            </div>
+                        </div>
+                        <hr>
+                    </li>
+
+                    <%}%>
                 </ul>
             </div>
 
 
             <div class="col-md-4 card p-0" ondragover="return over(event)"
-                ondrop="return drop(event,'terminer')" ondragstart="start(event)"
+                ondrop="return drop(event,'isFinish')" ondragstart="start(event)"
                 ondragleave="leave(event)">
                 <div class="card-header px-2">
                     Terminer
                 </div>
                 <ul class="list-group list-group-flush">
+                    <%for(var idz=0;idz<finish.length;idz++){%>
 
+                    <li class="list-group-item"  draggable="true" id="<%=finish[idz]._id%>" data-id="<%=finish[idz]._id%>" >
+                        <div class="d-flex justify-content-between">
+                            <p><%=finish[idz].title%> <br>
+                                estimation:<%=finish[idz].duration+" heure"%> <br>
+                                quantité:<%=finish[idz].qte%>
+                            </p> 
+                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=finish[idz]._idz%>" role="button" aria-expanded="false" aria-controls="coll<%=finish[idz]._idz%>">
+                                description
+                              </a>
+                        </div>
+                        <div class="collapse" id="coll<%=finish[idz]._id%>">
+                            <div class=" card-body">
+                             <%=finish[idz].description%>
+                            </div>
+                        </div>
+                        <hr>
+                    </li>
+
+                    <%}%>
                 </ul>
 
             </div>
