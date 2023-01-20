@@ -1,14 +1,14 @@
 [
     {
-        "identifiant":"isTache",
+        "identifiant":"isTask",
         "description":"à faire"
     },
     {
-        "identifiant":"isEnCour",
+        "identifiant":"isProgress",
         "description":"en cours"
     },
     {
-        "identifiant":"isTerminer",
+        "identifiant":"isFinish",
         "description":"terminer"
     }
 ]

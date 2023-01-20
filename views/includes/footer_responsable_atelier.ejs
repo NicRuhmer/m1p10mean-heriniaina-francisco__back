@@ -56,7 +56,7 @@
           if (res.ok) return res.json()
         })
           .then(response => {
-            
+            alert(JSON.stringify(response));
           }).catch(err=>{
               alert(err.message);
              

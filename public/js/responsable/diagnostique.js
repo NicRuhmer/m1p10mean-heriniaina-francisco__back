@@ -137,7 +137,7 @@ $('#start_reparation').click( function(){
   
     // $(this).attr('disabled',true);
     $(this).html("Chargement du projet  en cours ...");
-    const reponse_={};
+    const reponse_={reparation:reparation_id};
 
  fetch('/start-reparation/'+reparation_id, {
         method: 'put',
@@ -148,11 +148,14 @@ $('#start_reparation').click( function(){
         if (res.ok) return res.json()
       })
         .then(response => {
+            $(this).attr('disabled',false); 
+                $(this).html("Lancez le projet");
+            if(response.status==200){
+               
+                window.location.replace(window.location.protocol + "//" + window.location.host + "/etat-davancement/"+reparation_id);
+            //  window.location.protocol + "//" + window.location.host + "/reparation-en-cours/"+reparation_id;
+            }
            
-           $(this).attr('disabled',false); 
-           $(this).html("Lancez le projet");
-
-        window.location.protocol + "//" + window.location.host + "/reparation-en-cours/"+reparation_id;
         }).catch(err=>{
             alert(err.message);
             $(this).attr('disabled',false); 

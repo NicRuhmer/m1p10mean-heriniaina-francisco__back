@@ -44,7 +44,8 @@ exports.findAllReparationAttente = () => {
 exports.findAllReparationReceptionner = (user_id) => {
     return new Promise(async(resolve, reject) => {
         const emp = await Employedb.findOne({user:user_id});
-        Reparationdb.find({employe:emp._id,status:true})
+      
+        Reparationdb.find({employe:emp._id})
             .populate({ 
                 path: 'voiture', 
                 populate: { 
@@ -56,6 +57,7 @@ exports.findAllReparationReceptionner = (user_id) => {
                     console.log(err.message)
                     reject({ status: 400, message: err.message });
                 } else {
+                    
                     resolve(result);
                 }
             });
@@ -96,7 +98,7 @@ exports.update = async (req, res) => {
         status: true,
         start:false
     };
-    if (dataUpdated.employe != null && dataUpdated.status != null) {
+    if (emp._id != null && dataUpdated.status != null) {
         Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
                 res.send({ status: 404, message: "La modification a échoué!" });
@@ -110,18 +112,23 @@ exports.update = async (req, res) => {
 };
 
 exports.startReparation = async (req, res) => {
+   
     const dataUpdated = {
         start:true
     };
-    if (dataUpdated.employe != null && dataUpdated.status != null) {
+    if (dataUpdated.start == true) {
         Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
+
+                console.log('La modification a échoué! ');
                 res.send({ status: 404, message: "La modification a échoué!" });
             } else {
+                console.log('information a été modifié avec success!');
                 res.send({ status: 200, message: 'information a été modifié avec success!' });
             }
         });
     } else {
+        console.log("champs invalide !")
         res.send({ status: 400, message: " champs invalide !" });
     }
 };

@@ -28,6 +28,6 @@ exports.etatAvancementVoiture = async(req,res)=>{
      const tasks_ = await diagnostiqueController.findData(req.params.id,"isTask");
      const progress_ = await diagnostiqueController.findData(req.params.id,"isProgress");
      const finish_ = await diagnostiqueController.findData(req.params.id,"isFinish");
-res.send({task:tasks_,progress:progress_});
-  // res.render('responsable/atelier/etat_avancement', {  detail:detail_,tasks:tasks_,progress:progress_,finish:finish_,role: req.user.role.role, moment: moment, title: "Gestion Panel- état d'avancement" });
+
+   res.render('responsable/atelier/etat_avancement', {  detail:detail_,tasks:tasks_,progress:progress_,finish:finish_,role: req.user.role.role, moment: moment, title: "Gestion Panel- état d'avancement" });
 };
