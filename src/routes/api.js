@@ -11,14 +11,7 @@ const clientController = require('../controllers/ClientController');
 const voitureController = require('../controllers/VoitureController');
 const diagnostiqueController = require('../controllers/diagnostiqueController');
 
-route.get('/reparation',async(req,res)=>{
-    const tasks_ = await diagnostiqueController.findData("63ca9a415a78487fc5a61536","isTask");
-    
-     const progress_ = await diagnostiqueController.findData("63ca9a415a78487fc5a61536","isProgress");
-     const finish_ = await diagnostiqueController.findData("63ca9a415a78487fc5a61536","isFinish");
-     res.send(finish_)
-// res.send({task:tasks_,progress:progress_,finish:finish_});
-});
+
 
 //=================== Route Super Admin ==================
 route.get('/initialisation-role-status',defaultDataController.insertDefaultData);

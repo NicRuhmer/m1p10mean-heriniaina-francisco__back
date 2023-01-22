@@ -2,6 +2,7 @@
 // ================= Importation Controller Back Office============================
 const reparationController = require('./src/controllers/reparationController');
 const diagnostiqueController = require('./src/controllers/diagnostiqueController');
+const userController = require('./src/controllers/userController');
 
 
 // ========================== Use redirection 
@@ -96,7 +97,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(new localStrategy(function (email, password, done) {
-  Userdb.findOne({ username: email })
+  Userdb.findOne({ username: email,status:true })
     .populate({
       path: 'role'
     }).exec((err, user) => {
@@ -151,12 +152,46 @@ app.post("/login", passport.authenticate("local", {
 }), function (req, res) {
 });
 
+//================== API Reset Password ===============
+
+app.put('/reset_password/:id/user',async(req,res)=>{
+
+    if(req.body.new_password == req.body.confirm_password){
+        const user = await Userdb.findById(req.params.id);
+        bcrypt.compare(req.body.last_password, user.password, function (err2, res2) {
+          if (err2) {
+              res.send({status:400,message:"Votre mot de passe précedent est incorrect"});
+          }
+          else if (res2 === false) {
+            res.send({ status:400,message: "Mot de passe incorrecte" });
+          }
+          else {
+            userController.reset_password(req.params.id,req.body.confirm_password).then((result)=>{
+                res.send(result);
+            }).catch((err)=>{
+                res.send(err);
+            });
+          }
+        });
+
+    
+    } else {
+      res.send({status:400,message:' Votre nouveau mot de passe est incorrect'});
+    }
+    
+});
 
 //================== API Reparation ===================
 
 app.post('/create/:id/reparation',reparationController.create);
 app.get('/accepter-la-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.update)
 app.put('/start-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.startReparation);
+app.get('/list-reparation',(req,res)=>{
+      reparationController.findAllReparationEnCour("63ca97231a809713932b5ff0").then((tmp)=>{
+      res.send(tmp);  
+      });
+      
+});
 //=================== API Diagnotique ==============================================
 app.put('/modif/:id/reparation-diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.update)
 app.post('/create/:id/reparation-diagnostique',diagnostiqueController.create);
@@ -173,9 +208,7 @@ app.get('/nouveau_responsable', connectEnsureLogin.ensureLoggedIn(),redirectionW
 
 //  2- Redirection Responsable Atelier
 app.get('/voiture_receptionner',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReceptionner);
-app.get('/reparation-en-cours/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReparationEnCour);
 app.get('/reparation-terminer',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReparationTerminer);
-app.get('/sortir-des-voitures',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureSortir);
 app.get('/diagnostic/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureDiagnostic);
 app.get('/etat-davancement/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.etatAvancementVoiture);
 

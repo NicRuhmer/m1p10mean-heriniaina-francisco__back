@@ -1,6 +1,23 @@
 
 
-    <div id="loading_page"></div>
+    <div id="loading_page" class="d-flex justify-content-center align-items-between">
+
+           <div class="modal fade show w-auto" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 999999999999; display:block;">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header d-flex justify-content-center">
+                        <img src="/logo/logo.png" width="60px"
+                                height="120px" class="img-fluid" alt="">
+                      </div>
+                      <div class="modal-body d-flex justify-content-center">
+                        <span class="text-center spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="text-center">Chargement...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+    </div>
     <footer class="navbar navbar-expand-lg bg-footer p-4 d-flex
       justify-content-center mt-3" style="background-color: white;"> copyright
       @2022</footer>
@@ -13,7 +30,22 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"></script>
    
-    <!--================================  IMPORTATION DATATABLE ======================================-->
+   <script
+      src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+ <!-- ==================== FONT =====================================-->
+    <script src="fonts/js/all.js"></script>
+    <script src="fonts/js/all.min.js"></script>
+    <script src="fonts/js/brands.js"></script>
+    <script src="fonts/js/brands.min.js"></script>
+    <script src="fonts/js/fontawesome.js"></script>
+    <script src="fonts/js/fontawesome.min.js"></script>
+    <script src="fonts/js/solid.js"></script>
+    <script src="fonts/js/solid.min.js"></script>
+    <script src="fonts/js/regular.js"></script>
+    <script src="fonts/js/regular.min.js"></script>
+
+     <!--================================  IMPORTATION DATATABLE ======================================-->
     <script type="text/javascript"
       src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/French.json"></script>
     <script type="text/javascript"
@@ -26,6 +58,39 @@
      <script src="/js/responsable/diagnostique.js"></script>
 
     <script>
+
+  const optionDataTable = {
+            "sProcessing": "Traitement en cours ...",
+            "sLengthMenu": "Afficher _MENU_ lignes",
+            "sZeroRecords": "Aucun résultat trouvé",
+            "sEmptyTable": "Aucune donnée disponible",
+            "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+            "sInfoEmpty": "Aucune ligne affichée",
+            "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+            "sInfoPostFix": "",
+            "sSearch": "Chercher:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Chargement...",
+            "oPaginate": {
+              "sFirst": "Premier", "sLast": "Dernier", "sNext": "Suivant", "sPrevious": "Précédent"
+            },
+            "oAria": {
+              "sSortAscending": ": Trier par ordre croissant", "sSortDescending": ": Trier par ordre décroissant"
+            },
+            url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/French.json",
+           
+            };
+      
+              $('#list_reparation').DataTable({
+                language: optionDataTable
+              });
+               $('#list_reparation_receptionner').DataTable({
+                language: optionDataTable
+              });
+              $('#list_reparation_enCour').DataTable({
+                language: optionDataTable
+              });
 
       function start(e){
         e.dataTransfer.effectAllowed="move";

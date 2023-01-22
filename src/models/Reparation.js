@@ -7,6 +7,10 @@ var ReparationSchema = new mongoose.Schema({
         ref:'voitures',
         require:true
     },
+    description:{
+        type:String
+    }
+    ,
     client:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'clients',

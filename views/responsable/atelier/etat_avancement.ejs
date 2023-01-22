@@ -34,8 +34,9 @@
 
     <div class="col-md-4">  
         <div class="card shadow-sm p-3 mb-1 bg-body rounded">
-                <h5>Estimation en cours:  60%(static)</h5>
-                       <h5>Estimation terminer:  100%(static)</h5>
+                <h6>Estimation à faire:  <%=task_pourcentage%>%</h6>
+                <h6>Estimation en cours:  <%=progress_pourcentage%>%</h6>
+                <h6>Estimation terminer:  <%=finish_pourcentage%>%</h6>
         </div>
     </div>
    
@@ -69,23 +70,12 @@
                              <%=tasks[id].description%>
                             </div>
                         </div>
-                        <hr>
+                    
                     </li>
 
                     <%}%>
 
-                    <!--<li class="list-group-item" id="2"  data-id="2" draggable="true">
-                        <div class="d-flex justify-content-between">
-                            <p>An second</p> <button>voir</button>
-                        </div>
-                        <hr>
-                    </li>
-                    <li class="list-group-item" id="3"  data-id="3" draggable="true">
-                        <div class="d-flex justify-content-between">
-                            <p>An three</p> <button>voir</button>
-                        </div>
-                        <hr>
-                    </li>-->
+              
                 </ul>
 
             </div>
@@ -104,7 +94,7 @@
                                 estimation:<%=progress[ids].duration+" heure"%> <br>
                                 quantité:<%=progress[ids].qte%>
                             </p> 
-                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=progress[ids]._ids%>" role="button" aria-expanded="false" aria-controls="coll<%=progress[ids]._ids%>">
+                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=progress[ids]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=progress[ids]._id%>">
                                 description
                               </a>
                         </div>
@@ -113,7 +103,7 @@
                              <%=progress[ids].description%>
                             </div>
                         </div>
-                        <hr>
+                       
                     </li>
 
                     <%}%>
@@ -136,7 +126,7 @@
                                 estimation:<%=finish[idz].duration+" heure"%> <br>
                                 quantité:<%=finish[idz].qte%>
                             </p> 
-                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=finish[idz]._idz%>" role="button" aria-expanded="false" aria-controls="coll<%=finish[idz]._idz%>">
+                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=finish[idz]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=finish[idz]._id%>">
                                 description
                               </a>
                         </div>
@@ -145,7 +135,7 @@
                              <%=finish[idz].description%>
                             </div>
                         </div>
-                        <hr>
+                      
                     </li>
 
                     <%}%>

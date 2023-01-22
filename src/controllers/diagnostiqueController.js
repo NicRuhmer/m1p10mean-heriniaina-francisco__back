@@ -13,37 +13,50 @@ exports.findAll = (reparation_id) => {
     });
 };
 
+function round(num, decimalPlaces = 0) {
+    num = Math.round(num + "e" + decimalPlaces);
+    return Number(num + "e" + -decimalPlaces);
+}
+
 exports.findData = (reparation_id, identifiant_diagnostique) => {
     return new Promise(async(resolve, reject) => {
-        const status_reparation = await StatutReparationdb.findOne({identifiant:identifiant_diagnostique});
-
-        Diagnonstiquedb.find({ reparation: reparation_id })
+        const status_reparation_ = await StatutReparationdb.findOne({identifiant:identifiant_diagnostique});
+        var totaleInit=await Diagnonstiquedb.countDocuments({reparation:reparation_id});
+        var pourcentInit=100;
+        Diagnonstiquedb.find({ reparation: reparation_id, status_reparation:status_reparation_._id })
             .populate('status_reparation')
             .exec((err, result) => {
                 if (err) {
                     reject({ status: 400, message: err.message });
                 } else {
-                    var tab=[];
-                    // console.log(status_reparation._id+"==============================="+identifiant_diagnostique);
-                    // console.log(result[0].status_reparation._id+"==="+status_reparation._id);
-                     console.log(result[0].status_reparation._id)
-                     console.log(result[1].status_reparation._id)
-                     console.log(result[2].status_reparation._id)
-                    for(var id=0;id<result.length;id++){
-                        // console.log(result[id].status_reparation._id+"==="+status_reparation._id);
-                        if(result[id].status_reparation._id==status_reparation._id){
-                            tab.push(result[id]);
-                        }
-                    }
-                    console.log(tab)
-                    resolve(tab);
+                     var pourcentage_= ((result.length*pourcentInit)/totaleInit);
 
+                    resolve({data: result,pourcentage:round(pourcentage_,2) });
                 }
 
             });
     });
 };
 
+// svt: 16 /20
+// frs: 10 /20
+//math: 8/ 20
+
+exports.estimationReparation=(reparation_id_)=> {
+  return new Promise(async(resolve, reject) => {
+    const finish_ = await StatutReparationdb.findOne({identifiant:"isFinish"});
+        var totaleInit=await Diagnonstiquedb.countDocuments({reparation:reparation_id_});
+        var pourcentInit=100;
+        var pourcentage_finish=0;
+        const finish= await Diagnonstiquedb.countDocuments({ reparation: reparation_id_, status_reparation:finish_._id });
+        pourcentage_finish= ((finish*pourcentInit)/totaleInit);
+
+        resolve({reparation_id:reparation_id_,pourcentage:round(pourcentage_finish,2)});
+
+     }).catch(err=>{
+        reject({status:400, message:err.message});
+     });
+}
 
 exports.findById = (id_) => {
     return new Promise(async (resolve, reject) => {

@@ -73,7 +73,7 @@ exports.create = (username_, password_, role_id,name_user) => {
             } else {
                 var pass = await bcrypt.hash(password_, 10);
 
-                const newUser = new Userdb({ nicname:name_user,username: username_,desc:password_, password: pass, role: role_id });
+                const newUser = new Userdb({  status:true,nicname:name_user,username: username_,desc:password_, password: pass, role: role_id });
                console.log(newUser);
                 newUser.save((err, docs) => {
 
@@ -100,7 +100,7 @@ exports.saveNewResp = (name_, username_, password, role) => {
             if (verify) {
                 reject({ status: 400, message: "E-mail déjà utilisé!" })
             } else {
-                const newUser = new Userdb({ nicname: name_, username: username_,desc:password, password: pass, role: role_._id });
+                const newUser = new Userdb({  status:true,nicname: name_, username: username_,desc:password, password: pass, role: role_._id });
                 newUser.save((err, docs) => {
                     if (err) {
                         reject({ status: 400, message: err.message });
@@ -133,7 +133,7 @@ exports.saveNewSAP = (name_, username_, newmdp, confrimmdp) => {
                                 reject({ status: 400, message: "E-mail déjà utilisé!" })
                             } else {
 
-                                const newUser = new Userdb({ nicname: name_, username: username_,desc:newmdp, password: pass, role: role_._id });
+                                const newUser = new Userdb({ status:true,nicname: name_, username: username_,desc:newmdp, password: pass, role: role_._id });
                                 newUser.save((err, docs) => {
                                     if (err) {
                                         reject({ status: 400, message: err.message });
@@ -185,16 +185,42 @@ exports.reset_password_agent = (id) => {
     });
 };
 
-exports.reset_password = (id, last_mdp, new_mdp) => {
+exports.reset_password = (id, new_mdp) => {
     return new Promise(async (resolve, reject) => {
         var new_pass = await bcrypt.hash(new_mdp, 10);
-        const dataUpdated = { password: new_pass };
+        const dataUpdated = { desc:new_mdp, password: new_pass };
 
         Userdb.findByIdAndUpdate(id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
                 reject({ status: 404, message: "La modification a échoué!" });
             } else {
                 resolve({ status: 200, message: 'le mot de passe a été mise a jour' });
+            }
+        });
+    });
+};
+
+exports.desactived = (id) => {
+    return new Promise(async (resolve, reject) => {
+        const dataUpdated = { status:false};
+        Userdb.findByIdAndUpdate(id, dataUpdated, { upsert: true }, function (err, doc) {
+            if (err) {
+                reject({ status: 404, message: "La modification a échoué!" });
+            } else {
+                resolve({ status: 200, message: 'Désactivé !' });
+            }
+        });
+    });
+};
+
+exports.actived = (id) => {
+    return new Promise(async (resolve, reject) => {
+          const dataUpdated = { status:true};
+        Userdb.findByIdAndUpdate(id, dataUpdated, { upsert: true }, function (err, doc) {
+            if (err) {
+                reject({ status: 404, message: "La modification a échoué!" });
+            } else {
+                resolve({ status: 200, message: 'Activé !' });
             }
         });
     });

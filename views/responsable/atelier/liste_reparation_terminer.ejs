@@ -11,16 +11,36 @@
                         <li class="breadcrumb-item active" aria-current="page">Liste</li>
                     </ol>
                 </nav>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
 
-                <table class="table table-striped">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+                <table class="table table-striped" id="list_reparation_enCour">
                     <thead class="bg-success text-white">
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Déposition</th>
                             <th scope="col">Sortie</th>
                             <th scope="col">Voiture</th>
                             <th scope="col">Matricule</th>
-                            <th scope="cool">N°série</th>
                             <th scope="col">Client</th>
                             <th scope="col">Estimation</th>
                             <th scope="cool">Montant</th>
@@ -29,7 +49,39 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                    <% for(var id=0;id<reparations.length;id++){%>
+                            <tr>
+                                <td><%=moment(reparations[id].data.createdAt)%></td>
+                                 <td>---(static)</td>
+                                <td><%=reparations[id].data.voiture.description%></td>
+                                <td><%=reparations[id].data.voiture.matricule%></td>
+                                <td> <div>
+                                        <p><%=reparations[id].data.voiture.client.name+" "+reparations[id].data.voiture.client.username%><br>
+                                            <%=reparations[id].data.voiture.client.email%> <br>
+                                            <%=reparations[id].data.voiture.client.contact%>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td><%=reparations[id].pourcentage%>%</td>
+                               <td>montant(static)</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success
+                                            dropdown-toggle"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Plus
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                             <li><a class="dropdown-item" href="/etat-davancement/<%=reparations[id].data._id%>">L'état d'avancement</a></li>
+                                             <li><a class="dropdown-item" href="#">Valider la sortie</a></li>
+                                            </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        <%}%>
+
+                        <!--<tr>
                             <td>1</td>
                             <td>12/11/2022</td>
                             <td>...</td>
@@ -58,6 +110,8 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">L'état d'avancement</a></li>
                                     <li><a class="dropdown-item" href="#">Valider la sortie</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Facture</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -97,7 +151,7 @@
                                 </ul>
                             </div>
                         </td>
-                        </tr>
+                        </tr>-->
                     </table>
                 </div>
             </div>

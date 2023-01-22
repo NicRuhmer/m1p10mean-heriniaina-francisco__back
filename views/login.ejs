@@ -2,6 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="logo/logo.png"/>
+
         <title>Connexion sur la Panel</title>
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
@@ -18,14 +22,22 @@
 
         <div class="container-fluid mt-5">
             <div class="row d-flex justify-content-center align-itmes-center">
+
+             
+
                 <div class="col-md-5">
+ 
+
                     <div class=" shadow p-3 mb-5 bg-body rounded"
                         id="form-new-spa">
-                        <h5>Connexion sur le panel d'adminisitrateur</h5>
+                     
                         <div class=" d-flex justify-content-center">
-                            <img src="/logo/Ostie_Logo_Color1.png" width="120px"
+                            
+                                      <img src="/logo/logo.png" width="120px"
                                 height="120px" class="img-fluidr" alt="">
+
                         </div>
+                         <h5 class="text-center">Connexion sur le panel d'adminisitrateur</h5>
                         <form action="/login" method="POST">
                             <div class="mb-3">
                                 <% if(error) { %>

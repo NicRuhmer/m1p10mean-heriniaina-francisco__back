@@ -23,6 +23,10 @@ var UserSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'roles',
         require:true
+    },
+     status:{
+        type:Boolean,
+        default:true
     }
 });
 
