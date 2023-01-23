@@ -27,7 +27,14 @@ var ReparationSchema = new mongoose.Schema({
      start:{
         type: Boolean,
         default:false
-    }
+    },
+    release_date:{
+        type: Date
+    },
+    facture:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'factures'
+    },
 });
 
 

@@ -126,10 +126,10 @@
         })
           .then(response => {
             $('#loading_page').css("display", "none");
-            if(response.status==400){
-                document.getElementById('estimation_task').innerHTML = response.pourcentage_task+"%";
-                document.getElementById('estimation_progress').innerHTML = response.pourcentage_progress+"%";
-                document.getElementById('estimation_finish').innerHTML = response.pourcentage_finish+"%";
+            if(response.status==200){
+                document.getElementById('estimation_task').innerHTML = response.pourcent_task+"%";
+                document.getElementById('estimation_progress').innerHTML = response.pourcent_progress+"%";
+                document.getElementById('estimation_finish').innerHTML = response.pourcent_finish+"%";
             } else {
               toastError(response.message);
             }
@@ -137,13 +137,13 @@
             toastError(err.message);
           });
           
-
         //e.currentTarget.addClassName=" border border-none";
         e.stopPropagation();
         return false;
       }
 
       function leave(e){
+        //==================== en mouvement asina css kely tena izy
        // e.currentTarget.addClassName=" border border-none";
       }
     </script>

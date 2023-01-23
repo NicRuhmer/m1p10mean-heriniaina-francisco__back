@@ -1,16 +1,19 @@
 var Reparationdb = require('../models/Reparation');
 var Employedb = require('../models/Employer');
+var Clientdb = require('../models/Client');
+var Voituredb = require('../models/Voiture');
 
 var diagnostiqueController = require('./diagnostiqueController');
+var authentificationMail = require('./AuthentificationMail');
 
 exports.findById = (id) => {
     return new Promise((resolve, reject) => {
         Reparationdb.findById(id)
-            .populate({ 
-                path: 'voiture', 
-                populate: { 
-                    path: 'client' 
-                } 
+            .populate({
+                path: 'voiture',
+                populate: {
+                    path: 'client'
+                }
             })
             .exec((err, result) => {
                 if (err) {
@@ -25,12 +28,12 @@ exports.findById = (id) => {
 
 exports.findAllReparationAttente = () => {
     return new Promise((resolve, reject) => {
-        Reparationdb.find({status:false})
-            .populate({ 
-                path: 'voiture', 
-                populate: { 
-                    path: 'client' 
-                } 
+        Reparationdb.find({ status: false })
+            .populate({
+                path: 'voiture',
+                populate: {
+                    path: 'client'
+                }
             })
             .exec((err, result) => {
                 if (err) {
@@ -44,22 +47,22 @@ exports.findAllReparationAttente = () => {
 };
 
 exports.findAllReparationReceptionner = (user_id) => {
-    return new Promise(async(resolve, reject) => {
-        const emp = await Employedb.findOne({user:user_id});
-      
-        Reparationdb.find({employe:emp._id})
-            .populate({ 
-                path: 'voiture', 
-                populate: { 
-                    path: 'client' 
-                } 
+    return new Promise(async (resolve, reject) => {
+        const emp = await Employedb.findOne({ user: user_id });
+
+        Reparationdb.find({ employe: emp._id })
+            .populate({
+                path: 'voiture',
+                populate: {
+                    path: 'client'
+                }
             })
             .exec((err, result) => {
                 if (err) {
                     console.log(err.message)
                     reject({ status: 400, message: err.message });
                 } else {
-                    
+
                     resolve(result);
                 }
             });
@@ -67,25 +70,25 @@ exports.findAllReparationReceptionner = (user_id) => {
 };
 
 exports.findAllReparationEnCour = (user_id) => {
-    return new Promise(async(resolve, reject) => {
-        const emp = await Employedb.findOne({user:user_id});
-      
-        Reparationdb.find({employe:emp._id,start:true})
-            .populate({ 
-                path: 'voiture', 
-                populate: { 
-                    path: 'client' 
-                } 
+    return new Promise(async (resolve, reject) => {
+        const emp = await Employedb.findOne({ user: user_id });
+
+        Reparationdb.find({ employe: emp._id, start: true })
+            .populate({
+                path: 'voiture',
+                populate: {
+                    path: 'client'
+                }
             })
             .exec(async (err, result) => {
                 if (err) {
                     console.log(err.message)
                     reject({ status: 400, message: err.message });
                 } else {
-                    var tab=[];
+                    var tab = [];
                     for (var i = 0; i < result.length; i++) {
                         const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
-                        tab.push({data:result[i], pourcentage:tmp.pourcentage});
+                        tab.push({ data: result[i], pourcentage: tmp.pourcentage });
                     }
                     resolve(tab);
                 }
@@ -97,10 +100,12 @@ exports.create = (req, res) => {
     const new_ = {
         voiture: req.body.voiture,
         client: req.params.id,
-        description:req.body.description,
-        employe:null,
+        description: req.body.description,
+        employe: null,
+        facture: null,
+        release_date: null,
         status: false,
-        start:false
+        start: false
     };
 
     if (new_.voiture != null && new_.client != null && new_.status != null) {
@@ -124,9 +129,11 @@ exports.update = async (req, res) => {
     const emp = await Employedb.findOne({ user: req.user._id });
     const dataUpdated = {
         employe: emp._id,
-         description:req.body.description,
+        description: req.body.description,
         status: true,
-        start:false
+        release_date: null,
+        facture: null,
+        start: false
     };
     if (emp._id != null && dataUpdated.status != null) {
         Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
@@ -141,10 +148,65 @@ exports.update = async (req, res) => {
     }
 };
 
-exports.startReparation = async (req, res) => {
-   
+
+exports.valider_sortir = (req, res) => {
     const dataUpdated = {
-        start:true
+        release_date: req.body.release_date,
+    };
+  
+    // if (dataUpdated.release_date != null) {
+        Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
+            if (err) {
+                res.send({ status: 404, message: "La modification a échoué!" });
+            } else {
+                Voituredb.findById(doc.voiture).then((vtre) => {
+                 
+                    Clientdb.findById(vtre.client).then( (cli) => {
+                        console.log("=================tonga================");
+            
+                         authentificationMail.sendMailSortirVehicule(cli.email, cli.name + " " + cli.username, "Sortir du voiture le " + dataUpdated.release_date, vtre.matricule, "http://localhost:3000/liste-reparation/" + "terminer", dataUpdated.release_date)
+                            .then((val) => {
+                                console.log(val);
+                                res.send(val);
+                            }).catch((errS) => {
+                                res.send(errS);
+                            });
+
+                    }).catch((er) => {
+                        console.log(er.message)
+                        res.send({ status: 400, message: "Une erreur s'est produit lors du retournement du donnée client" });
+                    });
+                }).catch((erV) => {
+                    res.send({ status: 400, message: erV.message });
+                });
+            }
+        });
+    // } else {
+    //     res.send({ status: 400, message: " champs invalide !" });
+    // }
+};
+
+exports.valider_facture = (req, res) => {
+    const dataUpdated = {
+        facture: req.body.facture,
+    };
+    if (dataUpdated.facture != null) {
+        Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
+            if (err) {
+                res.send({ status: 404, message: "La modification a échoué!" });
+            } else {
+                res.send({ status: 200, message: 'Facture validé!' });
+            }
+        });
+    } else {
+        res.send({ status: 400, message: " champs invalide !" });
+    }
+};
+
+exports.startReparation = async (req, res) => {
+
+    const dataUpdated = {
+        start: true
     };
     if (dataUpdated.start == true) {
         Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {

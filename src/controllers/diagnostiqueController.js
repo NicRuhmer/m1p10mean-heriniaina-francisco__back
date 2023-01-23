@@ -162,7 +162,7 @@ exports.updateTask = async (index_, req, res) => {
                     const pourcent_progress_ = await $this.getPourcentageProgress(doc.reparation, 'isProgress');
                     const pourcent_finish_ = await $this.getPourcentageProgress(doc.reparation, 'isFinish');
 
-                    res.send({ pourcent_task: pourcent_task_, pourcent_progress: pourcent_progress_, pourcent_finish: pourcent_finish_, status: 200, message: 'information a été modifié avec success!' });
+                    res.send({ pourcent_task: pourcent_task_.pourcentage, pourcent_progress: pourcent_progress_.pourcentage, pourcent_finish: pourcent_finish_.pourcentage, status: 200, message: 'information a été modifié avec success!' });
                 }
             });
         } else {

@@ -191,11 +191,22 @@ app.get('/list-reparation',(req,res)=>{
       });
       
 });
+
+app.post('/valide/:id/sortit-vehicule',reparationController.valider_sortir);
+app.post('/valide/:id/facture',connectEnsureLogin.ensureLoggedIn(),reparationController.valider_facture);
 //=================== API Diagnotique ==============================================
 app.put('/modif/:id/reparation-diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.update)
 app.post('/create/:id/reparation-diagnostique',diagnostiqueController.create);
 app.delete('/delete/:id/reparation-diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.delete)
 app.post('/progress-reparation-diagnostiques',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.isProgress);
+
+
+
+
+
+
+
+
 //=================== Redirection Page Web ==========================
 
 //  1- Redirection Super Admin

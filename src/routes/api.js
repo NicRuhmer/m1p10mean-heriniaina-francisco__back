@@ -51,6 +51,7 @@ route.get('/form-new-client', (req, res) => {
     res.render('client/new_client');
 });
 
+
 route.post('/send-mail-teste', (req, res) => {
     var transport = nodemailer.createTransport({
         service: 'gmail',
