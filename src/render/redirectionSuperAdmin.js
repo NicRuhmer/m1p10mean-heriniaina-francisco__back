@@ -11,7 +11,7 @@ exports.new_spa = (req, res) => {
     res.render('spa/new_sap');
 };
 exports.reset_password = (req, res) => {
-    res.render('spa/reset_password_spa', { moment: moment, role: req.user.role.role, title: 'Changer le mot de passe', email: req.user.username });
+    res.render('spa/reset_password_spa', { moment: moment,user_id:req.user._id, role: req.user.role.role, title: 'Changer le mot de passe', email: req.user.username });
 }
 exports.listResponsable = (req, res) => {
     res.render('spa/liste_responsable', { role: req.user.role.role, moment: moment, title: 'Gestion Panel- liste responsable' });

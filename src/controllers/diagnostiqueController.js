@@ -91,8 +91,10 @@ exports.create = async (req, res) => {
                     console.log(err.message);
                     res.send({ status: 400, message: err.message });
                 } else {
-                    console.log('Success !');
-                    res.send({ status: 200, data: docs, message: "Success !" });
+                    this.findAll(req.params.id).then((result)=>{
+                        res.send({ status: 200, data: result, message: "Success !" });
+                    });
+                   
                 }
             });
         } else {

@@ -278,6 +278,47 @@ function desactived(id_) {
         });
 }
 
+
+
+$('#reset_password').click(function () {
+    const id = $(this).data("id");
+    $(this).attr('disabled', true);
+    $(this).html("Modification en cour ...");
+    const reponse_ = {
+        last_password: $('#last_password').val(),
+        new_password: $('#new_password').val(),
+        confirm_password: $('#confirm_password').val()
+    };
+    const url = `/reset_password/${id}/user`;
+    fetch(url, {
+        method: 'put',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reponse_)
+    })
+        .then(res => {
+            if (res.ok) return res.json()
+        })
+        .then(response => {
+            $(this).attr('disabled', false);
+            $(this).html("Modifier le mot de passe");
+
+            $('#loading_page').css("display", "none");
+            if (response.status == 200) {
+                toastSuccess(response.message);
+            }
+            if (response.status == 400) {
+                toastError(response.message);
+            }
+        }).catch(err => {
+            $(this).attr('disabled', false);
+            $(this).html("Modifier le mot de passe");
+
+            $('#loading_page').css("display", "none");
+            toastError(err.message);
+        });
+
+});
+
 function actived(id_) {
     $('#loading_page').css("display", "block");
     const reponse_ = {};
@@ -301,9 +342,6 @@ function actived(id_) {
             if (response.status == 400) {
                 toastError(response.message);
             }
-
-
-
         }).catch(err => {
             $('#loading_page').css("display", "none");
             toastError(err.message);

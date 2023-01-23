@@ -173,7 +173,6 @@ app.put('/reset_password/:id/user',async(req,res)=>{
             });
           }
         });
-
     
     } else {
       res.send({status:400,message:' Votre nouveau mot de passe est incorrect'});
