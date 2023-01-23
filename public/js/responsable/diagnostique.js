@@ -20,6 +20,7 @@ $(document).ready(function () {
 
 
 $('#modif_diagnostique').click(function () {
+    $('#loading_page').css("display", "block");
     const diag_id = $(this).data("id");
     document.getElementById('message_update_error').innerHTML = "";
     document.getElementById("message_update_success").innerHTML = "";
@@ -45,15 +46,19 @@ $('#modif_diagnostique').click(function () {
         })
         .then(response => {
             if (response.status == 200) {
-                document.getElementById("message_update_success").innerHTML = response.message;
+                $('#loading_page').css("display", "none");
+                document.location.reload();
+          //      document.getElementById("message_update_success").innerHTML = response.message;
             }
             if (response.status == 400) {
-                document.getElementById("message_update_error").innerHTML = response.message;
+                toastError(response.message);
+             //   document.getElementById("message_update_error").innerHTML = response.message;
             }
             $(this).attr('disabled', false);
             $(this).html("Modifier");
         }).catch(err => {
-            document.getElementById("message_update_error").innerHTML = err.message;
+            toastError(err.message);
+            //document.getElementById("message_update_error").innerHTML = err.message;
             $(this).attr('disabled', false);
             $(this).html("Modifier");
         });
@@ -121,6 +126,7 @@ $('#submit_diagnostique').click(function () {
         })
         .then(response => {
             $('#loading_page').css("display", "none");
+            document.location.reload();
             if (response.status == 200) {
                 document.getElementById("message_success").innerHTML = response.message;
             }
@@ -128,9 +134,9 @@ $('#submit_diagnostique').click(function () {
                 document.getElementById("message_error").innerHTML = response.message;
                 // list_diagnostique(response.data);
             }
-            setInterval(() => {
+            /*setInterval(() => {
                 document.location.reload();
-            }, 2000);
+            }, 2000);*/
             $(this).attr('disabled', false);
             $(this).html("Ajout");
         }).catch(err => {
@@ -145,6 +151,7 @@ $('#submit_diagnostique').click(function () {
 
 function supp_diagnostique(diag_id) {
     const reponse_ = {};
+    $('#loading_page').css("display", "block");
     $(".delete_diagnostique").attr('disabled', true);
     fetch('/delete/' + diag_id + '/reparation-diagnostique', {
         method: 'delete',
@@ -155,18 +162,22 @@ function supp_diagnostique(diag_id) {
             if (res.ok) return res.json()
         })
         .then(response => {
+            $('#loading_page').css("display", "none");
             if (response.status == 200) {
-                alert(response.message);
+               /* setInterval(() => {
+                    document.location.reload();
+                }, 2000);*/
+            //    alert(response.message);
                 // toastSuccess(response.message);
             }
             if (response.status == 400) {
-                alert(response.message);
-                // toastError(response.message);
+               
+                 toastError(response.message);
             }
             $(".delete_diagnostique").attr('disabled', false);
         }).catch(err => {
-            alert(err.message);
-            // toastError(err.message);
+           
+             toastError(err.message);
             $(".delete_diagnostique").attr('disabled', false);
         });
 }

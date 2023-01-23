@@ -37,7 +37,14 @@
                 <div class="card shadow-sm p-3 mb-5 bg-body rounded">
                     <div class="card-body">
 
-                        <button class="btn btn-primary" id="start_reparation" data-id="<%=detail._id%>">Lancez le projet</button>
+                        <button class="btn btn-primary" id="start_reparation" data-id="<%=detail._id%>">
+                            <%if(detail.start==true){%>
+                                Proje en cours
+                            <%} else {%>
+                                Lancez le projet
+                            <%}%>
+                           
+                        </button>
                         <h5 class="card-title">A réparer</h5>
 
                         <table class="table mt-5" >
@@ -133,7 +140,7 @@
                                           </div>
                                           <div class="modal-footer d-flex justify-content-between">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" id="modif_diagnostique" data-id="<%=diagnostiques[id]._id%>" class="btn btn-primary">Modifier</button>
+                                            <button type="button" id="modif_diagnostique" data-bs-dismiss="modal" data-id="<%=diagnostiques[id]._id%>" class="btn btn-primary">Modifier</button>
                                           </div>
                                         </div>
                                       </div>

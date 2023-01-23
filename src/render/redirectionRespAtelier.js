@@ -7,11 +7,11 @@ const diagnostiqueController = require('../controllers/diagnostiqueController');
 
 exports.voitureReceptionner = async(req, res) => {
     const repararation_ = await reparationController.findAllReparationReceptionner(req.user._id);
-    res.render('responsable/atelier/liste_voiture_receptionner', { role: req.user.role.role, moment: moment,receptionners:repararation_, title: 'Gestion Panel- voitures réceptionnners' });
+    res.render('responsable/atelier/liste_voiture_receptionner', { role: req.user.role.role, moment: moment,receptionners:repararation_, title: 'Gestion Panel- voitures-réceptionnners' });
 };
 exports.voitureReparationTerminer = async(req, res) => {
       const reparations_ = await reparationController.findAllReparationEnCour(req.user._id);
-    res.render('responsable/atelier/liste_reparation_terminer', { reparations:reparations_,role: req.user.role.role, moment: moment, title: 'Gestion Panel- réparation terminer' });
+    res.render('responsable/atelier/liste_reparation_terminer', { reparations:reparations_,role: req.user.role.role, moment: moment, title: 'Gestion Panel- réparation-terminer' });
 };
 
 exports.voitureDiagnostic = async(req,res)=>{

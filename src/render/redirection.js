@@ -30,7 +30,7 @@ exports.redirectPageClient = async(role_, res) => {
 
 exports.redirectPageRespAtelier = async(role_, res) => {
     const reparations_ = await reparationController.findAllReparationAttente();
-   res.render('responsable/atelier/index', { role: role_, moment: moment,reparations:reparations_, title: 'Gestion Panel- reéception des voitures' });
+   res.render('responsable/atelier/index', { role: role_, moment: moment,reparations:reparations_, title: 'Gestion Panel-réception-des-voitures' });
 };
 
 exports.redirectPageRespFinancier = (role_, res) => {

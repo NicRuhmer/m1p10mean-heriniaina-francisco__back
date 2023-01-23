@@ -19,43 +19,55 @@ function round(num, decimalPlaces = 0) {
 }
 
 exports.findData = (reparation_id, identifiant_diagnostique) => {
-    return new Promise(async(resolve, reject) => {
-        const status_reparation_ = await StatutReparationdb.findOne({identifiant:identifiant_diagnostique});
-        var totaleInit=await Diagnonstiquedb.countDocuments({reparation:reparation_id});
-        var pourcentInit=100;
-        Diagnonstiquedb.find({ reparation: reparation_id, status_reparation:status_reparation_._id })
+    return new Promise(async (resolve, reject) => {
+        const status_reparation_ = await StatutReparationdb.findOne({ identifiant: identifiant_diagnostique });
+        var totaleInit = await Diagnonstiquedb.countDocuments({ reparation: reparation_id });
+        var pourcentInit = 100;
+        Diagnonstiquedb.find({ reparation: reparation_id, status_reparation: status_reparation_._id })
             .populate('status_reparation')
             .exec((err, result) => {
                 if (err) {
                     reject({ status: 400, message: err.message });
                 } else {
-                     var pourcentage_= ((result.length*pourcentInit)/totaleInit);
+                    var pourcentage_ = ((result.length * pourcentInit) / totaleInit);
 
-                    resolve({data: result,pourcentage:round(pourcentage_,2) });
+                    resolve({ data: result, pourcentage: round(pourcentage_, 2) });
                 }
 
             });
     });
 };
 
-// svt: 16 /20
-// frs: 10 /20
-//math: 8/ 20
+exports.getPourcentageProgress = (reparation_id, identifiant_diagnostique) => {
+    return new Promise(async (resolve, reject) => {
+        const status_reparation_ = await StatutReparationdb.findOne({ identifiant: identifiant_diagnostique });
+        var totaleInit = await Diagnonstiquedb.countDocuments({ reparation: reparation_id });
+        var pourcentInit = 100;
+        Diagnonstiquedb.find({ reparation: reparation_id, status_reparation: status_reparation_._id })
+            .then((result) => {
+                var pourcentage_ = ((result.length * pourcentInit) / totaleInit);
+                resolve({ pourcentage: round(pourcentage_, 2) });
 
-exports.estimationReparation=(reparation_id_)=> {
-  return new Promise(async(resolve, reject) => {
-    const finish_ = await StatutReparationdb.findOne({identifiant:"isFinish"});
-        var totaleInit=await Diagnonstiquedb.countDocuments({reparation:reparation_id_});
-        var pourcentInit=100;
-        var pourcentage_finish=0;
-        const finish= await Diagnonstiquedb.countDocuments({ reparation: reparation_id_, status_reparation:finish_._id });
-        pourcentage_finish= ((finish*pourcentInit)/totaleInit);
+            }).catch((err) => {
+                reject({ status: 400, message: err.message });
+            });
+    });
+};
 
-        resolve({reparation_id:reparation_id_,pourcentage:round(pourcentage_finish,2)});
+exports.estimationReparation = (reparation_id_) => {
+    return new Promise(async (resolve, reject) => {
+        const finish_ = await StatutReparationdb.findOne({ identifiant: "isFinish" });
+        var totaleInit = await Diagnonstiquedb.countDocuments({ reparation: reparation_id_ });
+        var pourcentInit = 100;
+        var pourcentage_finish = 0;
+        const finish = await Diagnonstiquedb.countDocuments({ reparation: reparation_id_, status_reparation: finish_._id });
+        pourcentage_finish = ((finish * pourcentInit) / totaleInit);
 
-     }).catch(err=>{
-        reject({status:400, message:err.message});
-     });
+        resolve({ reparation_id: reparation_id_, pourcentage: round(pourcentage_finish, 2) });
+
+    }).catch(err => {
+        reject({ status: 400, message: err.message });
+    });
 }
 
 exports.findById = (id_) => {
@@ -91,10 +103,10 @@ exports.create = async (req, res) => {
                     console.log(err.message);
                     res.send({ status: 400, message: err.message });
                 } else {
-                    this.findAll(req.params.id).then((result)=>{
+                    this.findAll(req.params.id).then((result) => {
                         res.send({ status: 200, data: result, message: "Success !" });
                     });
-                   
+
                 }
             });
         } else {
@@ -118,7 +130,7 @@ exports.update = (req, res) => {
     if (dataUpdated.title != null && dataUpdated.qte != null && dataUpdated.pu != null && dataUpdated.duration != null) {
         Diagnonstiquedb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
-                res.send({ status: 404, message: "La modification a échoué!" });
+                res.send({ status: 400, message: "La modification a échoué!" });
             } else {
                 res.send({ status: 200, message: 'information a été modifié avec success!' });
             }
@@ -132,20 +144,25 @@ exports.delete = (req, res) => {
     Diagnonstiquedb.findByIdAndDelete(req.params.id).then((result) => {
         res.send({ status: 200, message: 'Suppression terminé !' })
     }).catch((err) => {
-        res.send({ status: 404, message: err.message });
+        res.send({ status: 400, message: err.message });
     });
 };
 
-exports.updateTask = async (index_, req,res) => {
+exports.updateTask = async (index_, req, res) => {
+    var $this = this;
     const status = await StatutReparationdb.findOne({ identifiant: index_ });
     if (status != null) {
         const dataUpdated = { status_reparation: status._id };
         if (dataUpdated.status_reparation != null) {
-            Diagnonstiquedb.findByIdAndUpdate(req.body.diagnostique, dataUpdated, function (err, doc) {
+            Diagnonstiquedb.findByIdAndUpdate(req.body.diagnostique, dataUpdated, async function (err, doc) {
                 if (err) {
-                    res.send({ status: 404, message: "La modification a échoué!" });
+                    res.send({ status: 400, message: "La modification a échoué!" });
                 } else {
-                    res.send({ status: 200, message: 'information a été modifié avec success!' });
+                    const pourcent_task_ = await $this.getPourcentageProgress(doc.reparation, 'isTask');
+                    const pourcent_progress_ = await $this.getPourcentageProgress(doc.reparation, 'isProgress');
+                    const pourcent_finish_ = await $this.getPourcentageProgress(doc.reparation, 'isFinish');
+
+                    res.send({ pourcent_task: pourcent_task_, pourcent_progress: pourcent_progress_, pourcent_finish: pourcent_finish_, status: 200, message: 'information a été modifié avec success!' });
                 }
             });
         } else {
@@ -159,17 +176,17 @@ exports.updateTask = async (index_, req,res) => {
 };
 
 exports.isProgress = (req, res) => {
-  
+
     if (req.body.diagnostique != null && req.body.progress != null) {
 
         if (req.body.progress == "isTask") {
-            this.updateTask("isTask",req, res);
+            this.updateTask("isTask", req, res);
         }
         else if (req.body.progress == "isProgress") {
-            this.updateTask("isProgress", req,res);
+            this.updateTask("isProgress", req, res);
         }
         else if (req.body.progress == "isFinish") {
-            this.updateTask("isFinish", req,res);
+            this.updateTask("isFinish", req, res);
         }
         else {
             res.send({ status: 400, message: ' erreur lors de retournement des données. Progress not exist: ' + req.body.progress });
