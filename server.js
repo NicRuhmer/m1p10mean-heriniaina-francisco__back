@@ -205,6 +205,7 @@ app.get('/8767545233123456787654SDFGKJXSgvgdey53636', redirectionWebSuperAdmin.n
 app.get('/reset_password/986874R234657898ZZ54545', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.reset_password);
 app.get('/liste_responsable', connectEnsureLogin.ensureLoggedIn(), redirectionWebSuperAdmin.listResponsable);
 app.get('/nouveau_responsable', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.nouveauResponsable);
+app.get('/modification/equipe/:id', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.modificationResponsable);
 
 //  2- Redirection Responsable Atelier
 app.get('/voiture_receptionner',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReceptionner);

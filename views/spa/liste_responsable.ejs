@@ -24,29 +24,57 @@
                     </thead>
                     <tbody>
                         <%for(var i=0; i<employes.length;i++){%>
-                        <tr>
-                            <td><%=employes[i].user.role.description%></td>
-                            <td><%=employes[i].name%></td>
-                            <td><%=employes[i].email%></td>
-                            <td><%=employes[i].contact%></td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-warning
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Désactiver/Activer</a></li>
-                                        <li><a class="dropdown-item" href="#">Modifier</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger"
-                                                href="#">Rétiré</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
+
+                            <%if(employes[i].user.status==false){%>
+                                <tr>
+                                    <td class="text-danger"><%=employes[i].user.role.description%></td>
+                                    <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].name%></a> </td>
+                                    <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].email%></a> </td></td>
+                                    <td class="text-danger"><%=employes[i].contact%></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-warning
+                                                dropdown-toggle"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                Plus
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" onclick='actived(<%=JSON.stringify(employes[i].user._id)%>)' href="#">Activer</a></li>
+                                                <li><a class="dropdown-item" href="/modification/equipe/<%=employes[i]._id%>">Modifier</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger"
+                                                        href="#">Rétiré</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <%} else {%>
+                                <tr>
+                                    <td><%=employes[i].user.role.description%></td>
+                                    <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].name%></a> </td>
+                                    <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].email%></a> </td></td>
+                                    <td><%=employes[i].contact%></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-warning
+                                                dropdown-toggle"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                Plus
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" onclick='desactived(<%=JSON.stringify(employes[i].user._id)%>)' href="#">Désactiver</a></li>
+                                                <li><a class="dropdown-item" href="/modification/<%=employes[i]._id%>/equipe">Modifier</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger"
+                                                        href="#">Rétiré</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <%}%>
+                        
                         <%}%>
                         
                         <!--<tr>

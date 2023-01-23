@@ -6,6 +6,7 @@ moment.suppressDeprecationWarnings = true;
 var Roledb = require('../models/Role');
 var Userdb = require('../models/User');
 var cRole = require('../controllers/roleController');
+var cEmployer = require('../controllers/EmployerController');
 exports.new_spa = (req, res) => {
     res.render('spa/new_sap');
 };
@@ -17,7 +18,12 @@ exports.listResponsable = (req, res) => {
 };
 exports.nouveauResponsable = (req, res) => {
     cRole.listRoleResponsable().then((data)=>{
-        res.render('spa/nouveau_responsable', { role: req.user.role.role, moment: moment, title: 'Gestion Panel- nouveau responsable', roles:data });
+        res.render('spa/nouveau_responsable', { role: req.user.role.role, moment: moment, title: 'Gestion Panel-Nouveau', roles:data });
+    })
+ };
 
+ exports.modificationResponsable = (req, res) => {
+    cEmployer.findById(req.params.id).then((data)=>{
+        res.render('spa/modification_responsable', { detail:data,role: req.user.role.role, moment: moment, title: 'Gestion Panel-Modification' });
     })
  };

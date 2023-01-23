@@ -97,7 +97,7 @@ exports.new_resp = (req, res) => {
 
 exports.update = async (req,res) => {
    
-    const emp = await Employerdb.findById(req.body.employe);
+    const emp = await Employerdb.findById(req.params.id);
         const dataUpdated = {
             name: req.body.nicname,
             contact: req.body.contact,
@@ -107,11 +107,18 @@ exports.update = async (req,res) => {
         };
         cUser.update(emp.user,req.body.nicname,req.body.username).then((result)=>{
             if(result!=null){
-                Employerdb.findByIdAndUpdate(req.body.employe, dataUpdated, { upsert: true }, function (err, doc) {
+                Employerdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, async function (err, doc) {
                     if (err) {
-                        reject({ status: 404, message: "La modification a échoué!" });
+                        res.send({ status: 400, message: "La modification a échoué!" });
                     } else {
-                        resolve({ status: 200, message: 'information a été modifié avec success!' });
+                        Userdb.findByIdAndUpdate(emp.user, {nicname:dataUpdated.name,username:dataUpdated.email}, { upsert: true }, function (err2, doc2){
+                                if(err2){
+                                    res.send({ status: 400, message: err2.message });
+                                } else {
+                                    res.send({ status: 200, message: 'information a été modifié avec success!' });
+                                }
+                        });
+                      
                     }
                 });
             }

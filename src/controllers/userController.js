@@ -74,11 +74,9 @@ exports.create = (username_, password_, role_id,name_user) => {
                 var pass = await bcrypt.hash(password_, 10);
 
                 const newUser = new Userdb({  status:true,nicname:name_user,username: username_,desc:password_, password: pass, role: role_id });
-               console.log(newUser);
                 newUser.save((err, docs) => {
 
                     if (err) {
-                        console.log(err.message);
                         reject({ status: 400, message: err.message });
                     } else {
                         resolve({ status: 200, _id: docs._id, message: "Success !" });
@@ -205,6 +203,7 @@ exports.desactived = (id) => {
         const dataUpdated = { status:false};
         Userdb.findByIdAndUpdate(id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
+                console.log(err.message);
                 reject({ status: 404, message: "La modification a échoué!" });
             } else {
                 resolve({ status: 200, message: 'Désactivé !' });
@@ -218,6 +217,7 @@ exports.actived = (id) => {
           const dataUpdated = { status:true};
         Userdb.findByIdAndUpdate(id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
+                console.log(err.message);
                 reject({ status: 404, message: "La modification a échoué!" });
             } else {
                 resolve({ status: 200, message: 'Activé !' });

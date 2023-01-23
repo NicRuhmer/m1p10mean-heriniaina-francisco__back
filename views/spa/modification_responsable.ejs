@@ -1,0 +1,102 @@
+<%- include('../includes/header_admin') %>
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Responsable</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><%=detail.name%>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-5">
+
+                </nav>
+
+
+                <div class=" shadow p-3 mb-5 bg-body rounded" >
+                    <h5>Modification Responsable</h5>
+                   
+                    <id="form-new-resp">
+                        
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1"
+                                class="form-label">Nom Complet<span
+                                    class="text-danger">*</span></label>
+                            <input type="text" required class="form-control"
+                                id="named" name="named" value="<%=detail.name%>"
+                                placeholder="Nom complet">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1"
+                                        class="form-label">Email <span
+                                            class="text-danger">*</span></label>
+                                    <input type="Email" class="form-control"
+                                        id="emaild" required value="<%=detail.email%>"
+                                        placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1"
+                                        class="form-label">Contact <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control"
+                                        id="contactd" name="contac" required value="<%=detail.contact%>"
+                                        placeholder="Télephone">
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1"
+                                class="form-label">Adresse <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                id="adressed" name="adressed" required value="<%=detail.adresse%>"
+                                placeholder="Adresse">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1"
+                                        class="form-label">Salaire Net (Ar) <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number" class="form-control"
+                                        id="salaired" value="<%=detail.salaire%>" min="0" name="salaired" required
+                                        placeholder="Salaire Net">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!--<div class="mb-3">
+                                    <label for="exampleFormControlInput1"
+                                        class="form-label">Mot de passe <span
+                                            class="text-danger">*</span></label>
+                                    <input type="password" class="form-control"
+                                        id="password"  name="password" required
+                                        placeholder="Nouveau mot de passe">
+                                        <span class="text-danger" id="password_error"></span>
+                                </div>-->
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 d-flex justify-content-center">
+                            <button type="button" data-id="<%=detail._id%>" class="btn btn-success "
+                                id="submit_update_resp">Modifier</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <%- include('../includes/footer_admin') %>

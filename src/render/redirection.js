@@ -18,7 +18,7 @@ exports.loginRoutes = (req, res) => {
 
 exports.redirectPageSPA = async(role_, res) => {
      employeController.findAll().then((empl)=>{
-        res.render('index', { role: role_, moment: moment, employes: empl, title: 'Gestion Panel- Administrateur' });
+        res.render('index', { role: role_, moment: moment, employes: empl, title: 'Gestion Panel-Responsable' });
      });
     
 };
