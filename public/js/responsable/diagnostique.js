@@ -126,8 +126,11 @@ $('#submit_diagnostique').click(function () {
             }
             if (response.status == 400) {
                 document.getElementById("message_error").innerHTML = response.message;
-                list_diagnostique(response.data);
+                // list_diagnostique(response.data);
             }
+            setInterval(() => {
+                document.location.reload();
+            }, 2000);
             $(this).attr('disabled', false);
             $(this).html("Ajout");
         }).catch(err => {
