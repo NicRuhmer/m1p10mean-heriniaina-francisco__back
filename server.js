@@ -73,7 +73,7 @@ app.use('/logo', express.static("public/logo"));
 app.use('/js', express.static("public/js"));
 app.use('/css', express.static("public/css"));
 app.use('/scss', express.static("public/scss"));
-
+app.use('/fonts', express.static("public/fonts"));
 // ================================ IMPORTATION =========================
 // Use connection Database
 const connectDB = require('./src/database/connection');
