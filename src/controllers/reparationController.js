@@ -178,6 +178,7 @@ exports.valider_sortir = (req, res) => {
             }
         });
   
+
 };
 
 exports.valider_facture = (req, res) => {
