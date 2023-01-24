@@ -34,7 +34,7 @@ exports.redirectPageRespAtelier = async(role_, res) => {
 };
 
 exports.redirectPageRespFinancier = (role_, res) => {
-
+    res.render('responsable/facture/nouveau_facture', { role: role_, moment: moment, title: 'Gestion Panel-creation-facture' });
 };
 
 exports.getData = (req, res) => {

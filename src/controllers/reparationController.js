@@ -6,6 +6,31 @@ var Voituredb = require('../models/Voiture');
 var diagnostiqueController = require('./diagnostiqueController');
 var authentificationMail = require('./AuthentificationMail');
 
+exports.findAllReparationEnCourFinancier = () => {
+    return new Promise((resolve, reject) => {
+        
+        Reparationdb.find({employe:{$ne:null}})
+            .populate({
+                path: 'voiture',
+                populate: {
+                    path: 'client'
+                }
+            })
+            .populate({
+                path:'employe'
+            })
+            .exec((err, result) => {
+                if (err) {
+                    console.log(err.message)
+                    reject({ status: 400, message: err.message });
+                } else {
+
+                    resolve(result);
+                }
+            });
+    });
+};
+
 exports.findById = (id) => {
     return new Promise((resolve, reject) => {
         Reparationdb.findById(id)
@@ -14,6 +39,9 @@ exports.findById = (id) => {
                 populate: {
                     path: 'client'
                 }
+            })
+            .populate({
+                path:'employe'
             })
             .exec((err, result) => {
                 if (err) {
@@ -57,6 +85,9 @@ exports.findAllReparationReceptionner = (user_id) => {
                     path: 'client'
                 }
             })
+            .populate({
+                path:'employe'
+            })
             .exec((err, result) => {
                 if (err) {
                     console.log(err.message)
@@ -79,6 +110,9 @@ exports.findAllReparationEnCour = (user_id) => {
                 populate: {
                     path: 'client'
                 }
+            })
+            .populate({
+                path:'employe'
             })
             .exec(async (err, result) => {
                 if (err) {
@@ -177,8 +211,6 @@ exports.valider_sortir = (req, res) => {
                 });
             }
         });
-  
-
 };
 
 exports.valider_facture = (req, res) => {

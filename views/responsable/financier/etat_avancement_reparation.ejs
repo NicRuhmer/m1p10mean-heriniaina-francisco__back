@@ -1,0 +1,145 @@
+<%- include('../../includes/header_responsable_financier') %>
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Voiture
+                                réceptionner</a></li>
+                        <li class="breadcrumb-item"><a href="/"><%=detail.voiture.description%></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">État
+                            d'avancement</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+
+  <div class="row">
+    <div class="col-md-4">  
+          <div class="card shadow-sm p-3 mb-1 bg-body rounded">
+                <h5>Vehicule:  <%=detail.voiture.description%></h5>
+                <h5>Matricule:  <%=detail.voiture.matricule%></h5>
+          </div>
+    </div>
+     <div class="col-md-4">  
+          <div class="card shadow-sm p-3 mb-1 bg-body rounded">
+                 <h5>Client:  <%=detail.voiture.client.name+" "+detail.voiture.client.username%></h5>
+                <h5>email:  <%=detail.voiture.client.email%></h5>
+        </div>
+    </div>
+
+    <div class="col-md-4">  
+        <div class="card shadow-sm p-3 mb-1 bg-body rounded">
+                <h6>Estimation à faire:  <span id="estimation_task"><%=task_pourcentage%>%</span></h6>
+                <h6>Estimation en cours: <span id="estimation_progress"><%=progress_pourcentage%>%</span></h6>
+                <h6>Estimation terminer: <span id="estimation_finish"><%=finish_pourcentage%>%</span></h6>
+        </div>
+    </div>
+   
+  </div>
+
+
+        <div class="row">
+            <div class="col-md-4 card p-0">
+
+                <div class="card-header px-2">
+                    À Faire
+                </div>
+                <ul class="list-group list-group-flush px-1">
+
+                    <%for(var id=0;id<tasks.length;id++){%>
+
+                    <li class="list-group-item"  draggable="true" id="<%=tasks[id]._id%>" data-id="<%=tasks[id]._id%>" >
+                        <div class="d-flex justify-content-between">
+                            <p><%=tasks[id].title%> <br>
+                                estimation:<%=tasks[id].duration+" heure"%> <br>
+                                quantité:<%=tasks[id].qte%>
+                            </p> 
+                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=tasks[id]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=tasks[id]._id%>">
+                                description
+                              </a>
+                        </div>
+                        <div class="collapse" id="coll<%=tasks[id]._id%>">
+                            <div class=" card-body">
+                             <%=tasks[id].description%>
+                            </div>
+                        </div>
+                    
+                    </li>
+
+                    <%}%>
+
+              
+                </ul>
+
+            </div>
+            <div class="col-md-4 card p-0">
+                <div class="card-header px-2">
+                    En Cours
+                </div>
+                <ul class="list-group list-group-flush">
+                    <%for(var ids=0;ids<progress.length;ids++){%>
+
+                    <li class="list-group-item"  draggable="true" id="<%=progress[ids]._id%>" data-id="<%=progress[ids]._id%>" >
+                        <div class="d-flex justify-content-between">
+                            <p><%=progress[ids].title%> <br>
+                                estimation:<%=progress[ids].duration+" heure"%> <br>
+                                quantité:<%=progress[ids].qte%>
+                            </p> 
+                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=progress[ids]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=progress[ids]._id%>">
+                                description
+                              </a>
+                        </div>
+                        <div class="collapse" id="coll<%=progress[ids]._id%>">
+                            <div class=" card-body">
+                             <%=progress[ids].description%>
+                            </div>
+                        </div>
+                       
+                    </li>
+
+                    <%}%>
+                </ul>
+            </div>
+
+
+            <div class="col-md-4 card p-0" >
+                <div class="card-header px-2">
+                    Terminer
+                </div>
+                <ul class="list-group list-group-flush">
+                    <%for(var idz=0;idz<finish.length;idz++){%>
+
+                    <li class="list-group-item"  draggable="true" id="<%=finish[idz]._id%>" data-id="<%=finish[idz]._id%>" >
+                        <div class="d-flex justify-content-between">
+                            <p><%=finish[idz].title%> <br>
+                                estimation:<%=finish[idz].duration+" heure"%> <br>
+                                quantité:<%=finish[idz].qte%>
+                            </p> 
+                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=finish[idz]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=finish[idz]._id%>">
+                                description
+                              </a>
+                        </div>
+                        <div class="collapse" id="coll<%=finish[idz]._id%>">
+                            <div class=" card-body">
+                             <%=finish[idz].description%>
+                            </div>
+                        </div>
+                      
+                    </li>
+
+                    <%}%>
+                </ul>
+
+            </div>
+
+
+        </div>
+    </div>
+
+  
+    <%- include('../../includes/footer_responsable_financier') %>
