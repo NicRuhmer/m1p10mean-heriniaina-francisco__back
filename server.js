@@ -180,7 +180,7 @@ app.put('/reset_password/:id/user',async(req,res)=>{
     
 });
 
-//================== API Reparation ===================
+//================== API Reparation atelier ===================
 
 app.post('/create/:id/reparation',reparationController.create);
 app.get('/accepter-la-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.update)
@@ -191,6 +191,9 @@ app.get('/list-reparation',(req,res)=>{
       });
       
 });
+
+
+//================== API Reparation financier ===================
 
 app.post('/valide/:id/sortit-vehicule',reparationController.valider_sortir);
 app.post('/valide/:id/facture',connectEnsureLogin.ensureLoggedIn(),reparationController.valider_facture);

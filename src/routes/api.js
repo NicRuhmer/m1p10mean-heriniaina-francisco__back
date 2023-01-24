@@ -93,9 +93,8 @@ route.post('/send-mail-teste', (req, res) => {
     });
 });
 
-// ====================== API USer ==========================
+// ====================== API User ==========================
 
-//route.get('/reminder',cReminder.findAll);
 route.put('/desactived/:id/teams', (req, res) => {
     userController.desactived(req.params.id).then((result) => {
         res.send(result);
@@ -112,10 +111,5 @@ route.put('/actived/:id/teams', (req, res) => {
     });
 });
 
-/*
-route.post('/reminder',cReminder.create);
-route.delete('/reminder/:id',cReminder.delete);
-route.put('/reminder/:id',cReminder.update);
-route.get('/reminder-search/:search',cReminder.findReminderSearch);
-*/
+
 module.exports = route;

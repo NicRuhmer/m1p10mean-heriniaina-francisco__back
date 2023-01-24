@@ -153,20 +153,16 @@ exports.valider_sortir = (req, res) => {
     const dataUpdated = {
         release_date: req.body.release_date,
     };
-  
-    // if (dataUpdated.release_date != null) {
+
         Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
                 res.send({ status: 404, message: "La modification a échoué!" });
             } else {
                 Voituredb.findById(doc.voiture).then((vtre) => {
-                 
+              
                     Clientdb.findById(vtre.client).then( (cli) => {
-                        console.log("=================tonga================");
-            
                          authentificationMail.sendMailSortirVehicule(cli.email, cli.name + " " + cli.username, "Sortir du voiture le " + dataUpdated.release_date, vtre.matricule, "http://localhost:3000/liste-reparation/" + "terminer", dataUpdated.release_date)
                             .then((val) => {
-                                console.log(val);
                                 res.send(val);
                             }).catch((errS) => {
                                 res.send(errS);
@@ -181,9 +177,7 @@ exports.valider_sortir = (req, res) => {
                 });
             }
         });
-    // } else {
-    //     res.send({ status: 400, message: " champs invalide !" });
-    // }
+  
 };
 
 exports.valider_facture = (req, res) => {

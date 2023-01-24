@@ -17,9 +17,11 @@ exports.voitureReparationTerminer = async(req, res) => {
 exports.voitureDiagnostic = async(req,res)=>{
     const detail_ = await reparationController.findById(req.params.id);
     const diagnostiques_ = await diagnostiqueController.findAll(req.params.id);
+    
     res.render('responsable/atelier/diagnostic', { detail:detail_,diagnostiques:diagnostiques_,role: req.user.role.role, moment: moment, title: 'Gestion Panel- diagnostic' });
 };
 exports.etatAvancementVoiture = async(req,res)=>{
+   
      const detail_ = await reparationController.findById(req.params.id);
      const tasks_ = await diagnostiqueController.findData(req.params.id,"isTask");
      const progress_ = await diagnostiqueController.findData(req.params.id,"isProgress");

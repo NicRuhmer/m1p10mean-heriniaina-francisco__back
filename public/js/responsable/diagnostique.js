@@ -105,8 +105,9 @@ function valid_release_date(id) {
         release_date: $('#release_date').val()
      };
 
+    
     $('#loading_page').css("display", "block");
-    if (release_date.release_date!=null) {
+    // if (release_date.release_date!=null) {
         fetch('/valide/' + id + '/sortit-vehicule', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
@@ -128,9 +129,9 @@ function valid_release_date(id) {
                 $('#loading_page').css("display", "none");
                 toastError(err.message);
             });
-    } else {
-        toastError("champs invalide !");
-    }
+    // } else {
+    //     toastError("champs invalide !");
+    // }
 }
 
 $('#submit_diagnostique').click(function () {
