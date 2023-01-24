@@ -25,7 +25,44 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <% for(var id=0;id<listes.length;id++){%>
+                            <tr>
+                                <td><%=moment(listes[id].createdAt)%></td>
+                                <td><%=listes[id].voiture.description%></td>
+                                <td><%=listes[id].voiture.matricule%></td>
+                                <td> <div>
+                                        <p><%=listes[id].voiture.client.name+" "+listes[id].voiture.client.username%><br>
+                                            <%=listes[id].voiture.client.email%> <br>
+                                            <%=listes[id].voiture.client.contact%>
+                                        </p>
+                                    </div>
+                                </td>
+                                 <td> <div>
+                                        <p><%=listes[id].employe.name%><br>
+                                            <%=listes[id].employe.email%> <br>
+                                            <%=listes[id].employe.contact%>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success
+                                            dropdown-toggle"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Plus
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                             <li><a class="dropdown-item" href="/etat-davancement/<%=listes[id]._id%>/reparation">L'état d'avancement</a></li>
+                                            <li><a class="dropdown-item" href="/nouveau/<%=listes[id]._id%>/facture">Création
+                                                de la facture</a></li>
+                                        
+                                            </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        <%}%>
+                        <!--<tr>
                             <td>12/11/2022</td>
                             <td>V-8</td>
                             <td>TBH-987645</td>
@@ -96,7 +133,7 @@
                                     </ul>
                                 </div>
                             </td>
-                        </tr>
+                        </tr>-->
                 
                     </table>
                 </div>

@@ -93,10 +93,12 @@ exports.create = async (req, res) => {
             pu: req.body.montant,
             duration: req.body.duration,
             reparation: req.params.id,
-            status_reparation: status._id
+            status_reparation: status._id,
+            unite:req.body.unite,
+            tva:20
         };
 
-        if (new_.title != null && new_.qte != null && new_.pu != null && new_.duration != null && new_.reparation != null && new_.status_reparation != null) {
+        if (new_.title != null && new_.qte != null && new_.unite!=null && new_.pu != null && new_.duration != null && new_.reparation != null && new_.status_reparation != null) {
             const new__ = new Diagnonstiquedb(new_);
             new__.save((err, docs) => {
                 if (err) {
@@ -125,9 +127,32 @@ exports.update = (req, res) => {
         description: req.body.description,
         qte: req.body.qte,
         pu: req.body.montant,
-        duration: req.body.duration
+        duration: req.body.duration,
+        unite:req.body.unite,
+        tva:20
     };
     if (dataUpdated.title != null && dataUpdated.qte != null && dataUpdated.pu != null && dataUpdated.duration != null) {
+        Diagnonstiquedb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
+            if (err) {
+                res.send({ status: 400, message: "La modification a échoué!" });
+            } else {
+                res.send({ status: 200, message: 'information a été modifié avec success!' });
+            }
+        });
+    } else {
+        res.send({ status: 400, message: " champs invalide !" });
+    }
+};
+
+exports.updateFacture = (req, res) => {
+    const dataUpdated = {
+        title: req.body.title,
+        qte: req.body.qte,
+        pu: req.body.montant,
+        unite:req.body.unite,
+        tva:req.body.tva
+    };
+    if (dataUpdated.title != null && dataUpdated.qte != null && dataUpdated.pu != null && dataUpdated.unite != null && dataUpdated.tva != null) {
         Diagnonstiquedb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
                 res.send({ status: 400, message: "La modification a échoué!" });

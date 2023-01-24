@@ -23,12 +23,14 @@
           <div class="card shadow-sm p-3 mb-1 bg-body rounded">
                 <h5>Vehicule:  <%=detail.voiture.description%></h5>
                 <h5>Matricule:  <%=detail.voiture.matricule%></h5>
+               <h5>Client:  <%=detail.voiture.client.name+" "+detail.voiture.client.username%></h5>
+                <h5>email:  <%=detail.voiture.client.email%></h5>
           </div>
     </div>
      <div class="col-md-4">  
           <div class="card shadow-sm p-3 mb-1 bg-body rounded">
-                 <h5>Client:  <%=detail.voiture.client.name+" "+detail.voiture.client.username%></h5>
-                <h5>email:  <%=detail.voiture.client.email%></h5>
+                 <h5>Equipe:  <%=detail.employe.name%></h5>
+                <h5>email:  <%=detail.employe.email%></h5>
         </div>
     </div>
 
@@ -37,7 +39,7 @@
                 <h6>Estimation à faire:  <span id="estimation_task"><%=task_pourcentage%>%</span></h6>
                 <h6>Estimation en cours: <span id="estimation_progress"><%=progress_pourcentage%>%</span></h6>
                 <h6>Estimation terminer: <span id="estimation_finish"><%=finish_pourcentage%>%</span></h6>
-                <h6>Temps de réparation en moyen: <span id="estimation_moyen">2h 34 minute</span></h6>
+                <h6>Temps de réparation en moyen(static): <span id="estimation_moyen">2h 34 minute</span></h6>
         </div>
     </div>
    
@@ -47,9 +49,7 @@
         <div class="row">
             <div class="col-md-4 card p-0">
 
-                <div class="card-header px-2">
-                    À Faire
-                </div>
+                <div class="card-header px-2">  À Faire </div>
                 <ul class="list-group list-group-flush px-1">
 
                     <%for(var id=0;id<tasks.length;id++){%>
@@ -79,9 +79,7 @@
 
             </div>
             <div class="col-md-4 card p-0">
-                <div class="card-header px-2">
-                    En Cours
-                </div>
+                <div class="card-header px-2">  En Cours </div>
                 <ul class="list-group list-group-flush">
                     <%for(var ids=0;ids<progress.length;ids++){%>
 
@@ -109,9 +107,7 @@
 
 
             <div class="col-md-4 card p-0" >
-                <div class="card-header px-2">
-                    Terminer
-                </div>
+                <div class="card-header px-2">  Terminer  </div>
                 <ul class="list-group list-group-flush">
                     <%for(var idz=0;idz<finish.length;idz++){%>
 

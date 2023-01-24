@@ -14,23 +14,6 @@ var FactureSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
-    montant:{
-        type: Number,
-        default:0
-    },
-    reparation:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'reparations',
-        require:true
-    },
-    voiture:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'voitures'
-    },
-    client:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'clients'
-    },
     statut:{
         type:Boolean,
         default:false

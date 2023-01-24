@@ -9,7 +9,7 @@ var authentificationMail = require('./AuthentificationMail');
 exports.findAllReparationEnCourFinancier = () => {
     return new Promise((resolve, reject) => {
         
-        Reparationdb.find({employe:{$ne:null}})
+        Reparationdb.find({employe:{$ne:null},facture:null})
             .populate({
                 path: 'voiture',
                 populate: {
@@ -213,21 +213,24 @@ exports.valider_sortir = (req, res) => {
         });
 };
 
-exports.valider_facture = (req, res) => {
-    const dataUpdated = {
-        facture: req.body.facture,
+exports.valider_facture = (facture_) => {
+    return new Promise((resolve,reject)=>{
+        const dataUpdated = {
+        facture: req.body.facture_,
     };
-    if (dataUpdated.facture != null) {
-        Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
-            if (err) {
-                res.send({ status: 404, message: "La modification a échoué!" });
-            } else {
-                res.send({ status: 200, message: 'Facture validé!' });
-            }
-        });
-    } else {
-        res.send({ status: 400, message: " champs invalide !" });
-    }
+        if (dataUpdated.facture != null) {
+            Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
+                if (err) {
+                    reject({ status: 404, message: "La modification a échoué!" });
+                } else {
+                    resolve({ status: 200, message: 'Facture validé!' });
+                }
+            });
+        } else {
+            reject({ status: 400, message: " champs invalide !" });
+        }
+    });
+    
 };
 
 exports.startReparation = async (req, res) => {

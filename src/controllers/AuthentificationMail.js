@@ -1,6 +1,37 @@
 const nodemailer = require('nodemailer');
 
 
+exports.sendMailCreationFacture = (destinataire, id_reparation,matricule, url_site) => {
+    return new Promise((resolve, reject) => {
+        var transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'antoenjara1998@gmail.com',
+                pass: 'yzcufbqfsttpwblh'
+            }
+        });
+
+        const msg = "<p>Bonjour,</p> <p>La facture de réparation '"+id_reparation+"' de la voiture avec la matricule '"+matricule+"' est prêt.</p><p>Pour voir plus de detail veuillez vous se connectez sur:" + url_site+"</p>";
+
+        var mailOption = {
+            from: 'Projet-Meam-M1<antoenjara1998@gmail.com>',
+            to: destinataire,
+            replyTo: destinataire,
+            subject: "Facturation de la réparation du vehicule matriculé "+matricule,
+            html: msg
+        };
+        transport.sendMail(mailOption, (err, info) => {
+            if (err) {
+                console.log(err.message);
+                reject({ status: 400, message: err.message });
+            } else {
+                console.log(info.response);
+                resolve({ status: 200, message: 'Email envoyé !', data: info.response });
+            }
+        });
+    });
+
+};
 
 exports.sendMailSortirVehicule = (destinataire, nom_client, obj_, matricule, url_site, date_sortir) => {
     return new Promise((resolve, reject) => {
@@ -32,8 +63,7 @@ exports.sendMailSortirVehicule = (destinataire, nom_client, obj_, matricule, url
         });
     });
 
-
-}
+};
 
 exports.sendMail = (destinataire, obj_, message_) => {
     return new Promise((resolve, reject) => {

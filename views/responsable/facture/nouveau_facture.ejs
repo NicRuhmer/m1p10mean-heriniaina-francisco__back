@@ -8,7 +8,7 @@
                 <nav aria-label="breadcrumb" class="mb-3">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Reparation</a></li>
-                        <li class="breadcrumb-item"><a href="/">teste</a></li>
+                        <li class="breadcrumb-item"><a href="/"><%=detail.voiture.description%></a></li>
                         <li class="breadcrumb-item active"
                             aria-current="page">Nouveau facture
                         </li>
@@ -32,11 +32,11 @@
                     <h6 for="exampleFormControlInput1" class="form-label">Client:
                         <span>Nom_client</span></h6>
                     <h6 for="exampleFormControlInput1" class="form-label">N°
-                        Client: <span>cli0000</span></h6>
+                        Client: <span><%=detail.voiture.client.name+" "+detail.voiture.client.name%></span></h6>
                         <h6 for="exampleFormControlInput1" class="form-label">
-                            Contact: <span>032 22 222 22</span></h6>
+                            Contact: <span><%=detail.voiture.client.contact%></span></h6>
                             <h6 for="exampleFormControlInput1" class="form-label">
-                                Email: <span>contact@gmail.com</span></h6>
+                                Email: <span><%=detail.voiture.client.email%></span></h6>
                 </div>
 
             </div>
@@ -50,27 +50,32 @@
                 <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">N° facture:</label>
                     <input type="text" class="form-control"
-                        id="exampleFormControlInput1" placeholder="n° facture">
+                        id="num_facture" placeholder="n° facture">
                 </div>
                 <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Date
                         de création:</label>
                     <input type="date" class="form-control"
-                        id="exampleFormControlInput1">
+                        id="due_date">
                 </div>
                 <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Date
                         d'éxpiration:</label>
                     <input type="date" class="form-control"
-                        id="exampleFormControlInput1">
+                        id="invoice_date">
+                </div>
+                <div class="mb-3 d-flex">
+                    <label for="exampleFormControlInput1" class="form-label">Mode de paiement:</label>
+                    <input type="text" class="form-control"
+                        id="paiement">
                 </div>
                 <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Véhicule:</label>
-                    <label for="exampleFormControlInput1" class="form-label">Véhicule-0000</label>
+                    <label for="exampleFormControlInput1" class="form-label"><%=detail.voiture.description%></label>
                 </div>
                 <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Matricule:</label>
-                    <label for="exampleFormControlInput1" class="form-label">Matricule-0000</label>
+                    <label for="exampleFormControlInput1" class="form-label"><%=detail.voiture.matricule%></label>
                 </div>
             </div>
         </div>
@@ -89,14 +94,88 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>File à Air</td>
-                            <td><input type="number"  value="30"/></td>
-                            <td><input type="text"  value="pce."/></td>
-                            <td><input type="number" value="2000" /> Ar</td>
-                            <td><input type="number" value="20"/>%</td>
-                        </tr>
-                        <tr>
+                        <%for(var id=0;id<diagnostiques.length;id++)%>
+                            <tr>
+                                <td> <span role="button"><i class="fa fa-pen"></i> <%=diagnostiques[id].title%></span> </td>
+                                <td><%=diagnostiques[id].qte%></td>
+                                <td><%=diagnostiques[id].unite%></td>
+                                <td><%=diagnostiques[id].pu%>Ar</td>
+                                <td><%=diagnostiques[id].tva%>%</td>
+                            </tr>
+
+                            <div class="modal fade" id="edit<%=diagnostiques[id]._id%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Modification de "<%=diagnostiques[id].title%>"</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                                <div class="mb-3 mt-3">
+                          
+                                                    <label for="exampleFormControlInput1"
+                                                        class="form-label">Description</label>
+                                                    <input type="text" class="form-control"
+                                                        id="titlefact" name="titlefact"
+                                                        required value="<%=diagnostiques[id].title%>"
+                                                        placeholder="Tâches">
+                                                    
+                                                </div>
+                                             
+                                               
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1"
+                                                        class="form-label">Quantité
+                                                    </label>
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="qtefact" name="qtefact" min="0"
+                                                        required value="<%=diagnostiques[id].qte%>"
+                                                        placeholder="Quantité">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1"
+                                                        class="form-label">Unité
+                                                    </label>
+                                                    <input type="text"
+                                                        class="form-control"
+                                                        id="unitefact" name="unitefact" 
+                                                        required value="<%=diagnostiques[id].unite%>"
+                                                        placeholder="Unité">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1"
+                                                        class="form-label">PU HT
+                                                    </label>
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="montantfact" name="montantfact"
+                                                        required value="<%=diagnostiques[id].pu%>"
+                                                        placeholder="En Ar">
+                                                </div>
+                                                 <div class="mb-3">
+                                                    <label for="exampleFormControlInput1"
+                                                        class="form-label">TVA
+                                                    </label>
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="tavfact" name="tavfact" min="0"
+                                                        required value="<%=diagnostiques[id].tva%>"
+                                                        placeholder="Unité">
+                                                </div>
+                                          </div>
+                                          <div class="modal-footer d-flex justify-content-between">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" id="edit_facture_diagnostique" data-bs-dismiss="modal" data-id="<%=diagnostiques[id]._id%>" class="btn btn-primary">Modifier</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+                        <%%>
+                        
+                        <!--<tr>
                             <td>File à Air</td>
                             <td><input type="number"  value="30"/></td>
                             <td><input type="text"  value="pce."/></td>
@@ -116,12 +195,12 @@
                             <td><input type="text"  value="pce."/></td>
                             <td><input type="number" value="2000" /> Ar</td>
                             <td><input type="number" value="10"/>%</td>
-                        </tr>
+                        </tr>-->
                     </tbody>
                 </table>
 
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary py-3">Validé la facture</button>
+                    <button class="btn btn-primary py-3" data-id="<%=detail._id%>" id="save_new_facture">Validé la facture</button>
                 </div>
             </div>
         </div>

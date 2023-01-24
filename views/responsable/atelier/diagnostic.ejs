@@ -126,6 +126,16 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleFormControlInput1"
+                                                        class="form-label">Unité
+                                                    </label>
+                                                    <input type="text"
+                                                        class="form-control"
+                                                        id="united" name="united" min="0"
+                                                        required value="<%=diagnostiques[id].unite%>"
+                                                        placeholder="Unité">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1"
                                                         class="form-label">Estimation du prix
                                                     </label>
                                                     <input type="number"
@@ -148,33 +158,6 @@
 
                                 <%}%>
 
-                                <!--<tr>
-                                    <td>
-                                        <div>
-                                            <p>
-                                                Filtre à Air <br>
-                                                Il faut changer le filtre à Air
-                                            </p>
-                                        </div>
-                                       
-                                    </td>
-                                   <td>
-                                    <p>durée: 1heure <br>
-                                        quantité pièce: 0
-                                    </p>
-                                   </td>
-                                    <td>60 000Ar</td>
-                                    <td>
-                                        <div class="d-flex
-                                            justify-content-between">
-                                            <button type="button" class="btn
-                                                btn-outline-success">Modifier</button>
-                                            <button type="button" class="btn
-                                                btn-outline-warning">Rétirer</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                -->
 
                             </tbody>
                         </table>
@@ -222,6 +205,16 @@
                                         id="qte" name="qte" min="0" value="0"
                                         required
                                         placeholder="Quantité">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1"
+                                        class="form-label">Unité
+                                    </label>
+                                    <input type="text"
+                                        class="form-control"
+                                        id="unite" name="unite" 
+                                        required
+                                        placeholder="Unité">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1"

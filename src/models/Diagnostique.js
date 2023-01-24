@@ -9,9 +9,16 @@ var DiagnostiqueSchema = new mongoose.Schema({
     description:{
         type: String
     },
+    unite:{
+        type: String
+    },
     qte:{
         type: Number,
         default:0
+    },
+     tva:{
+        type: Number,
+        default:20
     },
     pu:{
         type: Number,
