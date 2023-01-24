@@ -9,7 +9,7 @@ const userController = require('./src/controllers/userController');
 const redirectionWeb = require('./src/render/redirection');
 const redirectionWebSuperAdmin = require('./src/render/redirectionSuperAdmin');
 const redirectionWebRespAtelier = require('./src/render/redirectionRespAtelier');
-
+const redirectionRespFinancier = require('./src/render/redirectionRespFinancier');
 
 // Use model 
 const Userdb = require('./src/models/User');
@@ -226,7 +226,10 @@ app.get('/reparation-terminer',connectEnsureLogin.ensureLoggedIn(),redirectionWe
 app.get('/diagnostic/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureDiagnostic);
 app.get('/etat-davancement/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.etatAvancementVoiture);
 
-
-
+// 3- Redirection Responsable Financier
+app.get('/nouveau/:id/facture',connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.nouveauFacture);
+app.get('/detail/:id/facture',connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.detailFacture);
+app.get('/reparation-payer',connectEnsureLogin.ensureLoggedIn(),redirectionRespFinancier.reparationFacturer);
+app.get('/facture-attente',connectEnsureLogin.ensureLoggedIn(),redirectionRespFinancier.factureAttente);
 
 server.listen(PORT, () => console.log(`App is listening at ${PORT}`));
