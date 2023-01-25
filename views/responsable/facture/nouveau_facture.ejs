@@ -66,7 +66,7 @@
                 </div>
                 <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Mode de paiement:</label>
-                    <input type="text" class="form-control"
+                    <input type="text" class="form-control" placeholder="Mode de paiement"
                         id="paiement">
                 </div>
                 <div class="mb-3 d-flex">
@@ -94,9 +94,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <%for(var id=0;id<diagnostiques.length;id++)%>
+                        <%for(var id=0;id<diagnostiques.length;id++){%>
                             <tr>
-                                <td> <span role="button"><i class="fa fa-pen"></i> <%=diagnostiques[id].title%></span> </td>
+                                <td> <span role="button" data-bs-toggle="modal" data-bs-target="#edit<%=diagnostiques[id]._id%>"><i class="fa fa-edit text-primary"></i> <%=diagnostiques[id].title%></span> </td>
                                 <td><%=diagnostiques[id].qte%></td>
                                 <td><%=diagnostiques[id].unite%></td>
                                 <td><%=diagnostiques[id].pu%>Ar</td>
@@ -123,46 +123,63 @@
                                                 </div>
                                              
                                                
-                                                <div class="mb-3">
-                                                    <label for="exampleFormControlInput1"
-                                                        class="form-label">Quantité
-                                                    </label>
-                                                    <input type="number"
-                                                        class="form-control"
-                                                        id="qtefact" name="qtefact" min="0"
-                                                        required value="<%=diagnostiques[id].qte%>"
-                                                        placeholder="Quantité">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="exampleFormControlInput1"
+                                                                class="form-label">Quantité
+                                                            </label>
+                                                            <input type="number"
+                                                                class="form-control"
+                                                                id="qtefact" name="qtefact" min="0"
+                                                                required value="<%=diagnostiques[id].qte%>"
+                                                                placeholder="Quantité">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="exampleFormControlInput1"
+                                                                class="form-label">Unité
+                                                            </label>
+                                                            <input type="text"
+                                                                class="form-control"
+                                                                id="unitefact" name="unitefact" 
+                                                                required value="<%=diagnostiques[id].unite%>"
+                                                                placeholder="Unité">
+                                                        </div>
+                                                    </div>
+                                                
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="exampleFormControlInput1"
-                                                        class="form-label">Unité
-                                                    </label>
-                                                    <input type="text"
-                                                        class="form-control"
-                                                        id="unitefact" name="unitefact" 
-                                                        required value="<%=diagnostiques[id].unite%>"
-                                                        placeholder="Unité">
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="exampleFormControlInput1"
+                                                                class="form-label">PU HT
+                                                            </label>
+                                                            <input type="number"
+                                                                class="form-control"
+                                                                id="montantfact" name="montantfact"
+                                                                required value="<%=diagnostiques[id].pu%>"
+                                                                placeholder="En Ar">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="exampleFormControlInput1"
+                                                                class="form-label">TVA
+                                                            </label>
+                                                            <input type="number"
+                                                                class="form-control"
+                                                                id="tvafact" name="tvafact" min="0"
+                                                                required value="<%=diagnostiques[id].tva%>"
+                                                                placeholder="Unité">
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="exampleFormControlInput1"
-                                                        class="form-label">PU HT
-                                                    </label>
-                                                    <input type="number"
-                                                        class="form-control"
-                                                        id="montantfact" name="montantfact"
-                                                        required value="<%=diagnostiques[id].pu%>"
-                                                        placeholder="En Ar">
-                                                </div>
-                                                 <div class="mb-3">
-                                                    <label for="exampleFormControlInput1"
-                                                        class="form-label">TVA
-                                                    </label>
-                                                    <input type="number"
-                                                        class="form-control"
-                                                        id="tavfact" name="tavfact" min="0"
-                                                        required value="<%=diagnostiques[id].tva%>"
-                                                        placeholder="Unité">
-                                                </div>
+                                                
+                                               
+                                                 
                                           </div>
                                           <div class="modal-footer d-flex justify-content-between">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -173,7 +190,7 @@
                                     </div>
 
 
-                        <%%>
+                        <%}%>
                         
                         <!--<tr>
                             <td>File à Air</td>

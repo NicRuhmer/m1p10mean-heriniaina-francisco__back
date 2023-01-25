@@ -19,13 +19,18 @@ exports.findAllReparationEnCourFinancier = () => {
             .populate({
                 path:'employe'
             })
-            .exec((err, result) => {
+            .exec(async (err, result) => {
                 if (err) {
                     console.log(err.message)
                     reject({ status: 400, message: err.message });
                 } else {
 
-                    resolve(result);
+                    var tab = [];
+                    for (var i = 0; i < result.length; i++) {
+                        const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
+                        tab.push({ data: result[i], pourcentage: tmp.pourcentage });
+                    }
+                    resolve(tab);
                 }
             });
     });

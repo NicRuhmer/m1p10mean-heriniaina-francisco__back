@@ -30,7 +30,7 @@ exports.reparationFacturer = (req,res)=>{
 
 exports.nouveauFacture = async (req,res)=>{
      const detail_ = await reparationController.findById(req.params.id);
-    const diagnostiques_ = await findAll(req.params.id);
+    const diagnostiques_ = await diagnostiqueController.findAll(req.params.id);
     res.render('responsable/facture/nouveau_facture', {moment: moment,detail:detail_,diagnostiques:diagnostiques_, title: 'Gestion Panel-nouveau-facture' });
 };
 

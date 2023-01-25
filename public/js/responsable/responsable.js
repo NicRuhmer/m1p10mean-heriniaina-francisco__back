@@ -57,22 +57,6 @@ $('#email').keyup(function () {
                 }).catch(err => {
                     document.getElementById("email_error").innerHTML = err.message;
                 });
-
-            /*$.ajax({
-                url:HOST+"/verify-mail-user",
-                method:"POST",
-                data:{mail: $(this).val()},
-                dataType : "JSON",
-                success:function(data)
-                {
-                    if(data.data!=null){
-                        document.getElementById('email_error').innerHTML="le email de l'utilisateur a été déjà utilisé";
-                        $('#submit_new_resp').attr('disabled',true);
-                    } else {
-                        document.getElementById('email_error').innerHTML="";
-                    }       
-                }
-            }); */
         } else {
             document.getElementById('email_error').innerHTML = "le email est invalide";
             $('#submit_new_resp').attr('disabled', true);

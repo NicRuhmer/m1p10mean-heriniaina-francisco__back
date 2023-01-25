@@ -54,11 +54,12 @@
 
                     <%for(var id=0;id<tasks.length;id++){%>
 
-                    <li class="list-group-item"  draggable="true" id="<%=tasks[id]._id%>" data-id="<%=tasks[id]._id%>" >
+                    <li class="list-group-item" id="<%=tasks[id]._id%>" data-id="<%=tasks[id]._id%>" >
                         <div class="d-flex justify-content-between">
                             <p><%=tasks[id].title%> <br>
                                 estimation:<%=tasks[id].duration+" heure"%> <br>
-                                quantité:<%=tasks[id].qte%>
+                                quantité:<%=tasks[id].qte%> <br>
+                                prix:<%=tasks[id].pu%>Ar
                             </p> 
                             <a  role="button" data-bs-toggle="collapse" href="#coll<%=tasks[id]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=tasks[id]._id%>">
                                 description
@@ -83,11 +84,12 @@
                 <ul class="list-group list-group-flush">
                     <%for(var ids=0;ids<progress.length;ids++){%>
 
-                    <li class="list-group-item"  draggable="true" id="<%=progress[ids]._id%>" data-id="<%=progress[ids]._id%>" >
+                    <li class="list-group-item" id="<%=progress[ids]._id%>" data-id="<%=progress[ids]._id%>" >
                         <div class="d-flex justify-content-between">
                             <p><%=progress[ids].title%> <br>
                                 estimation:<%=progress[ids].duration+" heure"%> <br>
-                                quantité:<%=progress[ids].qte%>
+                                quantité:<%=progress[ids].qte%> <br>
+                                prix:<%=progress[ids].pu%>Ar
                             </p> 
                             <a  role="button" data-bs-toggle="collapse" href="#coll<%=progress[ids]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=progress[ids]._id%>">
                                 description
@@ -111,11 +113,12 @@
                 <ul class="list-group list-group-flush">
                     <%for(var idz=0;idz<finish.length;idz++){%>
 
-                    <li class="list-group-item"  draggable="true" id="<%=finish[idz]._id%>" data-id="<%=finish[idz]._id%>" >
+                    <li class="list-group-item" id="<%=finish[idz]._id%>" data-id="<%=finish[idz]._id%>" >
                         <div class="d-flex justify-content-between">
                             <p><%=finish[idz].title%> <br>
                                 estimation:<%=finish[idz].duration+" heure"%> <br>
-                                quantité:<%=finish[idz].qte%>
+                                quantité:<%=finish[idz].qte%> <br>
+                                prix:<%=finish[idz].pu%>Ar
                             </p> 
                             <a  role="button" data-bs-toggle="collapse" href="#coll<%=finish[idz]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=finish[idz]._id%>">
                                 description

@@ -27,23 +27,24 @@
                     <tbody>
                         <% for(var id=0;id<listes.length;id++){%>
                             <tr>
-                                <td><%=moment(listes[id].createdAt)%></td>
-                                <td><%=listes[id].voiture.description%></td>
-                                <td><%=listes[id].voiture.matricule%></td>
+                                <td><%=moment(listes[id].data.createdAt)%></td>
+                                <td><%=listes[id].data.voiture.description%></td>
+                                <td><%=listes[id].data.voiture.matricule%></td>
                                 <td> <div>
-                                        <p><%=listes[id].voiture.client.name+" "+listes[id].voiture.client.username%><br>
-                                            <%=listes[id].voiture.client.email%> <br>
-                                            <%=listes[id].voiture.client.contact%>
+                                        <p><%=listes[id].data.voiture.client.name+" "+listes[id].data.voiture.client.username%><br>
+                                            <%=listes[id].data.voiture.client.email%> <br>
+                                            <%=listes[id].data.voiture.client.contact%>
                                         </p>
                                     </div>
                                 </td>
                                  <td> <div>
-                                        <p><%=listes[id].employe.name%><br>
-                                            <%=listes[id].employe.email%> <br>
-                                            <%=listes[id].employe.contact%>
+                                        <p><%=listes[id].data.employe.name%><br>
+                                            <%=listes[id].data.employe.email%> <br>
+                                            <%=listes[id].data.employe.contact%>
                                         </p>
                                     </div>
                                 </td>
+                                <td><%=listes[id].pourcentage%>%</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-success
@@ -53,8 +54,8 @@
                                             Plus
                                         </button>
                                         <ul class="dropdown-menu">
-                                             <li><a class="dropdown-item" href="/etat-davancement/<%=listes[id]._id%>/reparation">L'état d'avancement</a></li>
-                                            <li><a class="dropdown-item" href="/nouveau/<%=listes[id]._id%>/facture">Création
+                                             <li><a class="dropdown-item" href="/etat-davancement/<%=listes[id].data._id%>/reparation">L'état d'avancement</a></li>
+                                            <li><a class="dropdown-item" href="/nouveau/<%=listes[id].data._id%>/facture">Création
                                                 de la facture</a></li>
                                         
                                             </ul>
