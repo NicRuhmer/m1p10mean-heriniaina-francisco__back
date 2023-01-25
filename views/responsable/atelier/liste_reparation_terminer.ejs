@@ -30,9 +30,9 @@
                     <% for(var id=0;id<reparations.length;id++){%>
 
                             <tr>
-                                <td><%=moment(reparations[id].data.createdAt)%></td>
+                                <td><%=moment(reparations[id].data.createdAt).format('DD MMMM YYYY')%></td>
                                  <td> <%if(reparations[id].data.release_date!=null){%>
-                                    <%=moment(reparations[id].data.release_date)%>
+                                    <%=moment(reparations[id].data.release_date).format('DD MMMM YYYY')%>
                                     <%} else {%>
                                         <span class="text-primary">---</span>
                                     <%}%></td>
@@ -95,77 +95,6 @@
                               </div>
                         <%}%>
 
-                        <!--<tr>
-                            <td>1</td>
-                            <td>12/11/2022</td>
-                            <td>...</td>
-                            <td>V-8</td>
-                            <td>TBH-987645</td>
-                            <td>8888-5577-8765-34566</td>
-                            <td> <div>
-                                <p>M. Raphaël <br>
-                                    rafael-atelier@responsable.com <br>
-                                    034 55 222 33/ 032 11 222 11
-                                </p>
-                            </div>
-                        </td>
-                        <td>
-                            100%
-                        </td>
-                        <td> 900 000 Ar</td>
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-success
-                                    dropdown-toggle"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Plus
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">L'état d'avancement</a></li>
-                                    <li><a class="dropdown-item" href="#">Valider la sortie</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Facture</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                          
-                            
-                        </tr>
-                        
-                        <tr>
-                            <td>2</td>
-                            <td>12/11/2022</td>
-                            <td>13/11/2022</td>
-                            <td>V-8</td>
-                            <td>TBH-987645</td>
-                            <td>8888-5577-8765-34566</td>
-                            <td> <div>
-                                <p>M. Raphaël <br>
-                                    rafael-atelier@responsable.com <br>
-                                    034 55 222 33/ 032 11 222 11
-                                </p>
-                            </div>
-                        </td>
-                        <td>
-                            99%
-                        </td>
-                        <td> 900 000 Ar</td>
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-success
-                                    dropdown-toggle"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Plus
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">L'état d'avancement</a></li>
-                                    <li><a class="dropdown-item" href="#">Valider la sortie</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                        </tr>-->
                     </table>
                 </div>
             </div>

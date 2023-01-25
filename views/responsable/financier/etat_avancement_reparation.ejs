@@ -52,58 +52,74 @@
                 <div class="card-header px-2">  À Faire </div>
                 <ul class="list-group list-group-flush px-1">
 
-                    <%for(var id=0;id<tasks.length;id++){%>
+                    <%if(tasks.length>0){%>
+                        <%for(var id=0;id<tasks.length;id++){%>
 
-                    <li class="list-group-item" id="<%=tasks[id]._id%>" data-id="<%=tasks[id]._id%>" >
-                        <div class="d-flex justify-content-between">
-                            <p><%=tasks[id].title%> <br>
-                                estimation:<%=tasks[id].duration+" heure"%> <br>
-                                quantité:<%=tasks[id].qte%> <br>
-                                prix:<%=tasks[id].pu%>Ar
-                            </p> 
-                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=tasks[id]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=tasks[id]._id%>">
-                                description
-                              </a>
-                        </div>
-                        <div class="collapse" id="coll<%=tasks[id]._id%>">
-                            <div class=" card-body">
-                             <%=tasks[id].description%>
-                            </div>
-                        </div>
+                            <li class="list-group-item" id="<%=tasks[id]._id%>" data-id="<%=tasks[id]._id%>" >
+                                <div class="d-flex justify-content-between">
+                                    <p><%=tasks[id].title%> <br>
+                                        estimation:<%=tasks[id].duration+" heure"%> <br>
+                                        quantité:<%=tasks[id].qte%> <br>
+                                        prix:<%=tasks[id].pu%>Ar
+                                    </p> 
+                                    <a  role="button" data-bs-toggle="collapse" href="#coll<%=tasks[id]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=tasks[id]._id%>">
+                                        description
+                                      </a>
+                                </div>
+                                <div class="collapse" id="coll<%=tasks[id]._id%>">
+                                    <div class=" card-body">
+                                     <%=tasks[id].description%>
+                                    </div>
+                                </div>
+                            
+                            </li>
+        
+                            <%}%>
+
+                        <%}else{%>
+                            <li class="list-group-item text-center" >
+                                Aucun tâches est attente
+                            </li>
+                        <%}%>
+
                     
-                    </li>
-
-                    <%}%>
 
               
                 </ul>
 
             </div>
             <div class="col-md-4 card p-0">
-                <div class="card-header px-2">  En Cours </div>
+                <div class="card-header px-2">  En Cours</div>
                 <ul class="list-group list-group-flush">
-                    <%for(var ids=0;ids<progress.length;ids++){%>
+                    <%if(progress.length>0){%>
+                        <%for(var ids=0;ids<progress.length;ids++){%>
 
-                    <li class="list-group-item" id="<%=progress[ids]._id%>" data-id="<%=progress[ids]._id%>" >
-                        <div class="d-flex justify-content-between">
-                            <p><%=progress[ids].title%> <br>
-                                estimation:<%=progress[ids].duration+" heure"%> <br>
-                                quantité:<%=progress[ids].qte%> <br>
-                                prix:<%=progress[ids].pu%>Ar
-                            </p> 
-                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=progress[ids]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=progress[ids]._id%>">
-                                description
-                              </a>
-                        </div>
-                        <div class="collapse" id="coll<%=progress[ids]._id%>">
-                            <div class=" card-body">
-                             <%=progress[ids].description%>
-                            </div>
-                        </div>
-                       
-                    </li>
-
-                    <%}%>
+                            <li class="list-group-item" id="<%=progress[ids]._id%>" data-id="<%=progress[ids]._id%>" >
+                                <div class="d-flex justify-content-between">
+                                    <p><%=progress[ids].title%> <br>
+                                        estimation:<%=progress[ids].duration+" heure"%> <br>
+                                        quantité:<%=progress[ids].qte%> <br>
+                                        prix:<%=progress[ids].pu%>Ar
+                                    </p> 
+                                    <a  role="button" data-bs-toggle="collapse" href="#coll<%=progress[ids]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=progress[ids]._id%>">
+                                        description
+                                      </a>
+                                </div>
+                                <div class="collapse" id="coll<%=progress[ids]._id%>">
+                                    <div class=" card-body">
+                                     <%=progress[ids].description%>
+                                    </div>
+                                </div>
+                               
+                            </li>
+        
+                            <%}%>
+                        <%}else{%>
+                            <li class="list-group-item text-center" >
+                                Aucun tâches en cours pour le moment
+                            </li>
+                        <%}%>
+                    
                 </ul>
             </div>
 
@@ -111,28 +127,35 @@
             <div class="col-md-4 card p-0" >
                 <div class="card-header px-2">  Terminer  </div>
                 <ul class="list-group list-group-flush">
-                    <%for(var idz=0;idz<finish.length;idz++){%>
+                    <%if(finish.length>0){%>
+                        <%for(var idz=0;idz<finish.length;idz++){%>
 
-                    <li class="list-group-item" id="<%=finish[idz]._id%>" data-id="<%=finish[idz]._id%>" >
-                        <div class="d-flex justify-content-between">
-                            <p><%=finish[idz].title%> <br>
-                                estimation:<%=finish[idz].duration+" heure"%> <br>
-                                quantité:<%=finish[idz].qte%> <br>
-                                prix:<%=finish[idz].pu%>Ar
-                            </p> 
-                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=finish[idz]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=finish[idz]._id%>">
-                                description
-                              </a>
-                        </div>
-                        <div class="collapse" id="coll<%=finish[idz]._id%>">
-                            <div class=" card-body">
-                             <%=finish[idz].description%>
-                            </div>
-                        </div>
-                      
-                    </li>
-
+                            <li class="list-group-item" id="<%=finish[idz]._id%>" data-id="<%=finish[idz]._id%>" >
+                                <div class="d-flex justify-content-between">
+                                    <p><%=finish[idz].title%> <br>
+                                        estimation:<%=finish[idz].duration+" heure"%> <br>
+                                        quantité:<%=finish[idz].qte%> <br>
+                                        prix:<%=finish[idz].pu%>Ar
+                                    </p> 
+                                    <a  role="button" data-bs-toggle="collapse" href="#coll<%=finish[idz]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=finish[idz]._id%>">
+                                        description
+                                      </a>
+                                </div>
+                                <div class="collapse" id="coll<%=finish[idz]._id%>">
+                                    <div class=" card-body">
+                                     <%=finish[idz].description%>
+                                    </div>
+                                </div>
+                              
+                            </li>
+        
+                            <%}%>
+                    <%}else{%>
+                        <li class="list-group-item text-center" >
+                            Aucun tâches est encore terminer
+                        </li>
                     <%}%>
+                    
                 </ul>
 
             </div>

@@ -52,28 +52,35 @@
                     À Faire
                 </div>
                 <ul class="list-group list-group-flush px-1">
+                    <%if(tasks.length>0){%>
+                        <%for(var id=0;id<tasks.length;id++){%>
 
-                    <%for(var id=0;id<tasks.length;id++){%>
-
-                    <li class="list-group-item"  draggable="true" id="<%=tasks[id]._id%>" data-id="<%=tasks[id]._id%>" >
-                        <div class="d-flex justify-content-between">
-                            <p><%=tasks[id].title%> <br>
-                                estimation:<%=tasks[id].duration+" heure"%> <br>
-                                quantité:<%=tasks[id].qte%>
-                            </p> 
-                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=tasks[id]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=tasks[id]._id%>">
-                                description
-                              </a>
-                        </div>
-                        <div class="collapse" id="coll<%=tasks[id]._id%>">
-                            <div class=" card-body">
-                             <%=tasks[id].description%>
-                            </div>
-                        </div>
+                            <li class="list-group-item"  draggable="true" id="<%=tasks[id]._id%>" data-id="<%=tasks[id]._id%>" >
+                                <div class="d-flex justify-content-between">
+                                    <p><%=tasks[id].title%> <br>
+                                        estimation:<%=tasks[id].duration+" heure"%> <br>
+                                        quantité:<%=tasks[id].qte%>
+                                    </p> 
+                                    <a  role="button" data-bs-toggle="collapse" href="#coll<%=tasks[id]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=tasks[id]._id%>">
+                                        description
+                                      </a>
+                                </div>
+                                <div class="collapse" id="coll<%=tasks[id]._id%>">
+                                    <div class=" card-body">
+                                     <%=tasks[id].description%>
+                                    </div>
+                                </div>
+                            
+                            </li>
+        
+                            <%}%>
+                        <%} else {%>
+                            <li class="list-group-item text-center" >
+                                Aucun tâches en cours pour le moment
+                            </li>
+                        <%}%>
+    
                     
-                    </li>
-
-                    <%}%>
 
               
                 </ul>
@@ -86,27 +93,36 @@
                     En Cours
                 </div>
                 <ul class="list-group list-group-flush">
-                    <%for(var ids=0;ids<progress.length;ids++){%>
+                    <%if(progress.length>0){%>
+                        <%for(var ids=0;ids<progress.length;ids++){%>
 
-                    <li class="list-group-item"  draggable="true" id="<%=progress[ids]._id%>" data-id="<%=progress[ids]._id%>" >
-                        <div class="d-flex justify-content-between">
-                            <p><%=progress[ids].title%> <br>
-                                estimation:<%=progress[ids].duration+" heure"%> <br>
-                                quantité:<%=progress[ids].qte%>
-                            </p> 
-                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=progress[ids]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=progress[ids]._id%>">
-                                description
-                              </a>
-                        </div>
-                        <div class="collapse" id="coll<%=progress[ids]._id%>">
-                            <div class=" card-body">
-                             <%=progress[ids].description%>
-                            </div>
-                        </div>
-                       
-                    </li>
+                            <li class="list-group-item"  draggable="true" id="<%=progress[ids]._id%>" data-id="<%=progress[ids]._id%>" >
+                                <div class="d-flex justify-content-between">
+                                    <p><%=progress[ids].title%> <br>
+                                        estimation:<%=progress[ids].duration+" heure"%> <br>
+                                        quantité:<%=progress[ids].qte%>
+                                    </p> 
+                                    <a  role="button" data-bs-toggle="collapse" href="#coll<%=progress[ids]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=progress[ids]._id%>">
+                                        description
+                                      </a>
+                                </div>
+                                <div class="collapse" id="coll<%=progress[ids]._id%>">
+                                    <div class=" card-body">
+                                     <%=progress[ids].description%>
+                                    </div>
+                                </div>
+                               
+                            </li>
+        
+                            <%}%>
+                        <%} else {%>
+                            <li class="list-group-item text-center" >
+                                Aucun tâches en cours pour le moment
+                            </li>
+                        <%}%>
 
-                    <%}%>
+                        
+                   
                 </ul>
             </div>
 
@@ -118,27 +134,35 @@
                     Terminer
                 </div>
                 <ul class="list-group list-group-flush">
-                    <%for(var idz=0;idz<finish.length;idz++){%>
+                    <%if(finish.length>0){%>
+                        <%for(var idz=0;idz<finish.length;idz++){%>
 
-                    <li class="list-group-item"  draggable="true" id="<%=finish[idz]._id%>" data-id="<%=finish[idz]._id%>" >
-                        <div class="d-flex justify-content-between">
-                            <p><%=finish[idz].title%> <br>
-                                estimation:<%=finish[idz].duration+" heure"%> <br>
-                                quantité:<%=finish[idz].qte%>
-                            </p> 
-                            <a  role="button" data-bs-toggle="collapse" href="#coll<%=finish[idz]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=finish[idz]._id%>">
-                                description
-                              </a>
-                        </div>
-                        <div class="collapse" id="coll<%=finish[idz]._id%>">
-                            <div class=" card-body">
-                             <%=finish[idz].description%>
-                            </div>
-                        </div>
-                      
-                    </li>
-
+                            <li class="list-group-item"  draggable="true" id="<%=finish[idz]._id%>" data-id="<%=finish[idz]._id%>" >
+                                <div class="d-flex justify-content-between">
+                                    <p><%=finish[idz].title%> <br>
+                                        estimation:<%=finish[idz].duration+" heure"%> <br>
+                                        quantité:<%=finish[idz].qte%>
+                                    </p> 
+                                    <a  role="button" data-bs-toggle="collapse" href="#coll<%=finish[idz]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=finish[idz]._id%>">
+                                        description
+                                      </a>
+                                </div>
+                                <div class="collapse" id="coll<%=finish[idz]._id%>">
+                                    <div class=" card-body">
+                                     <%=finish[idz].description%>
+                                    </div>
+                                </div>
+                              
+                            </li>
+        
+                            <%}%>
+                    <%} else {%>
+                        <li class="list-group-item text-center" >
+                            Aucun tâches est encore terminer
+                        </li>
                     <%}%>
+
+                    
                 </ul>
 
             </div>

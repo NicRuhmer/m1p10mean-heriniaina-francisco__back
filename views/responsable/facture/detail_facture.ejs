@@ -33,11 +33,11 @@
                     <h6 for="exampleFormControlInput1" class="form-label">Client:
                         <span>Nom_client</span></h6>
                     <h6 for="exampleFormControlInput1" class="form-label">N°
-                        Client: <span>cli0000</span></h6>
+                        Client: <span><%=detail.voiture.client.name+" "+detail.voiture.client.name%></span></h6>
                         <h6 for="exampleFormControlInput1" class="form-label">
-                            Contact: <span>032 22 222 22</span></h6>
+                            Contact: <span><%=detail.voiture.client.contact%></span></h6>
                             <h6 for="exampleFormControlInput1" class="form-label">
-                                Email: <span>contact@gmail.com</span></h6>
+                                Email: <span><%=detail.voiture.client.email%></span></h6>
                 </div>
 
             </div>
@@ -48,27 +48,32 @@
                     height="120px" class="img-fluidr" alt="">
                 </div>
                
-                <div class="mb-3 d-flex  justify-content-end">
-                    <label for="exampleFormControlInput1" class="form-label">N° facture:</label>
-                    <label for="">fa-01</label>
+                <div class="mb-3 d-flex">
+                    <label for="exampleFormControlInput1" class="form-label">N° facture*:</label>
+                    <label for="exampleFormControlInput1" class="form-label"><%=moment(detail.facture.num_facture).format('DD MMMM YYYY')%></label>
                 </div>
-                <div class="mb-3 d-flex  justify-content-end">
+                <span class="text-danger" id="facture_error"></span>
+                <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Date
-                        de création:</label>
-                        <label for="">23/03/2023</label>
+                        de la facture*:</label>
+                        <label for="exampleFormControlInput1" class="form-label"><%=moment(detail.facture.invoice_date).format('DD MMMM YYYY')%></label>
                 </div>
-                <div class="mb-3 d-flex  justify-content-end">
+                <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Date
-                        d'éxpiration:</label>
-                    <label for="">30/03/2023</label>
+                        d'éxpiration*:</label>
+                        <label for="exampleFormControlInput1" class="form-label"><%=moment(detail.facture.due_date).format('DD MMMM YYYY')%></label>
                 </div>
-                <div class="mb-3 d-flex  justify-content-end">
+                <div class="mb-3 d-flex">
+                    <label for="exampleFormControlInput1" class="form-label">Mode de paiement*:</label>
+                    <label for="exampleFormControlInput1" class="form-label"><%=detail.facture.paiement%></label>
+                </div>
+                <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Véhicule:</label>
-                    <label for="exampleFormControlInput1" class="form-label">Véhicule-0000</label>
+                    <label for="exampleFormControlInput1" class="form-label"><%=detail.voiture.description%></label>
                 </div>
-                <div class="mb-3 d-flex  justify-content-end">
+                <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Matricule:</label>
-                    <label for="exampleFormControlInput1" class="form-label">Matricule-0000</label>
+                    <label for="exampleFormControlInput1" class="form-label"><%=detail.voiture.matricule%></label>
                 </div>
             </div>
         </div>
@@ -87,15 +92,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>File à Air</td>
-                            <td>30</td>
-                            <td>pce.</td>
-                            <td>2000 Ar</td>
-                            <td>6000 Ar</td>
-                            <td>20%</td>
-                        </tr>
-                        <tr>
+                        <%for(var id=0;id<diagnostiques.length;id++){%>
+                            <tr>
+                                <td> <%=diagnostiques[id].title%> </td>
+                                <td><%=diagnostiques[id].qte%></td>
+                                <td><%=diagnostiques[id].unite%></td>
+                                <td><%=diagnostiques[id].pu%>Ar</td>
+                                <td><%=(diagnostiques[id].pu*diagnostiques[id].qte)%>Ar</td>
+                                <td><%=diagnostiques[id].tva%>%</td>
+                            </tr>
+
+                        <%}%>
+                        <!--<tr>
                             <td>File à Air</td>
                             <td>30</td>
                             <td>pce.</td>
@@ -126,7 +134,7 @@
                             <td>2000 Ar</td>
                             <td>6000 Ar</td>
                             <td>10%</td>
-                        </tr>
+                        </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -136,7 +144,7 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td>Total HT</td>
+                            <td>Total HT(mbol static)</td>
                             <td>200 Ar</td>
                         </tr>
                         <tr>
@@ -159,7 +167,7 @@
         <div class="row">
             <div class="col-md-8">
                 <!--<p>Conditions de paiement: 30% à la commande, paiement à réception de facture</p>-->
-                <p>Mode de paiement: <span>par virement du chèque</span></p>
+                <!--<p>Mode de paiement: <span>par virement du chèque</span></p>-->
 
                 <p class="mt-3">
                     Nous vous remercions de votre confiance. <br>

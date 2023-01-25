@@ -14,7 +14,7 @@ var FactureSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
-    statut:{
+    status:{
         type:Boolean,
         default:false
     }

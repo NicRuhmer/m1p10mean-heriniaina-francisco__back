@@ -36,6 +36,39 @@ exports.findAllReparationEnCourFinancier = () => {
     });
 };
 
+exports.findAllReparationFacturer = () => {
+    return new Promise((resolve, reject) => {
+        
+        Reparationdb.find({employe:{$ne:null},facture:{$ne:null}})
+            .populate({
+                path: 'voiture',
+                populate: {
+                    path: 'client'
+                }
+            })
+            .populate({
+                path:'employe'
+            })
+            .populate({
+                path:'employe'
+            })
+            .exec(async (err, result) => {
+                if (err) {
+                    console.log(err.message)
+                    reject({ status: 400, message: err.message });
+                } else {
+
+                    var tab = [];
+                    for (var i = 0; i < result.length; i++) {
+                        const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
+                        tab.push({ data: result[i], pourcentage: tmp.pourcentage });
+                    }
+                    resolve(tab);
+                }
+            });
+    });
+};
+
 exports.findById = (id) => {
     return new Promise((resolve, reject) => {
         Reparationdb.findById(id)
@@ -47,6 +80,32 @@ exports.findById = (id) => {
             })
             .populate({
                 path:'employe'
+            })
+            .exec((err, result) => {
+                if (err) {
+                    console.log(err.message)
+                    reject({ status: 400, message: err.message });
+                } else {
+                    resolve(result);
+                }
+            });
+    });
+};
+
+exports.findFactureByReparation = (id) => {
+    return new Promise((resolve, reject) => {
+        Reparationdb.findById(id)
+            .populate({
+                path: 'voiture',
+                populate: {
+                    path: 'client'
+                }
+            })
+            .populate({
+                path:'employe'
+            })
+            .populate({
+                path:'facture'
             })
             .exec((err, result) => {
                 if (err) {
@@ -218,16 +277,18 @@ exports.valider_sortir = (req, res) => {
         });
 };
 
-exports.valider_facture = (facture_) => {
+exports.valider_facture = (reparation_id,facture_) => {
     return new Promise((resolve,reject)=>{
         const dataUpdated = {
-        facture: req.body.facture_,
+            facture:facture_,
     };
+    console.log(dataUpdated)
         if (dataUpdated.facture != null) {
-            Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
+            Reparationdb.findByIdAndUpdate(reparation_id, dataUpdated, { upsert: true }, function (err, doc) {
                 if (err) {
                     reject({ status: 404, message: "La modification a échoué!" });
                 } else {
+                    console.log("success insert reparation facture");
                     resolve({ status: 200, message: 'Facture validé!' });
                 }
             });

@@ -48,24 +48,25 @@
                 </div>
                
                 <div class="mb-3 d-flex">
-                    <label for="exampleFormControlInput1" class="form-label">N° facture:</label>
+                    <label for="exampleFormControlInput1" class="form-label">N° facture*:</label>
                     <input type="text" class="form-control"
-                        id="num_facture" placeholder="n° facture">
+                        id="facture" placeholder="n° facture">
                 </div>
+                <span class="text-danger" id="facture_error"></span>
                 <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Date
-                        de création:</label>
-                    <input type="date" class="form-control"
-                        id="due_date">
-                </div>
-                <div class="mb-3 d-flex">
-                    <label for="exampleFormControlInput1" class="form-label">Date
-                        d'éxpiration:</label>
+                        de la facture*:</label>
                     <input type="date" class="form-control"
                         id="invoice_date">
                 </div>
                 <div class="mb-3 d-flex">
-                    <label for="exampleFormControlInput1" class="form-label">Mode de paiement:</label>
+                    <label for="exampleFormControlInput1" class="form-label">Date
+                        d'éxpiration*:</label>
+                    <input type="date" class="form-control"
+                        id="due_date">
+                </div>
+                <div class="mb-3 d-flex">
+                    <label for="exampleFormControlInput1" class="form-label">Mode de paiement*:</label>
                     <input type="text" class="form-control" placeholder="Mode de paiement"
                         id="paiement">
                 </div>
@@ -116,7 +117,7 @@
                                                     <label for="exampleFormControlInput1"
                                                         class="form-label">Description</label>
                                                     <input type="text" class="form-control"
-                                                        id="titlefact" name="titlefact"
+                                                        id="titlefact<%=diagnostiques[id]._id%>" name="titlefact<%=diagnostiques[id]._id%>"
                                                         required value="<%=diagnostiques[id].title%>"
                                                         placeholder="Tâches">
                                                     
@@ -131,7 +132,7 @@
                                                             </label>
                                                             <input type="number"
                                                                 class="form-control"
-                                                                id="qtefact" name="qtefact" min="0"
+                                                                id="qtefact<%=diagnostiques[id]._id%>" name="qtefact<%=diagnostiques[id]._id%>" min="0"
                                                                 required value="<%=diagnostiques[id].qte%>"
                                                                 placeholder="Quantité">
                                                         </div>
@@ -143,7 +144,7 @@
                                                             </label>
                                                             <input type="text"
                                                                 class="form-control"
-                                                                id="unitefact" name="unitefact" 
+                                                                id="unitefact<%=diagnostiques[id]._id%>" name="unitefact<%=diagnostiques[id]._id%>" 
                                                                 required value="<%=diagnostiques[id].unite%>"
                                                                 placeholder="Unité">
                                                         </div>
@@ -159,7 +160,7 @@
                                                             </label>
                                                             <input type="number"
                                                                 class="form-control"
-                                                                id="montantfact" name="montantfact"
+                                                                id="montantfact<%=diagnostiques[id]._id%>" name="montantfact<%=diagnostiques[id]._id%>"
                                                                 required value="<%=diagnostiques[id].pu%>"
                                                                 placeholder="En Ar">
                                                         </div>
@@ -171,7 +172,7 @@
                                                             </label>
                                                             <input type="number"
                                                                 class="form-control"
-                                                                id="tvafact" name="tvafact" min="0"
+                                                                id="tvafact<%=diagnostiques[id]._id%>" name="tvafact<%=diagnostiques[id]._id%>" min="0"
                                                                 required value="<%=diagnostiques[id].tva%>"
                                                                 placeholder="Unité">
                                                         </div>
@@ -183,7 +184,7 @@
                                           </div>
                                           <div class="modal-footer d-flex justify-content-between">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" id="edit_facture_diagnostique" data-bs-dismiss="modal" data-id="<%=diagnostiques[id]._id%>" class="btn btn-primary">Modifier</button>
+                                            <button type="button" id="edit_facture_diagnostique" data-bs-dismiss="modal" onclick='edit_facture_diagnostique(<%=JSON.stringify(diagnostiques[id]._id)%>)' class="btn btn-primary">Modifier</button>
                                           </div>
                                         </div>
                                       </div>
@@ -217,7 +218,7 @@
                 </table>
 
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary py-3" data-id="<%=detail._id%>" id="save_new_facture">Validé la facture</button>
+                    <button class="btn btn-primary py-3" onclick="save_new_facture(<%=JSON.stringify(detail._id)%>)" id="save_new_facture">Validé la facture</button>
                 </div>
             </div>
         </div>

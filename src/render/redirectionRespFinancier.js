@@ -34,6 +34,9 @@ exports.nouveauFacture = async (req,res)=>{
     res.render('responsable/facture/nouveau_facture', {moment: moment,detail:detail_,diagnostiques:diagnostiques_, title: 'Gestion Panel-nouveau-facture' });
 };
 
-exports.detailFacture = (req,res)=>{
-    res.render('responsable/facture/detail_facture', {moment: moment, title: 'Gestion Panel- facture' });
+exports.detailFacture = async(req,res)=>{
+    const detail_ = await reparationController.findFactureByReparation(req.params.id);
+    const diagnostiques_ = await diagnostiqueController.findAll(req.params.id);
+ 
+    res.render('responsable/facture/detail_facture', {moment: moment,detail:detail_,diagnostiques:diagnostiques_, title: 'Gestion Panel- facture' });
 };

@@ -27,7 +27,7 @@
                     <tbody>
                         <% for(var id=0;id<reparations.length;id++){%>
                             <tr>
-                                <td><%=moment(reparations[id].createdAt)%></td>
+                                <td><%=moment(reparations[id].createdAt).format('DD MMMM YYYY')%></td>
                                 <td><%=reparations[id].voiture.description%></td>
                                 <td><%=reparations[id].voiture.matricule%></td>
                                 <td><%=reparations[id].voiture.num_serie%></td>
@@ -54,87 +54,7 @@
                                 </td>
                             </tr>
                         <%}%>
-                        <!--<tr>
-                            <td>12/11/2022</td>
-                            <td>V-8</td>
-                            <td>TBH-987645</td>
-                            <td>8888-5577-8765-34566</td>
-                            <td> <span class="text-primary">Personnel</span></td>
-                            <td> <div>
-                                    <p>M. Raphaël <br>
-                                        rafael-atelier@responsable.com <br>
-                                        034 55 222 33/ 032 11 222 11
-                                    </p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Accepter</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>12/11/2022</td>
-                            <td>V-8</td>
-                            <td>TBH-987645</td>
-                            <td>8888-5577-8765-34566</td>
-                            <td> <span class="text-warning">Particulier</span></td>
-                            <td> <div>
-                                    <p>M. Raphaël <br>
-                                        rafael-atelier@responsable.com <br>
-                                        034 55 222 33/ 032 11 222 11
-                                    </p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Accepter</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>12/11/2022</td>
-                            <td>V-8</td>
-                            <td>TBH-987645</td>
-                            <td>8888-5577-8765-34566</td>
-                            <td> <span class="text-success">Professionnel</span></td>
-                            <td> <div>
-                                    <p>M. Raphaël<br>
-                                        rafael-atelier@responsable.com <br>
-                                        034 55 222 33/ 032 11 222 11
-                                    </p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Accepter</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>-->
+                        
                     </table>
                 </div>
             </div>

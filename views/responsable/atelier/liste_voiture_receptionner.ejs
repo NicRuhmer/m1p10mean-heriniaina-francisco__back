@@ -27,7 +27,7 @@
                     <tbody>
                         <% for(var id=0;id<receptionners.length;id++){%>
                             <tr>
-                                <td><%=moment(receptionners[id].createdAt)%></td>
+                                <td><%=moment(receptionners[id].createdAt).format('DD MMMM YYYY')%></td>
                                 <td><%=receptionners[id].voiture.description%></td>
                                 <td><%=receptionners[id].voiture.matricule%></td>
                                 <td><%=receptionners[id].voiture.num_serie%></td>

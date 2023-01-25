@@ -206,8 +206,15 @@ app.post('/progress-reparation-diagnostiques',connectEnsureLogin.ensureLoggedIn(
 
 //=================== API Facture =================================================
 app.put('/edit/:id/diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.updateFacture);
+app.post('/verify-facture',connectEnsureLogin.ensureLoggedIn(),factureController.verifyNumFacture);
 app.post('/save/:id/new-facture',connectEnsureLogin.ensureLoggedIn(),factureController.saveFacture);
-
+app.get('/detail/:id/teste',(req,res)=>{
+  diagnostiqueController.totaleMontant(req.params.id).then((v)=>{
+    res.send(v);
+  }).catch((err)=>{
+    res.send(err.message);
+  })
+});
 
 
 
