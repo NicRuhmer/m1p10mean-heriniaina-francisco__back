@@ -141,9 +141,27 @@
         </div>
         <div class="row d-flex justify-content-end">
             <div class="col-md-4">
+             
                 <table class="table table-bordered">
                     <tbody>
+                       
                         <tr>
+                            <td>Total HT</td>
+                            <td><%=montant.totaleHT%>Ar</td>
+                        </tr>
+                        <%for(var id=0;id<montant.tabTva.length;id++){ %>
+                            <tr>
+                                <td><%=montant.tabTva[id].description%></td>
+                                <td><%=montant.tabTva[id].totaleTva%>Ar</td>
+                            </tr>
+                        <%}%>
+            
+                        <tr>
+                            <td>Total TTC</td>
+                            <td><%=(montant.totaleTTC)%>Ar</td>
+                        </tr>
+                      
+                        <!--<tr>
                             <td>Total HT(mbol static)</td>
                             <td>200 Ar</td>
                         </tr>
@@ -158,7 +176,7 @@
                         <tr>
                             <td>Total TTC</td>
                             <td>2000 Ar</td>
-                        </tr>
+                        </tr>-->
                     </tbody>
                 </table>
             </div>

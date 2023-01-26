@@ -61,7 +61,8 @@ exports.findAllReparationFacturer = () => {
                     var tab = [];
                     for (var i = 0; i < result.length; i++) {
                         const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
-                        tab.push({ data: result[i], pourcentage: tmp.pourcentage });
+                        const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
+                        tab.push({ data: result[i], pourcentage: tmp.pourcentage,montant:tmp2.totaleTTC });
                     }
                     resolve(tab);
                 }

@@ -113,7 +113,7 @@ exports.totaleMontant = (reparation_id_) => {
                     for(var id=0;id<totale2.length;id++){
                         tabTva_.push({description:"TVA "+totale2[id]._id.tva+"%",totaleTva:totale2[id].totaleTva});
                     }
-                    resolve({totaleHT:totaleht, totaleTVA:totaletva, tabTva:tabTva_});
+                    resolve({totaleHT:totaleht,totaleTTC:(totaleht+totaletva), totaleTVA:totaletva, tabTva:tabTva_});
             });
 
         }).catch((err) => {

@@ -24,8 +24,9 @@ exports.factureAttente = async(req,res)=>{
     res.render('responsable/financier/index', {moment: moment,listes:liste_, title: 'Gestion Panel-Facture-attente' });
 };
 
-exports.reparationFacturer = (req,res)=>{
-    res.render('responsable/financier/list_reparation_terminer', {moment: moment, title: 'Gestion Panel- facture' });
+exports.reparationFacturer = async(req,res)=>{
+    const liste_ = await reparationController.findAllReparationFacturer();
+    res.render('responsable/financier/list_reparation_terminer', {moment: moment,listes:liste_, title: 'Gestion Panel- facture' });
 };
 
 exports.nouveauFacture = async (req,res)=>{
@@ -37,6 +38,6 @@ exports.nouveauFacture = async (req,res)=>{
 exports.detailFacture = async(req,res)=>{
     const detail_ = await reparationController.findFactureByReparation(req.params.id);
     const diagnostiques_ = await diagnostiqueController.findAll(req.params.id);
- 
-    res.render('responsable/facture/detail_facture', {moment: moment,detail:detail_,diagnostiques:diagnostiques_, title: 'Gestion Panel- facture' });
+    const montant_ = await diagnostiqueController.totaleMontant(req.params.id);
+    res.render('responsable/facture/detail_facture', {moment: moment,detail:detail_,diagnostiques:diagnostiques_,montant:montant_, title: 'Gestion Panel- facture' });
 };

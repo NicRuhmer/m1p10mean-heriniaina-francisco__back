@@ -27,43 +27,45 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>12/11/2022</td>
-                            <td>V-8</td>
-                            <td>TBH-987645</td>
-                            <td> <div>
-                                    <p>M. Raphaël <br>
-                                        rafael-atelier@responsable.com <br>
-                                        034 55 222 33/ 032 11 222 11
-                                    </p>
-                                </div>
-                            </td>
-                            <td> <div>
-                                    <p>Responsable Atelier <br>
-                                        atelier@responsable.com <br>
-                                        034 55 222 33/ 032 11 222 11
-                                    </p>
-                                </div>
-                            </td>
-                            <td>90000 Ar</td>
-                            <td>0%(static)</td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Etat
-                                                d'avancement</a></li>
-                                                <li><a class="dropdown-item" href="/detail/1/facture">Détail de la facture</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
+                        <% for(var id=0;id<listes.length;id++){%>
+                            <tr>
+                                <td><%=moment(listes[id].data.createdAt).format('DD MMMM YYYY')%></td>
+                                <td><%=listes[id].data.voiture.description%></td>
+                                <td><%=listes[id].data.voiture.matricule%></td>
+                                <td> <div>
+                                        <p><%=listes[id].data.voiture.client.name+" "+listes[id].data.voiture.client.username%><br>
+                                            <%=listes[id].data.voiture.client.email%> <br>
+                                            <%=listes[id].data.voiture.client.contact%>
+                                        </p>
+                                    </div>
+                                </td>
+                                 <td> <div>
+                                        <p><%=listes[id].data.employe.name%><br>
+                                            <%=listes[id].data.employe.email%> <br>
+                                            <%=listes[id].data.employe.contact%>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td><%=listes[id].montant%>Ar</td>
+                                <td><%=listes[id].pourcentage%>%</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success
+                                            dropdown-toggle"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Plus
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                             <li><a class="dropdown-item" href="/etat-davancement/<%=listes[id].data._id%>/reparation">L'état d'avancement</a></li>
+                                            <li><a class="dropdown-item" href="/detail/<%=listes[id].data._id%>/facture">Détail de la facture</a></li>
+                                        
+                                            </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        <%}%>
+                        <!--<tr>
                             <td>12/11/2022</td>
                             <td>V-8</td>
                             <td>TBH-987645</td>
@@ -98,7 +100,7 @@
                                     </ul>
                                 </div>
                             </td>
-                        </tr>
+                        </tr>-->
                        
                     </table>
                 </div>
