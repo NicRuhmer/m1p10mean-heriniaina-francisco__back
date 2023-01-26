@@ -75,34 +75,46 @@ exports.totaleMontant = (reparation_id_) => {
         var totalettc = 0;
         var totaleht = 0;
         var totaletva = 0;
-        var tabTva = [];
+        var tabTva_ = [];
         Diagnonstiquedb.aggregate(
             [
-                {
+              {
                     $group:
                     {
-                        _id: {  reparation: reparation_id_ },
-                        'totaleHt': { $sum: { $multiply: ['$pu', '$qte'] } }
+                        _id:{reparation_id:reparation_id_},
+                        'totaleHt': { $sum: { $multiply: ['$pu', '$qte'] } },
+                        'totalTvaInit':{$sum: { $multiply: ['$pu', '$qte','$tva'] }}
                     }
+                },
+                { $project: { 
+                    _id: 1,
+                    totaleHt: 1,
+                    totaleTva: { $divide: [ "$totalTvaInit", 100 ] } } 
                 }
             ]
         ).then((totale) => {
-            console.log(totale)
-            resolve(totale);
-            /*Diagnonstiquedb.aggregate([
+            totaleht = totale[0].totaleHt;
+            totaletva = totale[0].totaleTva;
+            Diagnonstiquedb.aggregate([
                 {
                     $group:
                     {
-                        _id: { reparation: reparation_id_, tva: "$tva" }
-                    },
-                    totaleTvaTrier: { $sum: "(($tva*($pu*$qte))/100)" }
+                        _id: { reparation: reparation_id_, tva: "$tva" },
+                        'totalTvaInit':{$sum: { $multiply: ['$pu', '$qte','$tva'] }}
+                    }
+                },
+                {
+                    $project:{
+                        _id:1,
+                        totaleTva: { $sum:{$divide: [ "$totalTvaInit", 100 ] } } 
+                    }
                 }
             ]).then((totale2) => {
                     for(var id=0;id<totale2.length;id++){
-                        totaletva+=totale2[id].totaleTvaTrier;
-                        tabTva.push({description:"TAV "+totale2[id].tva+"%",totaleTva:totale2[id].totaleTvaTrier});
+                        tabTva_.push({description:"TVA "+totale2[id]._id.tva+"%",totaleTva:totale2[id].totaleTva});
                     }
-            });*/
+                    resolve({totaleHT:totaleht, totaleTVA:totaletva, tabTva:tabTva_});
+            });
 
         }).catch((err) => {
             reject({ status: 400, message: err.message });
