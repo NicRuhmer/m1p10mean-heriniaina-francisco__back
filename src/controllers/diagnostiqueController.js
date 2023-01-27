@@ -82,7 +82,7 @@ exports.totaleMontant = (reparation_id_) => {
                     $group:
                     {
                         _id:{reparation_id:reparation_id_},
-                        'totaleHt': { $sum: { $multiply: ['$pu', '$qte'] } },
+                        'totaleHt': { $sum:{ $multiply: ['$pu', '$qte'] } },
                         'totalTvaInit':{$sum: { $multiply: ['$pu', '$qte','$tva'] }}
                     }
                 },
