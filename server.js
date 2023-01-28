@@ -69,6 +69,7 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.static("views"));
 
+
 app.use('/logo', express.static("public/logo"));
 app.use('/js', express.static("public/js"));
 app.use('/css', express.static("public/css"));
