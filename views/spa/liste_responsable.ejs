@@ -1,132 +1,87 @@
-<%- include('../includes/header_admin') %>
-
-   
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb" class="mb-3">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Responsable</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Liste</li>
-                    </ol>
-                </nav>
-
-                <table class="table table-striped" id="liste_responsable">
-                    <thead class="bg-success text-white">
-                        <tr>
-                            <th scope="col">Status</th>
-                            <th scope="cool">Nom</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Contact</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%for(var i=0; i<employes.length;i++){%>
-
-                            <%if(employes[i].user.status==false){%>
+<div class="relative bg-blueGray-100">
+    <div class="px-4 md:px-10 mx-auto w-full -m-24 mt-10">
+        <div class="flex flex-wrap mt-4">
+            <div class="w-full xl:w-12/12 mb-12 xl:mb-0 px-4">
+                <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+                    <div class="rounded-t mb-0 px-4 py-3 border-0">
+                        <div class="flex flex-wrap items-center">
+                            <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                                <h3 class="font-semibold text-base text-blueGray-700">
+                                    Liste des Responsables
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block w-full overflow-x-auto px-3 py-10">
+                        <table class="table" id="liste_responsable">
+                            <thead class="">
                                 <tr>
-                                    <td class="text-danger"><%=employes[i].user.role.description%></td>
-                                    <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].name%></a> </td>
-                                    <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].email%></a> </td></td>
-                                    <td class="text-danger"><%=employes[i].contact%></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-warning
-                                                dropdown-toggle"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                Plus
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" onclick='actived(<%=JSON.stringify(employes[i].user._id)%>)' href="#">Activer</a></li>
-                                                <li><a class="dropdown-item" href="/modification/equipe/<%=employes[i]._id%>">Modifier</a></li>
-                                                <li><hr class="dropdown-divider"></li>
-                                                <li><a class="dropdown-item text-danger"
-                                                        href="#">Rétiré</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                                    <th scope="col">Status</th>
+                                    <th scope="cool">Nom</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Contact</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                            <%} else {%>
-                                <tr>
-                                    <td><%=employes[i].user.role.description%></td>
-                                    <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].name%></a> </td>
-                                    <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].email%></a> </td></td>
-                                    <td><%=employes[i].contact%></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-warning
-                                                dropdown-toggle"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                Plus
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" onclick='desactived(<%=JSON.stringify(employes[i].user._id)%>)' href="#">Désactiver</a></li>
-                                                <li><a class="dropdown-item" href="/modification/<%=employes[i]._id%>/equipe">Modifier</a></li>
-                                                <li><hr class="dropdown-divider"></li>
-                                                <li><a class="dropdown-item text-danger"
-                                                        href="#">Rétiré</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <%}%>
-                        
-                        <%}%>
-                        
-                        <!--<tr>
-                            <th scope="row">2</th>
-                            <td>Responsable financier</td>
-                            <td>M. Tonton</td>
-                            <td>tonton-financier@responsable.com</td>
-                            <td>034 55 222 33/ 032 11 222 11</td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-warning
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Désactiver/Activer</a></li>
-                                        <li><a class="dropdown-item" href="#">Modifier</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger"
-                                                href="#">Rétiré</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Responsable atelier</td>
-                            <td>M. Rafaël</td>
-                            <td>rafael-atelier@responsable.com</td>
-                            <td>034 55 222 33/ 032 11 222 11</td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-warning
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Désactiver/Activer</a></li>
-                                        <li><a class="dropdown-item" href="#">Modifier</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger"
-                                                href="#">Rétiré</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>-->
-                    </table>
+                            </thead>
+                            <tbody>
+                                <%for(var i=0; i<employes.length;i++){%>
+        
+                                    <%if(employes[i].user.status==false){%>
+                                        <tr>
+                                            <td class="text-warning"><%=employes[i].user.role.description%></td>
+                                            <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].name%></a> </td>
+                                            <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].email%></a> </td></td>
+                                            <td class="text-danger"><%=employes[i].contact%></td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-warning
+                                                        dropdown-toggle"
+                                                        data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        Plus
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" onclick='actived(<%=JSON.stringify(employes[i].user._id)%>)' href="#">Activer</a></li>
+                                                        <li><a class="dropdown-item" href="/modification/equipe/<%=employes[i]._id%>">Modifier</a></li>
+                                                        <li><hr class="dropdown-divider"></li>
+                                                        <li><a class="dropdown-item text-danger"
+                                                                href="#">Rétiré</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <%} else {%>
+                                        <tr>
+                                            <td><%=employes[i].user.role.description%></td>
+                                            <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].name%></a> </td>
+                                            <td> <a href="/modification/equipe/<%=employes[i]._id%>"><%=employes[i].email%></a> </td></td>
+                                            <td><%=employes[i].contact%></td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-warning
+                                                        dropdown-toggle"
+                                                        data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        Plus
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" onclick='desactived(<%=JSON.stringify(employes[i].user._id)%>)' href="#">Désactiver</a></li>
+                                                        <li><a class="dropdown-item" href="/modification/equipe/<%=employes[i]._id%">Modifier</a></li>
+                                                        <li><hr class="dropdown-divider"></li>
+                                                        <li><a class="dropdown-item text-danger"
+                                                                href="#">Rétiré</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <%}%>
+                                
+                                <%}%>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <%- include('../includes/footer_admin') %>
+    </div>
+    
