@@ -8,8 +8,8 @@ var authentificationMail = require('./AuthentificationMail');
 
 exports.findAllReparationEnCourFinancier = () => {
     return new Promise((resolve, reject) => {
-        
-        Reparationdb.find({employe:{$ne:null},facture:null})
+
+        Reparationdb.find({ employe: { $ne: null },start:true,facture:null })
             .populate({
                 path: 'voiture',
                 populate: {
@@ -17,7 +17,7 @@ exports.findAllReparationEnCourFinancier = () => {
                 }
             })
             .populate({
-                path:'employe'
+                path: 'employe'
             })
             .exec(async (err, result) => {
                 if (err) {
@@ -36,10 +36,11 @@ exports.findAllReparationEnCourFinancier = () => {
     });
 };
 
-exports.findAllReparationFacturer = () => {
-    return new Promise((resolve, reject) => {
-        
-        Reparationdb.find({employe:{$ne:null},facture:{$ne:null}})
+exports.findAllReparationEnCour = (user_id) => {
+    return new Promise(async (resolve, reject) => {
+        const emp = await Employedb.findOne({ user: user_id });
+
+        Reparationdb.find({ employe: emp._id, start: true })
             .populate({
                 path: 'voiture',
                 populate: {
@@ -47,10 +48,41 @@ exports.findAllReparationFacturer = () => {
                 }
             })
             .populate({
-                path:'employe'
+                path: 'employe'
+            })
+            .exec(async (err, result) => {
+                if (err) {
+                    console.log(err.message)
+                    reject({ status: 400, message: err.message });
+                } else {
+                    var tab = [];
+                    for (var i = 0; i < result.length; i++) {
+                        const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
+                        const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
+                        tab.push({ data: result[i], pourcentage: tmp.pourcentage, montant: tmp2.totaleTTC });
+                    }
+                    resolve(tab);
+                }
+            });
+    });
+};
+
+
+exports.findAllReparationFacturer = () => {
+    return new Promise((resolve, reject) => {
+
+        Reparationdb.find({ employe: { $ne: null }, facture: { $ne: null } })
+            .populate({
+                path: 'voiture',
+                populate: {
+                    path: 'client'
+                }
             })
             .populate({
-                path:'employe'
+                path: 'employe'
+            })
+            .populate({
+                path: 'facture'
             })
             .exec(async (err, result) => {
                 if (err) {
@@ -62,7 +94,7 @@ exports.findAllReparationFacturer = () => {
                     for (var i = 0; i < result.length; i++) {
                         const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
                         const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
-                        tab.push({ data: result[i], pourcentage: tmp.pourcentage,montant:tmp2.totaleTTC });
+                        tab.push({ data: result[i], pourcentage: tmp.pourcentage, montant: tmp2.totaleTTC });
                     }
                     resolve(tab);
                 }
@@ -80,7 +112,7 @@ exports.findById = (id) => {
                 }
             })
             .populate({
-                path:'employe'
+                path: 'employe'
             })
             .exec((err, result) => {
                 if (err) {
@@ -103,10 +135,10 @@ exports.findFactureByReparation = (id) => {
                 }
             })
             .populate({
-                path:'employe'
+                path: 'employe'
             })
             .populate({
-                path:'facture'
+                path: 'facture'
             })
             .exec((err, result) => {
                 if (err) {
@@ -143,7 +175,7 @@ exports.findAllReparationReceptionner = (user_id) => {
     return new Promise(async (resolve, reject) => {
         const emp = await Employedb.findOne({ user: user_id });
 
-        Reparationdb.find({ employe: emp._id })
+        Reparationdb.find({ employe: emp._id,start:false })
             .populate({
                 path: 'voiture',
                 populate: {
@@ -151,7 +183,7 @@ exports.findAllReparationReceptionner = (user_id) => {
                 }
             })
             .populate({
-                path:'employe'
+                path: 'employe'
             })
             .exec((err, result) => {
                 if (err) {
@@ -165,35 +197,6 @@ exports.findAllReparationReceptionner = (user_id) => {
     });
 };
 
-exports.findAllReparationEnCour = (user_id) => {
-    return new Promise(async (resolve, reject) => {
-        const emp = await Employedb.findOne({ user: user_id });
-
-        Reparationdb.find({ employe: emp._id, start: true })
-            .populate({
-                path: 'voiture',
-                populate: {
-                    path: 'client'
-                }
-            })
-            .populate({
-                path:'employe'
-            })
-            .exec(async (err, result) => {
-                if (err) {
-                    console.log(err.message)
-                    reject({ status: 400, message: err.message });
-                } else {
-                    var tab = [];
-                    for (var i = 0; i < result.length; i++) {
-                        const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
-                        tab.push({ data: result[i], pourcentage: tmp.pourcentage });
-                    }
-                    resolve(tab);
-                }
-            });
-    });
-};
 
 exports.create = (req, res) => {
     const new_ = {
@@ -239,6 +242,23 @@ exports.update = async (req, res) => {
             if (err) {
                 res.send({ status: 404, message: "La modification a échoué!" });
             } else {
+                Voituredb.findById(doc.voiture).then((vtre) => {
+
+                    Clientdb.findById(vtre.client).then((cli) => {
+                        authentificationMail.sendMailAcceptReparationVehicule(cli.email, cli.name + " " + cli.username, vtre.matricule, "http://localhost:3000/login", emp.name)
+                            .then((val) => {
+                                res.send(val);
+                            }).catch((errS) => {
+                                res.send(errS);
+                            });
+
+                    }).catch((er) => {
+                        console.log(er.message)
+                        res.send({ status: 400, message: "Une erreur s'est produit lors du retournement du donnée client" });
+                    });
+                }).catch((erV) => {
+                    res.send({ status: 400, message: erV.message });
+                });
                 res.send({ status: 200, message: 'information a été modifié avec success!' });
             }
         });
@@ -253,37 +273,37 @@ exports.valider_sortir = (req, res) => {
         release_date: req.body.release_date,
     };
 
-        Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
-            if (err) {
-                res.send({ status: 404, message: "La modification a échoué!" });
-            } else {
-                Voituredb.findById(doc.voiture).then((vtre) => {
-              
-                    Clientdb.findById(vtre.client).then( (cli) => {
-                         authentificationMail.sendMailSortirVehicule(cli.email, cli.name + " " + cli.username, "Sortir du voiture le " + dataUpdated.release_date, vtre.matricule, "http://localhost:3000/liste-reparation/" + "terminer", dataUpdated.release_date)
-                            .then((val) => {
-                                res.send(val);
-                            }).catch((errS) => {
-                                res.send(errS);
-                            });
+    Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
+        if (err) {
+            res.send({ status: 404, message: "La modification a échoué!" });
+        } else {
+            Voituredb.findById(doc.voiture).then((vtre) => {
 
-                    }).catch((er) => {
-                        console.log(er.message)
-                        res.send({ status: 400, message: "Une erreur s'est produit lors du retournement du donnée client" });
-                    });
-                }).catch((erV) => {
-                    res.send({ status: 400, message: erV.message });
+                Clientdb.findById(vtre.client).then((cli) => {
+                    authentificationMail.sendMailSortirVehicule(cli.email, cli.name + " " + cli.username, "Sortir du voiture le " + dataUpdated.release_date, vtre.matricule, "http://localhost:3000/liste-reparation/" + "terminer", dataUpdated.release_date)
+                        .then((val) => {
+                            res.send(val);
+                        }).catch((errS) => {
+                            res.send(errS);
+                        });
+
+                }).catch((er) => {
+                    console.log(er.message)
+                    res.send({ status: 400, message: "Une erreur s'est produit lors du retournement du donnée client" });
                 });
-            }
-        });
+            }).catch((erV) => {
+                res.send({ status: 400, message: erV.message });
+            });
+        }
+    });
 };
 
-exports.valider_facture = (reparation_id,facture_) => {
-    return new Promise((resolve,reject)=>{
+exports.valider_facture = (reparation_id, facture_) => {
+    return new Promise((resolve, reject) => {
         const dataUpdated = {
-            facture:facture_,
-    };
-    console.log(dataUpdated)
+            facture: facture_,
+        };
+        console.log(dataUpdated)
         if (dataUpdated.facture != null) {
             Reparationdb.findByIdAndUpdate(reparation_id, dataUpdated, { upsert: true }, function (err, doc) {
                 if (err) {
@@ -297,7 +317,7 @@ exports.valider_facture = (reparation_id,facture_) => {
             reject({ status: 400, message: " champs invalide !" });
         }
     });
-    
+
 };
 
 exports.startReparation = async (req, res) => {

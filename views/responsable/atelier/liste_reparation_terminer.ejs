@@ -48,7 +48,7 @@
                                 <td><%=reparations[id].pourcentage%>%</td>
                                <td>
                                 <%if(reparations[id].data.facture!=null){%>
-                                    asina montant eto
+                                    <%=reparations[id].montant%>Ar
                                 <%} else {%>
                                     <span class="text-primary">facture attente de validation</span>
                                 <%}%>
@@ -63,7 +63,9 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                              <li><a class="dropdown-item" href="/etat-davancement/<%=reparations[id].data._id%>">L'état d'avancement</a></li>
-                                             <li><a class="dropdown-item" href="#">Facture</a></li>
+                                             <%if(reparations[id].data.facture!=null){%>
+                                                <li><a class="dropdown-item" href="/detail/<%=reparations[id].data._id%>/facture-client">Facture</a></li>
+                                            <%}%>
                                              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#valid<%=reparations[id].data._id%>">Valider la sortie</a></li>
                                             </ul>
                                     </div>

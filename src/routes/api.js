@@ -9,8 +9,7 @@ const employeController = require('../controllers/employerController');
 const defaultDataController = require('../controllers/DefaultDataController');
 const clientController = require('../controllers/ClientController');
 const voitureController = require('../controllers/VoitureController');
-const diagnostiqueController = require('../controllers/diagnostiqueController');
-
+const depenseController = require('../controllers/DepenseController');
 
 
 //=================== Route Super Admin ==================
@@ -93,6 +92,24 @@ route.post('/send-mail-teste', (req, res) => {
     });
 });
 
+
+//======================= API Depense ===================
+
+route.post('/depense.create', depenseController.saveDepense);
+route.put('/depense.update/:id', depenseController.updateDepense);
+route.delete('/depense.delete/:id', depenseController.deleteDepense);
+route.post('/other-depense.create', depenseController.saveOtherDepense);
+route.put('/other-depense.update/:id', depenseController.updateOtherDepense);
+route.delete('/other-depense.delete/:id', depenseController.deleteOtherDepense);
+route.post('/statistiqueFilter',depenseController.statistiqueFilter);
+
+route.get('/test-statistiques',(req,res)=>{
+    depenseController.statistiques().then(result=>{
+        res.send(result);
+    }).catch(err=>{
+        res.send({status:400,message:err.mesage});
+    })
+});
 // ====================== API User ==========================
 
 route.put('/desactived/:id/teams', (req, res) => {
@@ -110,6 +127,12 @@ route.put('/actived/:id/teams', (req, res) => {
         res.send({ status: 400, message: err.mesage })
     });
 });
+
+
+
+
+
+
 
 
 module.exports = route;

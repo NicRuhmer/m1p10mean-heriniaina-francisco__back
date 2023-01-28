@@ -14,6 +14,11 @@ var FactureSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
+    paiement:{
+        type:String,
+        require:true
+    }
+    ,
     status:{
         type:Boolean,
         default:false

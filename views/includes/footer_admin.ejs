@@ -55,6 +55,19 @@
 
     <script>
 
+      $(document).ready(function () {
+        getUserConnected();
+    });
+    
+    
+    
+    async function getUserConnected() {
+        const response = await fetch('/user-connected', { method: 'GET' });
+        const data = await response.json();
+        document.getElementById('name-user-connected').innerHTML = data.nicname;
+    }
+    
+
         const optionDataTable = {
             "sProcessing": "Traitement en cours ...",
             "sLengthMenu": "Afficher _MENU_ lignes",

@@ -1,0 +1,89 @@
+<%- include('../../../includes/header_responsable_financier') %>
+
+
+
+    <div class="container-fluid">
+        <div class="row d-flex">
+            <div class="col-md-5">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Dépense</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Liste</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <h5>Liste Dépence</h5>
+                <table class="table table-striped" id="list_reparation">
+                    <thead class="bg-success text-white">
+                        <tr>
+                            <th scope="col">Description</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                        <%for(var id=0;id<depenses.length;id++){%>
+                            <tr>
+                                <td><%=depenses[id].description%></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success
+                                            dropdown-toggle"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Plus
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ex<%=depenses[id]._id%>">Modifier</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick='delete_depense(<%=JSON.stringify(depenses[id]._id)%>)'>Supprimer
+                                             </a></li>
+                                        
+                                            </ul>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <div class="modal fade" id="ex<%=depenses[id]._id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Modification</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlInput1"
+                                                class="form-label">Description <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" value="<%=depenses[id].description%>" id="description<%=depenses[id]._id%>" name="description<%=depenses[id]._id%>" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-between">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                      <button type="button" class="btn btn-primary" onclick='edit_depense(<%=JSON.stringify(depenses[id]._id)%>)' data-bs-dismiss="modal">Modifier</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        <%}%>
+                           
+                            
+                    </table>
+            </div>
+            <div class="col-md-4">
+                <div class=" shadow p-3 mb-5 bg-body rounded" >
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1"
+                        class="form-label">Description <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="description" name="description" />
+                </div>
+               
+                <button id="save_new_depense" onclick="save_new_depense()" class="btn btn-success">Enregistrer</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+    <%- include('../../../includes/footer_responsable_financier') %>

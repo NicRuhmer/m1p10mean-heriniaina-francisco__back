@@ -1,11 +1,11 @@
 const moment = require('moment');
 moment.suppressDeprecationWarnings = true;
 
-const Roledb = require('../models/Role');
 const Userdb = require('../models/User');
 
 const employeController = require('../controllers/EmployerController');
 const reparationController = require('../controllers/reparationController');
+const depenseController = require('../controllers/DepenseController');
 
 
 exports.loginRoutes = (req, res) => {
@@ -33,8 +33,9 @@ exports.redirectPageRespAtelier = async(role_, res) => {
    res.render('responsable/atelier/index', { role: role_, moment: moment,reparations:reparations_, title: 'Gestion Panel-réception-des-voitures' });
 };
 
-exports.redirectPageRespFinancier = (role_, res) => {
-    res.render('responsable/financier/tableau_bord', { role: role_, moment: moment, title: 'Gestion Panel-creation-facture' });
+exports.redirectPageRespFinancier = async(role_, res) => {
+        const stat_ = await depenseController.statistiques();
+    res.render('responsable/financier/tableau_bord', { role: role_, moment: moment,statistiques:stat_, title: 'Gestion Panel- dashbord' });
 };
 
 exports.getData = (req, res) => {

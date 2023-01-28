@@ -48,7 +48,7 @@
                                             Plus
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="/accepter-la-reparation/<%=reparations[id]._id%>">Accepter</a></li>
+                                            <li><a role="button" class="dropdown-item" onclick="accepter_reparation_client(<%=JSON.stringify(reparations[id]._id)%>)" href="#">Accepter</a></li>
                                             </ul>
                                     </div>
                                 </td>

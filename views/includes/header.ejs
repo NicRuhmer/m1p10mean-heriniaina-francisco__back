@@ -4,67 +4,107 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/png" href="img/icons/favicon.ico"/>
+        <link rel="icon" type="image/png" href="logo/logo.png"/>
 
-        <title>Gestion d'appel</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-            crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css"
-            href="fonts/css/fontawesome.min.css">
-        <link rel="stylesheet" type="text/css" href="fonts/css/fontawesome.css">
-        <link rel="stylesheet" type="text/css" href="fonts/css/solid.css">
-        <link rel="stylesheet" type="text/css" href="fonts/css/solid.min.css">
-        <link rel="stylesheet" type="text/css" href="fonts/css/all.css">
-        <link rel="stylesheet" type="text/css" href="fonts/css/all.min.css">
-        <link rel="stylesheet" type="text/css" href="fonts/css/brands.css">
-        <link rel="stylesheet" type="text/css" href="fonts/css/brands.min.css">
-        <link rel="stylesheet" type="text/css" href="fonts/css/regular.css">
-        <link rel="stylesheet" type="text/css" href="fonts/css/regular.min.css">
-        <link rel="stylesheet" href="css/style_call.css">
-        <link rel="stylesheet" href="css/sms.css">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-  
-    </head>
-    <body>
+        <title><%= title%></title>
+            <link
+                href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+                rel="stylesheet"
+                integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+                crossorigin="anonymous">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
 
-        <nav class="navbar navbar-expand-lg bg-light shadow-sm p-3 mb-1 bg-body
-            ">
-            <div class="container-fluid">
-                <div class="d-flex me-5">
-                    <a href="/" class="navbar-brand"><img src="img/logo.png"
-                            width="45px" alt=""></a>
+            <link rel="stylesheet" type="text/css" href="/fonts/css/fontawesome.min.css">
+              <link rel="stylesheet" type="text/css" href="/fonts/css/fontawesome.css">
+              <link rel="stylesheet" type="text/css" href="/fonts/css/solid.css">
+              <link rel="stylesheet" type="text/css" href="/fonts/css/solid.min.css">
+              <link rel="stylesheet" type="text/css" href="/fonts/css/all.css">
+              <link rel="stylesheet" type="text/css" href="/fonts/css/all.min.css">
+              <link rel="stylesheet" type="text/css" href="/fonts/css/brands.css">
+              <link rel="stylesheet" type="text/css" href="/fonts/css/brands.min.css">
+              <link rel="stylesheet" type="text/css" href="/fonts/css/regular.css">
+              <link rel="stylesheet" type="text/css" href="/fonts/css/regular.min.css">
+        </head>
+        <body>
+
+            <nav class="navbar navbar-expand-lg shadow-sm p-4 mb-1 bg-body
+                bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/"><img
+                            src="/logo/Ostie_Logo_Color1.png" width="60px"
+                            height="60px" alt=""><%=role%></a>
+                    <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse"
+                        id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex
+                            justify-content-center">
+
+                            <%if(role=="isAtelied"){%>
+                            <li class="nav-item ms-5">
+                                <a class="nav-link  <%= title === 'Gestion Panel-réception-des-voitures' && 'active' %>" aria-current="page"
+                                    href="/">Voiture déposer</a>
+                            </li>
+                            
+                            <li class="nav-item mx-3">
+                                <a class="nav-link <%= title === 'Gestion Panel- voitures-réceptionnners' && 'active' %>" aria-current="page"
+                                    href="/voiture_receptionner">Voiture réceptionner</a>
+                            </li>
+
+                            <li class="nav-item  mx-3">
+                                <a class="nav-link <%= title === 'Gestion Panel- réparation-terminer' && 'active' %>" href="/reparation-terminer" >
+                                 Réparation en cours
+                                </a>
+                                
+                              </li>
+                              <%}%>
+
+                              <%if(role=="isFinancied"){%>
+                                <li class="nav-item ms-5">
+                                    <a class="nav-link active" aria-current="page"
+                                        href="/">Tableaux de bord</a>
+                                </li>
+    
+                                <li class="nav-item ms-5">
+                                    <a class="nav-link active" aria-current="page"
+                                        href="/facture-attente">Facture en attente</a>
+                                </li>
+    
+                                <li class="nav-item mx-3">
+                                    <a class="nav-link" aria-current="page"
+                                        href="/reparation-payer">Réparation facturer</a>
+                                </li>
+    
+                                <li class="nav-item mx-3">
+                                    <a class="nav-link" aria-current="page"
+                                        href="#">Dépence</a>
+                                </li>
+                              <%}%>
+                        </ul>
+                        <div class="d-flex btn-group ">
+                            <div class="nav-item dropdown ">
+                                <a class="nav-link dropdown-toggle" href="#"
+                                    id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <span id="name-user-connected"></span>
+                                </a>
+                                <ul class="dropdown-menu"
+                                    aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item"
+                                            href="#">Profile</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="/logout">Déconnexion</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <input type="text" class="form-control width-input w-25"
-                    autocomplete="off" onkeyup="showResult(this.value)"
-                    id="exampleFormControlInput1" placeholder="recherche
-                    contact">
-
-                <div id="inbox-list-sms" class="header-notification"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasScrollingSms"
-                    aria-controls="offcanvasScrolling"
-                    onclick="show_inbox_sms()">
-                    <i class="fa-solid fa-envelope"></i>
-                    <span class="badge bg-danger badge-cust">0</span>
-                </div>
-                <div class="d-flex justify-content-between ms-5 dropstart">
-                    <label class="nav-item nav-link me-1 " role="button"
-                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                        aria-expanded="false"> <i class="fa-solid fa-gear"></i></label>
-                    <ul class="dropdown-menu"
-                        aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item"
-                                href="/76546587GFsdvlkh89656678cdc987765345364756754554scwxw45576786454563786">Changement
-                                de mot de passe</a></li>
-                    </ul>
-                    <label class="nav-item nav-link ms-1 "
-                        id="name-user-connected"></label>
-                    <!--<label for="" class="int" id="email-user-connected"></label>-->
-                </div>
-            </div>
-        </nav>
+            </nav>

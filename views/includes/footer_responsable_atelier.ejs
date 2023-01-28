@@ -59,6 +59,19 @@
      <script src="/js/responsable/diagnostique.js"></script>
 
     <script>
+
+      $(document).ready(function () {
+        getUserConnected();
+    });
+    
+    
+    
+    async function getUserConnected() {
+        const response = await fetch('/user-connected', { method: 'GET' });
+        const data = await response.json();
+        document.getElementById('name-user-connected').innerHTML = data.nicname;
+    }
+    
       function toastError(description) {
         toastr.error('' + description + '', '<h5 class="text-white px-1 py-1"> Erreur </h5>',
             { positionClass: "position-absolute top-50 start-50 translate-middle-x", timeout: 4000, rtl: false });
