@@ -247,7 +247,10 @@ function filtre_list_depense_stat(){
             if (response.status == 400) {
                 toastError(response.message);
             } else {
-                show_data_stat(response);
+                document.getElementById("stat_chiffre_affaire").innerHTML=response.chiff_affaire.chiffre_daffaire+"Ar";
+                document.getElementById("stat_benefice").innerHTML=response.benefice+"Ar";
+             
+                show_data_stat(response.depense);
             }
         }).catch(err => {
             $('#loading_page').css("display", "none");

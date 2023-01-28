@@ -1,6 +1,7 @@
 var Diagnonstiquedb = require('../models/Diagnostique');
 var cReparation = require('./reparationController');
 var StatutReparationdb = require('../models/StatutReparation');
+const { ObjectId } = require("mongodb");
 
 exports.findAll = (reparation_id) => {
     return new Promise((resolve, reject) => {
@@ -70,9 +71,42 @@ exports.estimationReparation = (reparation_id_) => {
     });
 }
 
+/*
+exports.totaleChiffreAffaire = () => {
+    return new Promise(async (resolve, reject) => {
+        var totaleht = 0;
+        var totaletva = 0;
+        var tabTva_ = [];
+        Diagnonstiquedb.aggregate(
+            [
+              {
+                    $group:
+                    {
+                        _id:0,
+                        'totaleHt': { $sum:{ $multiply: ['$pu', '$qte'] } },
+                        'totalTvaInit':{$sum: { $multiply: ['$pu', '$qte','$tva'] }}
+                    }
+                },
+                { $project: { 
+                    _id: 1,
+                    totaleHt: 1,
+                    totaleTva: { $divide: [ "$totalTvaInit", 100 ] } } 
+                }
+            ]
+        ).then((totale) => {
+            totaleht = totale[0].totaleHt;
+            totaletva = totale[0].totaleTva;
+           resolve({status:200, chiffre_affaire:(totaleht+totaletva)});
+
+        }).catch((err) => {
+            reject({ status: 400, message: err.message });
+        });
+    });
+};*/
+
+/*
 exports.totaleMontant = (reparation_id_) => {
     return new Promise(async (resolve, reject) => {
-        var totalettc = 0;
         var totaleht = 0;
         var totaletva = 0;
         var tabTva_ = [];
@@ -114,6 +148,76 @@ exports.totaleMontant = (reparation_id_) => {
                         tabTva_.push({description:"TVA "+totale2[id]._id.tva+"%",totaleTva:totale2[id].totaleTva});
                     }
                     resolve({totaleHT:totaleht,totaleTTC:(totaleht+totaletva), totaleTVA:totaletva, tabTva:tabTva_});
+            });
+
+        }).catch((err) => {
+            reject({ status: 400, message: err.message });
+        });
+    });
+};
+*/
+
+
+exports.totaleMontant = (reparation_id_) => {
+    return new Promise(async (resolve, reject) => {
+        var totaleht = 0;
+        var totaletva = 0;
+        var tabTva_ = [];
+        Diagnonstiquedb.aggregate(
+            [
+              
+                {
+                    $group:
+                    {
+                        _id: { reparation: '$reparation' },
+                        'totaleHt': { $sum: { $multiply: ['$pu', '$qte'] } },
+                        'totalTvaInit': { $sum: { $multiply: ['$pu', '$qte', '$tva'] } }
+                    }
+                },
+                {
+                    $project: {
+                        reparation: '$_id.reparation',
+                         totaleHt: 1,
+                         totalTvaInit:1,
+                        // qte: 1,
+                        // tva: 1,
+                        // pu: 1,
+                        totaleTva: { $divide: [ "$totalTvaInit", 100 ] } 
+                    }
+                },
+                  {
+                    $match: {
+                        reparation: new ObjectId(""+reparation_id_)
+                    }
+                }
+            ]
+        ).then((totale) => {
+          //  resolve(totale);
+            totaleht = totale[0].totaleHt;
+            totaletva = totale[0].totaleTva;
+            Diagnonstiquedb.aggregate([
+                  {
+                    $match: {
+                        reparation: new ObjectId(""+reparation_id_)
+                    }
+                },{
+                    $group:
+                    {
+                        _id: { tva: "$tva" },
+                        'totalTvaInit': { $sum: { $multiply: ['$pu', '$qte', '$tva'] } }
+                    }
+                },
+                {
+                    $project: {
+                        'tva': '$_id.tva',
+                        totaleTva: { $sum: { $divide: ["$totalTvaInit", 100] } }
+                    }
+                }
+            ]).then((totale2) => {
+                for (var id = 0; id < totale2.length; id++) {
+                    tabTva_.push({ description: "TVA " + totale2[id]._id.tva + "%", totaleTva: totale2[id].totaleTva });
+                }
+                resolve({ totaleHT: totaleht, totaleTTC: (totaleht + totaletva), totaleTVA: totaletva, tabTva: tabTva_ });
             });
 
         }).catch((err) => {
@@ -174,6 +278,7 @@ exports.create = async (req, res) => {
 
 };
 
+
 exports.update = (req, res) => {
     const dataUpdated = {
         title: req.body.title,
@@ -189,6 +294,7 @@ exports.update = (req, res) => {
             if (err) {
                 res.send({ status: 400, message: "La modification a échoué!" });
             } else {
+
                 res.send({ status: 200, message: 'information a été modifié avec success!' });
             }
         });
@@ -196,6 +302,7 @@ exports.update = (req, res) => {
         res.send({ status: 400, message: " champs invalide !" });
     }
 };
+
 
 exports.updateFacture = (req, res) => {
     const dataUpdated = {

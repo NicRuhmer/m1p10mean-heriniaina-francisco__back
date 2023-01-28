@@ -40,8 +40,12 @@ exports.nouveauFacture = async (req, res) => {
 exports.detailFacture = async (req, res) => {
     const detail_ = await reparationController.findFactureByReparation(req.params.id);
     const diagnostiques_ = await diagnostiqueController.findAll(req.params.id);
-    const montant_ = await diagnostiqueController.totaleMontant(req.params.id);
+  diagnostiqueController.totaleMontant(req.params.id).then((montant_)=>{
     res.render('responsable/facture/detail_facture', { role: req.user.role.role, moment: moment, detail: detail_, diagnostiques: diagnostiques_, montant: montant_, title: 'Gestion Panel- facture' });
+  }).catch((err)=>{
+    res.send(err);
+  });
+  
 };
 
 exports.listOtherDepense = async (req, res) => {
