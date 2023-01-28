@@ -1,0 +1,24 @@
+.navbar{
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+
+}
+.lien{
+    background: linear-gradient(60deg, #80808054,#80808054);
+    color: black;
+    border-radius: 30px;
+    width: 120px;
+    text-align: center;
+}
+.lien:hover{
+    color: White !important;
+    background: linear-gradient(60deg, #8E2DE2,#4A00E0);
+    transition: all .3s;
+}
+
+.lien.active{
+    color: White !important;
+    background: linear-gradient(60deg, #8E2DE2,#4A00E0);
+}

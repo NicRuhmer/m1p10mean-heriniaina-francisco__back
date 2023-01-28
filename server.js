@@ -227,6 +227,7 @@ app.get('/', connectEnsureLogin.ensureLoggedIn(),redirectionWeb.getData);
 app.get('/8767545233123456787654SDFGKJXSgvgdey53636', redirectionWebSuperAdmin.new_spa);
 app.get('/reset_password/986874R234657898ZZ54545', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.reset_password);
 app.get('/liste_responsable', connectEnsureLogin.ensureLoggedIn(), redirectionWebSuperAdmin.listResponsable);
+// app.get('/liste_client', connectEnsureLogin.ensureLoggedIn(), redirectionWebSuperAdmin.listClient);
 app.get('/nouveau_responsable', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.nouveauResponsable);
 app.get('/modification/equipe/:id', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.modificationResponsable);
 

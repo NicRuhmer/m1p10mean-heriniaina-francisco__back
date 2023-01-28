@@ -12,7 +12,7 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <h5 class="card-title text-uppercase text-muted mb-0">Responsables
+                                                        <h5 class="card-title text-uppercase text-muted mb-0">Clients
                                                         </h5>
                                                         <span class="h2 font-weight-bold mb-0">10</span>
                                                     </div>
@@ -36,7 +36,7 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <h5 class="card-title text-uppercase text-muted mb-0">Responsables Actif
+                                                        <h5 class="card-title text-uppercase text-muted mb-0">Clients Actif
                                                         </h5>
                                                         <span class="h2 font-weight-bold mb-0">2</span>
                                                     </div>
@@ -60,7 +60,7 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <h5 class="card-title text-uppercase text-muted mb-0">Responsables Inactif</h5>
+                                                        <h5 class="card-title text-uppercase text-muted mb-0">Clients Inactif</h5>
                                                         <span class="h2 font-weight-bold mb-0">1</span>
                                                     </div>
                                                     <div class="col-auto">
@@ -109,43 +109,43 @@
                 </div>
                 
                 <table class="table table-hover" id="liste_responsable">
-                    <!-- <h1 class="text-white">Liste des responsables</h1> -->
+                    <h1 class="text-white">Liste des responsables</h1>
                     <thead class="">
                         <tr>
-                            <th scope="col">Fonction</th>
+                            <th scope="col">Status</th>
                             <th scope="cool">Nom</th>
                             <th scope="col">Email</th>
                             <th scope="col">Contact</th>
-                            <th scope="col" class="text-center">Action</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <%for(var i=0; i<employes.length;i++){%>
+                        <!-- <%for(var i=0; i<employes.length;i++){%>
 
-                            <%if(employes[i].user.status==false){%>
+                            <%if(employes[i].user.status==false){%> -->
                                 <tr>
-                                    <td class="">
-                                        <%=employes[i].user.role.description%>
+                                    <td class="text-danger">
+                                        <!-- <%=employes[i].user.role.description%> -->
                                     </td>
                                     <td> <a href="/modification/equipe/<%=employes[i]._id%>">
-                                            <%=employes[i].name%>
+                                            <!-- <%=employes[i].name%> -->
                                         </a> </td>
                                     <td> <a href="/modification/equipe/<%=employes[i]._id%>">
-                                            <%=employes[i].email%>
+                                            <!-- <%=employes[i].email%> -->
                                         </a> </td>
                                     </td>
-                                    <td class="">
-                                        <%=employes[i].contact%>
+                                    <td class="text-danger">
+                                        <!-- <%=employes[i].contact%> -->
                                     </td>
-                                    <td class="text-center">
+                                    <td>
                                         <div class="btn-group">
-                                            <button type="button" class="
+                                            <button type="button" class="btn btn-warning
                                                 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Plus
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item"
-                                                        onclick='actived(<%=JSON.stringify(employes[i].user._id)%>)'
+                                                        onclick=""
                                                         href="#">Activer</a></li>
                                                 <li><a class="dropdown-item"
                                                         href="/modification/equipe/<%=employes[i]._id%>">Modifier</a>
@@ -153,99 +153,47 @@
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
-                                                <li><a class="dropdown-item" href="#">Rétiré</a></li>
+                                                <li><a class="dropdown-item text-danger" href="#">Rétiré</a></li>
                                             </ul>
                                         </div>
                                     </td>
                                 </tr>
-                                <%} else {%>
+                                <!-- <%} else {%> -->
                                     <tr>
                                         <td>
-                                            <%=employes[i].user.role.description%>
+                                            <!-- <%=employes[i].user.role.description%> -->
                                         </td>
                                         <td> <a href="/modification/equipe/<%=employes[i]._id%>">
-                                                <%=employes[i].name%>
+                                                <!-- <%=employes[i].name%> -->
                                             </a> </td>
                                         <td> <a href="/modification/equipe/<%=employes[i]._id%>">
-                                                <%=employes[i].email%>
+                                                <!-- <%=employes[i].email%> -->
                                             </a> </td>
                                         </td>
                                         <td>
-                                            <%=employes[i].contact%>
+                                            <!-- <%=employes[i].contact%> -->
                                         </td>
-                                        <td class="text-center">
+                                        <td>
                                             <div class="btn-group">
-                                                <button type="button" class="
+                                                <button type="button" class="btn btn-warning
                                                 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Plus
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li><a class="dropdown-item"
-                                                            onclick='desactived(<%=JSON.stringify(employes[i].user._id)%>)'
+                                                            onclick=""
                                                             href="#">Désactiver</a></li>
                                                     <li><a class="dropdown-item"
-                                                            href="/modification/equipe/<%=employes[i]._id%>">Modifier</a>
+                                                            href="/modification/<%=employes[i]._id%>/equipe">Modifier</a>
                                                     </li>
                                                     <li>
                                                         <hr class="dropdown-divider">
                                                     </li>
-                                                    <li><a class="dropdown-item" href="#">Rétiré</a></li>
+                                                    <li><a class="dropdown-item text-danger" href="#">Rétiré</a></li>
                                                 </ul>
                                             </div>
                                         </td>
                                     </tr>
-                                    <%}%>
-
-                                        <%}%>
-
-                                            <!--<tr>
-                            <th scope="row">2</th>
-                            <td>Responsable financier</td>
-                            <td>M. Tonton</td>
-                            <td>tonton-financier@responsable.com</td>
-                            <td>034 55 222 33/ 032 11 222 11</td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-warning
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Désactiver/Activer</a></li>
-                                        <li><a class="dropdown-item" href="#">Modifier</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger"
-                                                href="#">Rétiré</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Responsable atelier</td>
-                            <td>M. Rafaël</td>
-                            <td>rafael-atelier@responsable.com</td>
-                            <td>034 55 222 33/ 032 11 222 11</td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-warning
-                                        dropdown-toggle"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Plus
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Désactiver/Activer</a></li>
-                                        <li><a class="dropdown-item" href="#">Modifier</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item text-danger"
-                                                href="#">Rétiré</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>-->
                 </table>
             </div>
         </div>

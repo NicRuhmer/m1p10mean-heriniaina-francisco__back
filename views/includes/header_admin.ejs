@@ -13,25 +13,31 @@
             rel="stylesheet"
             integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
             crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
           <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 
-            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+          <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+          <link rel="stylesheet" href="/css/header.css">
+          <link rel="stylesheet" href="/css/admin.css">
     </head>
     <body>
 
-            <nav class="navbar navbar-expand-lg shadow-sm p-4 mb-1 bg-body bg-light">
+            <nav class="navbar navbar-expand-lg px-4 py-0 mb-1">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="/"><img src="/logo/Ostie_Logo_Color1.png" width="60px" height="60px" alt=""></a>
+                  <a class="navbar-brand" href="/"><img src="/logo/logo.png" width="60px" height="60px" alt="">IDEAL <span class="text-danger">AUTO</span></a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center">
                       <li class="nav-item ms-5">
-                        <a class="nav-link <%= title === 'Gestion Panel-Responsable' && 'active' %>" aria-current="page" href="/">Responsables</a>
+                        <a class="nav-link <%= title === 'Gestion Panel-Responsable' && 'active' %> lien" aria-current="page" href="/">Responsables</a>
+                      </li>
+                      <li class="nav-item ms-5">
+                        <a class="nav-link <%= title === 'Gestion Panel- client' && 'active' %> lien" aria-current="page" href="/nouveau_responsable">Clients</a>
                       </li>
                       <li class="nav-item mx-5">
-                        <a class="nav-link <%= title === 'Gestion Panel-Nouveau' && 'active' %>" href="/nouveau_responsable">Nouveau</a>
+                        <a class="nav-link <%= title === 'Gestion Panel-Nouveau' && 'active' %> lien" href="/nouveau_responsable">Nouveau</a>
                       </li>
                     </ul>
                     <div class="d-flex btn-group ">
