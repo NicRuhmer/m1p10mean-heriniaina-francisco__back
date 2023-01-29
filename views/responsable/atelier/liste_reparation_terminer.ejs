@@ -11,13 +11,13 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col">
-                                                <h5 class="card-title text-uppercase text-muted mb-0">Voitures en réparations
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Voitures en
+                                                    réparations
                                                 </h5>
                                                 <span class="h2 font-weight-bold mb-0">10</span>
                                             </div>
                                             <div class="col-auto">
-                                                <div
-                                                    class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                                <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
                                                     <i class="fas fa-chart-bar"></i>
                                                 </div>
                                             </div>
@@ -47,24 +47,34 @@
                             <th scope="col">Client</th>
                             <th scope="col">Estimation</th>
                             <th scope="cool">Montant</th>
-                            
+
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <% for(var id=0;id<reparations.length;id++){%>
+                        <% for(var id=0;id<reparations.length;id++){%>
 
                             <tr>
-                                <td><%=moment(reparations[id].data.createdAt).format('DD MMMM YYYY')%></td>
-                                 <td> <%if(reparations[id].data.release_date!=null){%>
-                                    <%=moment(reparations[id].data.release_date).format('DD MMMM YYYY')%>
-                                    <%} else {%>
-                                        <span class="text-primary">---</span>
-                                    <%}%></td>
-                                <td><%=reparations[id].data.voiture.description%></td>
-                                <td><%=reparations[id].data.voiture.matricule%></td>
-                                <td> <div>
-                                        <p><%=reparations[id].data.voiture.client.name+" "+reparations[id].data.voiture.client.username%><br>
+                                <td>
+                                    <%=moment(reparations[id].data.createdAt).format('DD MMMM YYYY')%>
+                                </td>
+                                <td>
+                                    <%if(reparations[id].data.release_date!=null){%>
+                                        <%=moment(reparations[id].data.release_date).format('DD MMMM YYYY')%>
+                                            <%} else {%>
+                                                <span class="text-primary">---</span>
+                                                <%}%>
+                                </td>
+                                <td>
+                                    <%=reparations[id].data.voiture.description%>
+                                </td>
+                                <td>
+                                    <%=reparations[id].data.voiture.matricule%>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p>
+                                            <%=reparations[id].data.voiture.client.name+" "+reparations[id].data.voiture.client.username%><br>
                                             <%=reparations[id].data.voiture.client.email%> <br>
                                             <%=reparations[id].data.voiture.client.contact%>
                                         </p>
@@ -75,53 +85,66 @@
                                 <%if(reparations[id].data.facture!=null){%>
                                     asina montant eto
                                 <%} else {%>
-                                    <span class="text-primary">facture attente de validation</span>
-                                <%}%>
-                               </td>
+                                    <span class=" text-primary">facture attente de validation</span>
+                                                <%}%>
+                                </td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-success
-                                            dropdown-toggle"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false">
+                                            dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                             Plus
                                         </button>
                                         <ul class="dropdown-menu">
-                                             <li><a class="dropdown-item" href="/etat-davancement/<%=reparations[id].data._id%>">L'état d'avancement</a></li>
-                                             <li><a class="dropdown-item" href="#">Facture</a></li>
-                                             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#valid<%=reparations[id].data._id%>">Valider la sortie</a></li>
-                                            </ul>
+                                            <li><a class="dropdown-item"
+                                                    href="/etat-davancement/<%=reparations[id].data._id%>">L'état
+                                                    d'avancement</a></li>
+                                            <li><a class="dropdown-item" href="#">Facture</a></li>
+                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#valid<%=reparations[id].data._id%>">Valider la
+                                                    sortie</a></li>
+                                        </ul>
                                     </div>
                                 </td>
                             </tr>
 
-                            <div class="modal fade" id="valid<%=reparations[id].data._id%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal fade" id="valid<%=reparations[id].data._id%>" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                aria-hidden="true">
                                 <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="staticBackdropLabel">Validation de la sortir du vehicule de "<%=reparations[id].data.voiture.matricule%>"</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                          
-                                          <div class="mb-3">
-                                              <label for="exampleFormControlInput1"
-                                                  class="form-label">Date de sortir de la voiture
-                                              </label>
-                                              <input type="date" class="form-control"   id="release_date" name="release_date">
-                                          </div>
-                                    </div>
-                                    <div class="modal-footer d-flex justify-content-between">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                      <button type="button" data-bs-dismiss="modal" onclick='valid_release_date(<%=JSON.stringify(reparations[id].data._id)%>)' data-bs-dismiss="modal" data-id="<%=reparations[id].data._id%>" class="btn btn-primary">Valider la sortir</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                        <%}%>
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Validation de la sortir du
+                                                vehicule de "<%=reparations[id].data.voiture.matricule%>"</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
 
-                    </table>
-                </div>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">Date de sortir
+                                                    de la voiture
+
+
+                                                </label>
+                                                <input type="date" class="form-control" id="release_date"
+                                                    name="release_date">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-between">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" data-bs-dismiss="modal"
+                                                onclick='valid_release_date(<%=JSON.stringify(reparations[id].data._id)%>)'
+                                                data-bs-dismiss="modal" data-id="<%=reparations[id].data._id%>"
+                                                class="btn btn-primary">Valider la sortir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
+
+                </table>
             </div>
         </div>
-        <%- include('../../includes/footer_responsable_atelier') %>
+    </div>
+    <%- include('../../includes/footer_responsable_atelier') %>
