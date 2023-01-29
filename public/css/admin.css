@@ -719,24 +719,58 @@ p {
     line-height: 1.7;
 }
 
-.dataTables_wrapper{
+.dataTables_wrapper {
     background: white;
     padding: 1em 3em;
     border-radius: 20px;
     margin-bottom: 5em;
 }
-.table{
+
+.table {
     color: black !important;
 }
-.table a{
+
+.table a {
     text-decoration: none;
     color: inherit;
 }
-.table button{
+
+.table button {
     font-size: .9em;
     width: 100px;
     border: none;
     background-color: #5e72e4;
     color: white;
     border-radius: 20px;
+}
+
+button {
+    /* font-size: .9em; */
+    width: auto;
+    border: none;
+    background-color: #233dd2;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 20px;
+}
+
+button:hover {
+    background-color: #8E2DE2;
+    color: white;
+}
+
+.content {
+    min-height: 100vh;
+}
+
+.diag {
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.list-group-item{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
