@@ -12,6 +12,8 @@
                 rel="stylesheet"
                 integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
                 crossorigin="anonymous">
+                <link rel="stylesheet" href="/css/header_finance.css">
+                <link rel="stylesheet" href="/css/admin.css">
             <link
                 href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
                 rel="stylesheet" />
@@ -37,12 +39,12 @@
         </head>
         <body>
 
-            <nav class="navbar navbar-expand-lg shadow-sm p-4 mb-1 bg-body
+            <nav class="navbar navbar-expand-lg shadow-sm  mb-1 bg-body
                 bg-light">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="/"><img
-                            src="/logo/Ostie_Logo_Color1.png" width="60px"
-                            height="60px" alt=""></a>
+                            src="/logo/logo.png" width="60px"
+                            height="60px" alt="">IDEAL<span class="text-danger">AUTO</span></a>
                     <button class="navbar-toggler" type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent"
@@ -55,29 +57,29 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex
                             justify-content-center">
 
-                            <li class="nav-item ms-5">
-                                <a class="nav-link <%= title === 'Gestion Panel- dashbord' && 'active' %>" aria-current="page"
+                            <li class="nav-item ms-5 me-4">
+                                <a class="nav-link <%= title === 'Gestion Panel- dashbord' && 'active' %> lien" aria-current="page"
                                     href="/">Tableaux de bord</a>
                             </li>
 
-                            <li class="nav-item ms-5">
-                                <a class="nav-link <%= title === 'Gestion Panel-Facture-attente' && 'active' %>" aria-current="page"
-                                    href="/facture-attente">Facture en attente</a>
+                            <li class="nav-item me-4">
+                                <a class="nav-link <%= title === 'Gestion Panel-Facture-attente' && 'active' %> lien" aria-current="page"
+                                    href="/facture-attente">Non Facturés</a>
                             </li>
 
-                            <li class="nav-item mx-3">
-                                <a class="nav-link <%= title === 'Gestion Panel- facture' && 'active' %>" aria-current="page"
-                                    href="/reparation-payer">Réparation facturer</a>
+                            <li class="nav-item me-4">
+                                <a class="nav-link <%= title === 'Gestion Panel- facture' && 'active' %> lien" aria-current="page"
+                                    href="/reparation-payer">En Facturation</a>
                             </li>
 
-                            <li class="nav-item mx-3">
-                                <a class="nav-link <%= title === 'Gestion Panel- depense' && 'active' %>" aria-current="page"
-                                    href="/depense">Dépence</a>
+                            <li class="nav-item me-4">
+                                <a class="nav-link <%= title === 'Gestion Panel- depense' && 'active' %> lien" aria-current="page"
+                                    href="/depense">Dépenses</a>
                             </li>
 
-                            <li class="nav-item mx-3">
-                                <a class="nav-link <%= title === 'Gestion Panel- ajout-depense' && 'active' %>" aria-current="page"
-                                    href="/ajout-depense">Ajout dépence</a>
+                            <li class="nav-item ">
+                                <a class="nav-link <%= title === 'Gestion Panel- ajout-depense' && 'active' %> lien" aria-current="page"
+                                    href="/ajout-depense">Ajout Dépenses</a>
                             </li>
 
                         </ul>
@@ -91,9 +93,6 @@
                                 </a>
                                 <ul class="dropdown-menu"
                                     aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item"
-                                            href="#">Profile</a></li>
-                                    <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="/logout">Déconnexion</a></li>
                                 </ul>
                             </div>

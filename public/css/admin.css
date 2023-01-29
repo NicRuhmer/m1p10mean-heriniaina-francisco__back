@@ -719,7 +719,8 @@ p {
     line-height: 1.7;
 }
 
-.dataTables_wrapper {
+.dataTables_wrapper,
+.no_dataTable {
     background: white;
     padding: 1em 3em;
     border-radius: 20px;
@@ -761,6 +762,7 @@ button:hover {
 
 .content {
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .diag {
@@ -773,4 +775,16 @@ button:hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     margin-bottom: 10px;
     margin-top: 10px;
+}
+.details{
+    width: auto;
+    border: none;
+    background-color: #233dd2;
+    color: white;
+    border-radius: 20px;
+    padding: 3px 10px;
+}
+.details:hover{
+    background-color: #8E2DE2;
+    color: white;
 }

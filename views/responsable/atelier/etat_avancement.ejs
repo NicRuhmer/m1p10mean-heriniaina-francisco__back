@@ -1,8 +1,101 @@
 <%- include('../../includes/header_responsable_atelier') %>
 
     <div class="container-fluid pt-5 pb-5 content bg-gradient-primary">
+
         <div class="row">
-            <div class="header pb-8 pt-5 pt-md-8">
+            <div class="header pb-4 pt-4 pt-md-4">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-4 col-lg-4">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Vehicule
+                                                </h5>
+                                                <span class="h2 font-weight-bold mb-0" id="">
+                                                    <%=detail.voiture.description%>
+                                                </span>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                                                    <i class="fas fa-car"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted" id="">
+                                                    <%=detail.voiture.matricule%>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Client
+                                                </h5>
+                                                <span class="h2 font-weight-bold mb-0" id="">
+                                                    <%=detail.voiture.client.name%>
+                                                </span>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted" id="">
+                                                    <%=detail.voiture.client.email%>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Equipe
+                                                </h5>
+                                                <span class="h2 font-weight-bold mb-0" id="">
+                                                    <%=detail.employe.name%>
+                                                </span>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                                                    <i class="fas fa-users"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted" id="">
+                                                    <%=detail.employe.email%>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="header pb-4 pt-4 pt-md-4">
                 <div class="container-fluid">
                     <div class="header-body">
                         <div class="row justify-content-center">
@@ -99,24 +192,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="row">
-            <div class="col-md-4">
-                <div class="card shadow-sm p-3 mb-1 bg-body rounded">
-                    <h5>Vehicule: <%=detail.voiture.description%>
-                    </h5>
-                    <h5>Matricule: <%=detail.voiture.matricule%>
-                    </h5>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card shadow-sm p-3 mb-1 bg-body rounded">
-                    <h5>Client: <%=detail.voiture.client.name+" "+detail.voiture.client.username%></h5>
-                <h5>email:  <%=detail.voiture.client.email%></h5>
-        </div>
-    </div>
-
-
-            </div> -->
 
 
         <div class="row px-3 justify-content-center">

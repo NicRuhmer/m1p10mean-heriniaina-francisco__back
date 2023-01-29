@@ -2,44 +2,34 @@
 
 
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb" class="mb-3">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Dépense</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Liste</li>
-                    </ol>
-                </nav>
+    <div class="container-fluid content pt-5 bg-gradient-primary">
+        <div class="row d-flex justify-content-center mt-3">
+            <div class="col-md-6">
+                <div class="mb-3 rounded">
+                    <div class="mb-3">
+                        <div class="mb-3 d-flex">
+                            <label for="exampleFormControlInput1" class="form-label me-2 text-white">Filtrer</label>
+                            <input id="date_filter" name="date_filter" type="date" class="form-control me-2" />
+                            <select class="form-select me-2" id="categorie_filter" name="categorie_filter">
+                                <option value="YEAR">Année</option>
+                                <option value="MONTH">Mensuelle</option>
+                                <option value="DAY">Journalier</option>
+                            </select>
+                            <button type="button" onclick='filtre_list_other_depense()' class="btn btn-dark"
+                                id="filter_stat_">Filtrer</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-8">
-                <div class="mb-3  shadow p-3 mb-5 bg-body rounded">
-                    <h5>Filtre</h5>
-                    <div class="mb-3">
-                        <div class="mb-3 d-flex">
-                            <label for="exampleFormControlInput1"
-                            class="form-label">Choisir<span
-                                class="text-danger">*</span></label>
-                           <input id="date_filter" name="date_filter" type="date" class="form-control" />
-                           <select class="form-select" id="categorie_filter" name="categorie_filter">
-                                   <option value="YEAR">Année</option>
-                                   <option value="MONTH">Mensuelle</option>
-                                   <option value="DAY">Journalier</option>
-                           </select>
-                           <button type="button" onclick="filtre_list_other_depense()" class="btn btn-success">Filtrer</button>
-                         
-                        </form>
-                        </div>
-    
-                    </div>
-                </div>
+                <h2 class="text-white">Liste des dépenses</h2>
+                <div class="mb-3 shadow p-3 mb-5 bg-body rounded">
 
-                <h5>Liste Dépence</h5>
                 <div id="show_modal_other_depense"></div>
-                <table class="table table-striped" id="list_reparation">
-                    <thead class="bg-success text-white">
+                <table class="table table-hover" id="list_reparation">
+                    <thead class="">
                         <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Object</th>
@@ -82,7 +72,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class=" shadow p-3 mb-5 bg-body rounded" >
-                                            <div class="mb-3 d-flex">
+                                            <div class="mb-3">
                                                 <label for="exampleFormControlInput1"
                                                 class="form-label">Date<span
                                                     class="text-danger">*</span></label>
@@ -156,19 +146,18 @@
                 
                     </table>
             </div>
+        </div>
             <div class="col-md-4">
+                <h2 class="text-white">Insérer un dépense</h2>
                 <div class=" shadow p-3 mb-5 bg-body rounded" >
-                    <div class="mb-3 d-flex">
-                        <label for="exampleFormControlInput1"
-                        class="form-label">Date<span
-                            class="text-danger">*</span></label>
-                       <input id="date" name="date" type="date" class="form-control" />
-                    </div>
-
                     <div class="mb-3">
                         <label for="exampleFormControlInput1"
-                        class="form-label">Type de dépense...<span
-                            class="text-danger">*</span></label>
+                            class="form-label">Date<span
+                                class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="date" name="date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="depense" class="form-label">Type de dépense...<span class="text-danger">*</span></label>
                         <select class="form-select" id="depense" name="depense" aria-label="Default select example">
                             <% for(var id=0;id<depenses.length;id++){%>
                                 <option value="<%=depenses[id]._id%>"><%=depenses[id].description%></option>
@@ -199,9 +188,10 @@
                             placeholder="Totale TTC (Ar) ">
                             <span class="text-danger" id="totale_error"></span>
                     </div>
-                <button id="other_depense" onclick="save_new_other_depense()" class="btn btn-success">Enregistrer</button>
+                    <div class="text-center">
+                        <button id="other_depense" onclick="save_new_other_depense()" class="w-50">Enregistrer</button>
+                    </div>
             </div>
-
             </div>
         </div>
     </div>

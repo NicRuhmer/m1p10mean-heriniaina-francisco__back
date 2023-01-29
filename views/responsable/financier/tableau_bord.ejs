@@ -1,81 +1,176 @@
 <%- include('../../includes/header_responsable_financier') %>
-
-
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb" class="mb-3">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Tableau de bord</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Liste</li>
-                    </ol>
-                </nav>
-                </div>
-            </div>
-        </div>
-
-        <div class="row d-flex justify-content-start">
-            <div class="col-md-4">
-                <div class="mb-3  shadow p-3 mb-5 bg-body rounded">
-                    <h5>Filtre</h5>
-                    <div class="mb-3">
-                        <div class="mb-3 d-flex">
-                            <label for="exampleFormControlInput1"
-                            class="form-label">Choisir<span
-                                class="text-danger">*</span></label>
-                           <input id="date_filter" name="date_filter" type="date" class="form-control" />
-                           <select class="form-select" id="categorie_filter" name="categorie_filter">
-                                   <option value="YEAR">Année</option>
-                                   <option value="MONTH">Mensuelle</option>
-                                   <option value="DAY">Journalier</option>
-                           </select>
-                           <button type="button" onclick='filtre_list_depense_stat()' class="btn btn-success" id="filter_stat_">Filtrer</button>
+    <div class="container-fluid content pt-5 bg-gradient-primary">
+        <div class="row mt-5">
+            <div class="header pb-4 pt-4 pt-md-4">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-3 col-lg-6">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Chiffres d'affaires
+                                                </h5>
+                                                <span class="h2 font-weight-bold mb-0"><%=chiffre_affaire%> Ar</span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                                    <i class="fas fa-chart-bar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <p class="mt-3 mb-0 text-muted text-sm">
+                                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>
+                                                3.48%</span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Bénefices
+                                                </h5>
+                                                <span class="h2 font-weight-bold mb-0"><%=benefice%> Ar</span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                                    <i class="fas fa-chart-pie"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <p class="mt-3 mb-0 text-muted text-sm">
+                                            <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i>
+                                                3.48%</span>
+                                            <span class="text-nowrap">Since last week</span>
+                                        </p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Temps de réparation</h5>
+                                                <span class="h2 font-weight-bold mb-0"><%=moyen_temps_reparation%>h en moyenne</span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                                                    <i class="fas fa-users"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <p class="mt-3 mb-0 text-muted text-sm">
+                                            <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i>
+                                                1.10%</span>
+                                            <span class="text-nowrap">Since yesterday</span>
+                                        </p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-xl-3 col-lg-6">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">
+                                                    Clients</h5>
+                                                <span class="h2 font-weight-bold mb-0">25</span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                                    <i class="fas fa-percent"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="mt-3 mb-0 text-muted text-sm">
+                                            <span class="text-success mr-2"><i class="fas fa-arrow-up"></i>
+                                                12%</span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> -->  
                         </div>
-    
                     </div>
                 </div>
-                </div>
             </div>
         </div>
-        
 
-        <div class="row">
-            <div class="col-md-6 p-3">
+        <div class="row justify-content-center">
+            <!-- <div class="col-md-6 p-3">
                 <div class="shadow p-3 mb-3 bg-body rounded">
                     <h6 class="text-primary">Chiffre d'affaire</h6>
-               
-                    <h5 id="stat_chiffre_affaire"><%=chiffre_affaire%>Ar</h5>
+
+                    <h5 id="stat_chiffre_affaire">
+                        <%=chiffre_affaire%>Ar
+                    </h5>
                 </div>
 
                 <div class="shadow p-3  mb-3 bg-body rounded">
-                        <h6 class="text-primary">Bénefice</h6>
-                 
-                    <h5 id="stat_benefice"><%=benefice%>Ar</h5>
+                    <h6 class="text-primary">Bénefice</h6>
+
+                    <h5 id="stat_benefice">
+                        <%=benefice%>Ar
+                    </h5>
                 </div>
 
                 <div class="shadow p-3 bg-body rounded">
                     <h6 class="text-primary">Temps de réparation moyen pour une voiture</h6>
-             
-                    <h5 id="stat_moyen_temps_reparation"><%=moyen_temps_reparation%>heure environt</h5>
+
+                    <h5 id="stat_moyen_temps_reparation">
+                        <%=moyen_temps_reparation%>heure environt
+                    </h5>
                 </div>
-               
-            </div>
+
+            </div> -->
             <div class="col-md-6 p-3">
                 <div class="shadow p-3 mb-5 bg-body rounded">
-                        <h6 class="text-primary">Dépense</h6>
-                   
-                        <div id="list_depense_data">
-                            <%for(var ids=0;ids<statistiques.length;ids++){%>
-                                <div class="d-flex justify-content-between mb-3">
-                                    <h6><%=statistiques[ids].depense.description%></h6>
-                                    <h5><%=statistiques[ids].totale%>Ar</h5>
-                                </div>
+                    <h3 class="text-center">Dépense</h3>
+
+                    <div id="list_depense_data">
+                        <%for(var ids=0;ids<statistiques.length;ids++){%>
+                            <div class="d-flex justify-content-between mb-3">
+                                <h5 class="text-uppercase text-muted">
+                                    <%=statistiques[ids].depense.description%>
+                                </h5>
+                                <h5 class="h2 font-weight-bold mb-0">
+                                    <%=statistiques[ids].totale%> Ar
+                                </h5>
+                            </div>
                             <%}%>
-                        </div>
-                       
+                    </div>
                 </div>
-               
+            </div>
+            <div class="row d-flex justify-content-center mt-3">
+                <div class="col-md-6">
+                    <div class="mb-3 rounded">
+                        <div class="mb-3">
+                            <div class="mb-3 d-flex">
+                                <label for="exampleFormControlInput1" class="form-label me-2 text-white">Filtrer</label>
+                                <input id="date_filter" name="date_filter" type="date" class="form-control me-2" />
+                                <select class="form-select me-2" id="categorie_filter" name="categorie_filter">
+                                    <option value="YEAR">Année</option>
+                                    <option value="MONTH">Mensuelle</option>
+                                    <option value="DAY">Journalier</option>
+                                </select>
+                                <button type="button" onclick='filtre_list_depense_stat()' class="btn btn-dark"
+                                    id="filter_stat_">Filtrer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <%- include('../../includes/footer_responsable_financier') %>
+    </div>
+
+    <%- include('../../includes/footer_responsable_financier') %>

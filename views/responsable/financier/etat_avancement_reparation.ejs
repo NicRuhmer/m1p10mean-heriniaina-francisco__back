@@ -1,167 +1,327 @@
 <%- include('../../includes/header_responsable_financier') %>
 
-
-
-    <div class="container-fluid">
+    <div class="container-fluid content pt-5 bg-gradient-primary">
         <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb" class="mb-3">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Voiture
-                                réceptionner</a></li>
-                        <li class="breadcrumb-item"><a href="/"><%=detail.voiture.description%></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">État
-                            d'avancement</li>
-                    </ol>
-                </nav>
+            <div class="header pb-4 pt-4 pt-md-4">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-4 col-lg-4">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Vehicule
+                                                </h5>
+                                                <span class="h2 font-weight-bold mb-0" id="">
+                                                    <%=detail.voiture.description%>
+                                                </span>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                                                    <i class="fas fa-car"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted" id="">
+                                                    <%=detail.voiture.matricule%>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Client
+                                                </h5>
+                                                <span class="h2 font-weight-bold mb-0" id="">
+                                                    <%=detail.voiture.client.name%>
+                                                </span>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted" id="">
+                                                    <%=detail.voiture.client.email%>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Equipe
+                                                </h5>
+                                                <span class="h2 font-weight-bold mb-0" id="">
+                                                    <%=detail.employe.name%>
+                                                </span>
+
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                                                    <i class="fas fa-users"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted" id="">
+                                                    <%=detail.employe.email%>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-
-  <div class="row">
-    <div class="col-md-4">  
-          <div class="card shadow-sm p-3 mb-1 bg-body rounded">
-                <h5>Vehicule:  <%=detail.voiture.description%></h5>
-                <h5>Matricule:  <%=detail.voiture.matricule%></h5>
-               <h5>Client:  <%=detail.voiture.client.name+" "+detail.voiture.client.username%></h5>
-                <h5>email:  <%=detail.voiture.client.email%></h5>
-          </div>
-    </div>
-     <div class="col-md-4">  
-          <div class="card shadow-sm p-3 mb-1 bg-body rounded">
-                 <h5>Equipe:  <%=detail.employe.name%></h5>
-                <h5>email:  <%=detail.employe.email%></h5>
-        </div>
-    </div>
-
-    <div class="col-md-4">  
-        <div class="card shadow-sm p-3 mb-1 bg-body rounded">
-                <h6>Estimation à faire:  <span id="estimation_task"><%=task_pourcentage%>%</span></h6>
-                <h6>Estimation en cours: <span id="estimation_progress"><%=progress_pourcentage%>%</span></h6>
-                <h6>Estimation terminer: <span id="estimation_finish"><%=finish_pourcentage%>%</span></h6>
-        </div>
-    </div>
-   
-  </div>
-
-
         <div class="row">
-            <div class="col-md-4 card p-0">
+            <div class="header pb-4 pt-4 pt-md-4">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-3 col-lg-6">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Estimation à faire
+                                                </h5>
+                                                <span class="h2 font-weight-bold mb-0" id="estimation_task">
+                                                    <%=task_pourcentage%>%
+                                                </span>
 
-                <div class="card-header px-2">  À Faire </div>
-                <ul class="list-group list-group-flush px-1">
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                                    <i class="fas fa-percent"></i>
+                                                </div>
+                                            </div>
 
-                    <%if(tasks.length>0){%>
-                        <%for(var id=0;id<tasks.length;id++){%>
-
-                            <li class="list-group-item" id="<%=tasks[id]._id%>" data-id="<%=tasks[id]._id%>" >
-                                <div class="d-flex justify-content-between">
-                                    <p><%=tasks[id].title%> <br>
-                                        estimation:<%=tasks[id].duration+" heure"%> <br>
-                                        quantité:<%=tasks[id].qte%> <br>
-                                        prix:<%=tasks[id].pu%>Ar
-                                    </p> 
-                                    <a  role="button" data-bs-toggle="collapse" href="#coll<%=tasks[id]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=tasks[id]._id%>">
-                                        description
-                                      </a>
-                                </div>
-                                <div class="collapse" id="coll<%=tasks[id]._id%>">
-                                    <div class=" card-body">
-                                     <%=tasks[id].description%>
+                                        </div>
+                                        <div class="progress p-0 mt-4">
+                                            <div class="progress-bar bg-danger" role="progressbar" id="estimation_task2"
+                                                aria-label="Success example" style="width: <%=task_pourcentage%>%"
+                                                aria-valuemin="0" aria-valuemax="100">
+                                                <%=task_pourcentage%>%
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            
-                            </li>
-        
-                            <%}%>
-
-                        <%}else{%>
-                            <li class="list-group-item text-center" >
-                                Aucun tâches est attente
-                            </li>
-                        <%}%>
-
-                    
-
-              
-                </ul>
-
-            </div>
-            <div class="col-md-4 card p-0">
-                <div class="card-header px-2">  En Cours</div>
-                <ul class="list-group list-group-flush">
-                    <%if(progress.length>0){%>
-                        <%for(var ids=0;ids<progress.length;ids++){%>
-
-                            <li class="list-group-item" id="<%=progress[ids]._id%>" data-id="<%=progress[ids]._id%>" >
-                                <div class="d-flex justify-content-between">
-                                    <p><%=progress[ids].title%> <br>
-                                        estimation:<%=progress[ids].duration+" heure"%> <br>
-                                        quantité:<%=progress[ids].qte%> <br>
-                                        prix:<%=progress[ids].pu%>Ar
-                                    </p> 
-                                    <a  role="button" data-bs-toggle="collapse" href="#coll<%=progress[ids]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=progress[ids]._id%>">
-                                        description
-                                      </a>
-                                </div>
-                                <div class="collapse" id="coll<%=progress[ids]._id%>">
-                                    <div class=" card-body">
-                                     <%=progress[ids].description%>
+                            </div>
+                            <div class="col-xl-3 col-lg-6">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Estimation en
+                                                    cours
+                                                </h5>
+                                                <span class="h2 font-weight-bold mb-0" id="estimation_progress">
+                                                    <%=progress_pourcentage%>%
+                                                </span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                                    <i class="fas fa-percent"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="progress p-0 mt-4">
+                                            <div class="progress-bar bg-warning" role="progressbar"
+                                                id="estimation_progress2" aria-label="Success example"
+                                                style="width: <%=progress_pourcentage%>%" aria-valuemin="0"
+                                                aria-valuemax="100">
+                                                <%=progress_pourcentage%>%
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                               
-                            </li>
-        
-                            <%}%>
-                        <%}else{%>
-                            <li class="list-group-item text-center" >
-                                Aucun tâches en cours pour le moment
-                            </li>
-                        <%}%>
-                    
-                </ul>
-            </div>
-
-
-            <div class="col-md-4 card p-0" >
-                <div class="card-header px-2">  Terminer  </div>
-                <ul class="list-group list-group-flush">
-                    <%if(finish.length>0){%>
-                        <%for(var idz=0;idz<finish.length;idz++){%>
-
-                            <li class="list-group-item" id="<%=finish[idz]._id%>" data-id="<%=finish[idz]._id%>" >
-                                <div class="d-flex justify-content-between">
-                                    <p><%=finish[idz].title%> <br>
-                                        estimation:<%=finish[idz].duration+" heure"%> <br>
-                                        quantité:<%=finish[idz].qte%> <br>
-                                        prix:<%=finish[idz].pu%>Ar
-                                    </p> 
-                                    <a  role="button" data-bs-toggle="collapse" href="#coll<%=finish[idz]._id%>" role="button" aria-expanded="false" aria-controls="coll<%=finish[idz]._id%>">
-                                        description
-                                      </a>
-                                </div>
-                                <div class="collapse" id="coll<%=finish[idz]._id%>">
-                                    <div class=" card-body">
-                                     <%=finish[idz].description%>
+                            </div>
+                            <div class="col-xl-3 col-lg-6">
+                                <div class="card card-stats mb-4 mb-xl-0">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Estimation
+                                                    terminer</h5>
+                                                <span class="h2 font-weight-bold mb-0" id="estimation_finish">
+                                                    <%=finish_pourcentage%>%
+                                                </span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon icon-shape bg-success text-white rounded-circle shadow">
+                                                    <i class="fas fa-percent"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="progress p-0 mt-4">
+                                            <div class="progress-bar bg-success" role="progressbar"
+                                                id="estimation_finish2" aria-label="Success example"
+                                                style="width: <%=finish_pourcentage%>%" aria-valuemin="0"
+                                                aria-valuemax="100">
+                                                <%=finish_pourcentage%>%
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                              
-                            </li>
-        
-                            <%}%>
-                    <%}else{%>
-                        <li class="list-group-item text-center" >
-                            Aucun tâches est encore terminer
-                        </li>
-                    <%}%>
-                    
-                </ul>
-
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        
+        <div class="row">
+            <div class="header pb-4 pt-4 pt-md-4">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="row justify-content-center">
+                            <div class="col-md-3 me-3 card p-0">
+
+                                <div class="card-header text-center text-white text-uppercase font-weight-bold bg-primary px-2"> À Faire </div>
+                                <ul class="list-group list-group-flush px-1">
+
+                                    <%if(tasks.length>0){%>
+                                        <%for(var id=0;id<tasks.length;id++){%>
+
+                                            <li class="list-group-item" id="<%=tasks[id]._id%>"
+                                                data-id="<%=tasks[id]._id%>">
+                                                <div class="d-flex justify-content-between">
+                                                    <p>
+                                                        <%=tasks[id].title%> <br>
+                                                            estimation:<%=tasks[id].duration+" heure"%> <br>
+                                                                quantité:<%=tasks[id].qte%> <br>
+                                                                    prix:<%=tasks[id].pu%>Ar
+                                                    </p>
+                                                    <a role="button" data-bs-toggle="collapse"
+                                                        href="#coll<%=tasks[id]._id%>" role="button"
+                                                        aria-expanded="false" aria-controls="coll<%=tasks[id]._id%>">
+                                                        <span class="details">Détails</span>
+                                                    </a>
+                                                </div>
+                                                <div class="collapse" id="coll<%=tasks[id]._id%>">
+                                                    <div class="card-body">
+                                                        <%=tasks[id].description%>
+                                                    </div>
+                                                </div>
+
+                                            </li>
+
+                                            <%}%>
+
+                                                <%}else{%>
+                                                    <li class="list-group-item text-center">
+                                                        Aucun tâches est attente
+                                                    </li>
+                                                    <%}%>
+                                </ul>
+                            </div>
+                            <div class="col-md-3 me-3 card p-0">
+                                <div class="card-header text-center text-white text-uppercase font-weight-bold bg-warning px-2"> En Cours</div>
+                                <ul class="list-group list-group-flush">
+                                    <%if(progress.length>0){%>
+                                        <%for(var ids=0;ids<progress.length;ids++){%>
+                                            <li class="list-group-item" id="<%=progress[ids]._id%>"
+                                                data-id="<%=progress[ids]._id%>">
+                                                <div class="d-flex justify-content-between">
+                                                    <p>
+                                                        <%=progress[ids].title%> <br>
+                                                            estimation:<%=progress[ids].duration+" heure"%> <br>
+                                                                quantité:<%=progress[ids].qte%> <br>
+                                                                    prix:<%=progress[ids].pu%>Ar
+                                                    </p>
+                                                    <a role="button" data-bs-toggle="collapse"
+                                                        href="#coll<%=progress[ids]._id%>" role="button"
+                                                        aria-expanded="false"
+                                                        aria-controls="coll<%=progress[ids]._id%>" >
+                                                        <span class="details">Détails</span>
+                                                    </a>
+                                                </div>
+                                                <div class="collapse" id="coll<%=progress[ids]._id%>">
+                                                    <div class=" card-body">
+                                                        <%=progress[ids].description%>
+                                                    </div>
+                                                </div>
+
+                                            </li>
+
+                                            <%}%>
+                                                <%}else{%>
+                                                    <li class="list-group-item text-center">
+                                                        Aucun tâches en cours pour le moment
+                                                    </li>
+                                                    <%}%>
+
+                                </ul>
+                            </div>
 
 
+                            <div class="col-md-3 card p-0">
+                                <div class="card-header text-center text-white text-uppercase font-weight-bold bg-success px-2"> Terminer </div>
+                                <ul class="list-group list-group-flush">
+                                    <%if(finish.length>0){%>
+                                        <%for(var idz=0;idz<finish.length;idz++){%>
+
+                                            <li class="list-group-item" id="<%=finish[idz]._id%>"
+                                                data-id="<%=finish[idz]._id%>">
+                                                <div class="d-flex justify-content-between">
+                                                    <p>
+                                                        <%=finish[idz].title%> <br>
+                                                            estimation:<%=finish[idz].duration+" heure"%> <br>
+                                                                quantité:<%=finish[idz].qte%> <br>
+                                                                    prix:<%=finish[idz].pu%>Ar
+                                                    </p>
+                                                    <a role="button" data-bs-toggle="collapse"
+                                                        href="#coll<%=finish[idz]._id%>" role="button"
+                                                        aria-expanded="false" aria-controls="coll<%=finish[idz]._id%>">
+                                                        <span class="details">Détails</span>
+                                                    </a>
+                                                </div>
+                                                <div class="collapse" id="coll<%=finish[idz]._id%>">
+                                                    <div class=" card-body">
+                                                        <%=finish[idz].description%>
+                                                    </div>
+                                                </div>
+
+                                            </li>
+
+                                            <%}%>
+                                                <%}else{%>
+                                                    <li class="list-group-item text-center">
+                                                        Aucun tâches est encore terminer
+                                                    </li>
+                                                    <%}%>
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-  
+
     <%- include('../../includes/footer_responsable_financier') %>

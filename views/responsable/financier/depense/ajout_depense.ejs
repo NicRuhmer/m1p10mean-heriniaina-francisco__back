@@ -1,24 +1,12 @@
 <%- include('../../../includes/header_responsable_financier') %>
 
-
-
-    <div class="container-fluid">
-        <div class="row d-flex">
-            <div class="col-md-5">
-                <nav aria-label="breadcrumb" class="mb-3">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Dépense</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Liste</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+    <div class="container-fluid content pt-5 bg-gradient-primary">
         <div class="row">
-            <div class="col-md-8">
-                <h5>Liste Dépence</h5>
+            <h2 class="text-white">Liste des dépenses</h2>
+            <div class="col-md-8 no_dataTable">
                 <div id="show_modal_depense"></div>
-                <table class="table table-striped" id="list_reparation">
-                    <thead class="bg-success text-white">
+                <table class="table table-hover" id="list_reparation">
+                    <thead class="">
                         <tr>
                             <th scope="col">Description</th>
                             <th scope="col">Action</th>

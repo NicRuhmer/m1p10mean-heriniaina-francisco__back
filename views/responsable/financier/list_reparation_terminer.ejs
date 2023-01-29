@@ -2,19 +2,12 @@
 
 
 
-    <div class="container-fluid">
+    <div class="container-fluid content pt-5 bg-gradient-primary">
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="breadcrumb" class="mb-3">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Facture en
-                                attente</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Liste</li>
-                    </ol>
-                </nav>
-
-                <table class="table table-striped" id="list_reparation_facturer_financier">
-                    <thead class="bg-success text-white">
+                <h2 class="text-white">Liste des factures en cours</h2>
+                <table class="table table-hover" id="list_reparation_facturer_financier">
+                    <thead class="">
                         <tr>
                             <th scope="col">Déposition</th>
                             <th scope="col">Voiture</th>
@@ -25,13 +18,13 @@
                             <th scope="cool">Estimation</th>
                             <th scope="cool">Heure</th>
                             <th scope="cool">N°facture</th>
-                            <th scope="col">Action</th>
+                            <th scope="col" class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% for(var id=0;id<listes.length;id++){%>
                             <tr>
-                                <td><%=moment(listes[id].data.createdAt).format('DD MMMM YYYY')%></td>
+                                <td><%=moment(listes[id].data.createdAt).format('DD/MM/YYYY')%></td>
                                 <td><%=listes[id].data.voiture.description%></td>
                                 <td><%=listes[id].data.voiture.matricule%></td>
                                 <td> <div>
