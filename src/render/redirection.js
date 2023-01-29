@@ -43,7 +43,7 @@ exports.redirectPageRespFinancier = async (role_, res) => {
         totaleDepense_ += stat_[index].totale;
     }
     benefice_ = (chiff_affaire_.chiffre_daffaire - totaleDepense_);
-    res.render('responsable/financier/tableau_bord', { role: role_, moment: moment, benefice: benefice_, chiffre_affaire: chiff_affaire_.chiffre_daffaire, statistiques: stat_, title: 'Gestion Panel- dashbord' });
+    res.render('responsable/financier/tableau_bord', { role: role_, moment: moment, benefice: benefice_, moyen_temps_reparation: chiff_affaire_.moyen_temps_reparation, chiffre_affaire: chiff_affaire_.chiffre_daffaire, statistiques: stat_, title: 'Gestion Panel- dashbord' });
 };
 
 exports.getData = (req, res) => {

@@ -97,10 +97,11 @@ route.post('/send-mail-teste', (req, res) => {
 
 
 //======================= API Depense ===================
-
+route.get('/depense.get/:id', depenseController.findAllDepenseById);
 route.post('/depense.create', depenseController.saveDepense);
 route.put('/depense.update/:id', depenseController.updateDepense);
 route.delete('/depense.delete/:id', depenseController.deleteDepense);
+route.get('/other-depense.get/:id', depenseController.findAllOtherDepenseById);
 route.post('/other-depense.create', depenseController.saveOtherDepense);
 route.put('/other-depense.update/:id', depenseController.updateOtherDepense);
 route.delete('/other-depense.delete/:id', depenseController.deleteOtherDepense);

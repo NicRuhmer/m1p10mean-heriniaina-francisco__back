@@ -16,6 +16,7 @@
         <div class="row">
             <div class="col-md-8">
                 <h5>Liste Dépence</h5>
+                <div id="show_modal_depense"></div>
                 <table class="table table-striped" id="list_reparation">
                     <thead class="bg-success text-white">
                         <tr>
@@ -23,7 +24,7 @@
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="show_list_data_depense">
                        
                         <%for(var id=0;id<depenses.length;id++){%>
                             <tr>

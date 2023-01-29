@@ -9,6 +9,12 @@ var Voituredb = require('../models/Voiture');
 var diagnostiqueController = require('./diagnostiqueController');
 var authentificationMail = require('./AuthentificationMail');
 
+function round(num, decimalPlaces = 0) {
+    num = Math.round(num + "e" + decimalPlaces);
+    return Number(num + "e" + -decimalPlaces);
+}
+
+
 exports.findAllReparationEnCourFinancier = () => {
     return new Promise((resolve, reject) => {
 
@@ -74,6 +80,9 @@ exports.findAllReparationEnCour = (user_id) => {
 exports.totaleChiffreAffaire = () => {
     return new Promise((resolve, reject) => {
         var totale_chiffre_daffaire = 0;
+        var moyen_heure_reparation = 0;
+        var totale_heure_reparation = 0;
+        var totale_nb_reparation = 0;
         Reparationdb.find({ employe: { $ne: null }, facture: { $ne: null } })
             .exec(async (err, result) => {
                 if (err) {
@@ -85,8 +94,13 @@ exports.totaleChiffreAffaire = () => {
                     for (var i = 0; i < result.length; i++) {
                         const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
                         totale_chiffre_daffaire += tmp2.totaleTTC;
+
+                        totale_heure_reparation += tmp2.totaleReparation;
+                        totale_nb_reparation += 1;
                     }
-                    resolve({ status: 200, chiffre_daffaire: totale_chiffre_daffaire });
+                    moyen_heure_reparation = round(((totale_heure_reparation) / totale_nb_reparation), 2);
+
+                    resolve({ status: 200, totale_temps_reparation: totale_heure_reparation, totale_nb_reparation: totale_nb_reparation, moyen_temps_reparation: moyen_heure_reparation, chiffre_daffaire: totale_chiffre_daffaire });
                 }
             });
     });
@@ -106,6 +120,9 @@ exports.totaleChiffreAffaireFilter = (req, res) => {
         }
 
         var totale_chiffre_daffaire = 0;
+        var moyen_heure_reparation = 0;
+        var totale_heure_reparation = 0;
+        var totale_nb_reparation = 0;
         Reparationdb.aggregate([
             {
                 $project:
@@ -136,8 +153,11 @@ exports.totaleChiffreAffaireFilter = (req, res) => {
                     for (var i = 0; i < result.length; i++) {
                         const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
                         totale_chiffre_daffaire += tmp2.totaleTTC;
+                        totale_heure_reparation += tmp2.totaleReparation;
+                        totale_nb_reparation += 1;
                     }
-                    resolve({ status: 200, chiffre_daffaire: totale_chiffre_daffaire });
+                    moyen_heure_reparation = round(((totale_heure_reparation) / totale_nb_reparation), 2);
+                    resolve({ status: 200, totale_temps_reparation: totale_heure_reparation, totale_nb_reparation: totale_nb_reparation, moyen_temps_reparation: moyen_heure_reparation, chiffre_daffaire: totale_chiffre_daffaire });
 
                 }
             });
@@ -170,7 +190,7 @@ exports.findAllReparationFacturer = () => {
                     for (var i = 0; i < result.length; i++) {
                         const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
                         const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
-                        tab.push({ data: result[i], pourcentage: tmp.pourcentage, montant: tmp2.totaleTTC });
+                        tab.push({ data: result[i], pourcentage: tmp.pourcentage,temps_reparation: tmp2.totaleReparation, montant: tmp2.totaleTTC });
                     }
                     resolve(tab);
                 }

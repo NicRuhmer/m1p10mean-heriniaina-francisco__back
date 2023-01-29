@@ -23,6 +23,7 @@
                             <th scope="cool">Responsable</th>
                             <th scope="cool">Montant</th>
                             <th scope="cool">Estimation</th>
+                            <th scope="cool">Heure</th>
                             <th scope="cool">N°facture</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -49,6 +50,7 @@
                                 </td>
                                 <td><%=listes[id].montant%>Ar</td>
                                 <td><%=listes[id].pourcentage%>%</td>
+                                <td><%=listes[id].temps_reparation%> heure</td>
                                 <td> <a href="/detail/<%=listes[id].data._id%>/facture"> <%=listes[id].data.facture.num_facture%></a></td>
                                 <td>
                                     <div class="btn-group">

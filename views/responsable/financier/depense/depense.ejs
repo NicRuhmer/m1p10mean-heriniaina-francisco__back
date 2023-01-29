@@ -37,6 +37,7 @@
                 </div>
 
                 <h5>Liste Dépence</h5>
+                <div id="show_modal_other_depense"></div>
                 <table class="table table-striped" id="list_reparation">
                     <thead class="bg-success text-white">
                         <tr>
@@ -47,7 +48,7 @@
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="show_list_data_other_depense">
                         <%for(var id=0;id<list_depenses.length;id++){%>
                             <tr>
                                 <td><%=moment(list_depenses[id].thedate).format('DD MMMM YYYY')%></td>
@@ -85,7 +86,7 @@
                                                 <label for="exampleFormControlInput1"
                                                 class="form-label">Date<span
                                                     class="text-danger">*</span></label>
-                                               <input id="date<%=list_depenses[id]._id%>" value="<%=moment(list_depenses[id].thedate).format("DD-MM-YYYY")%>" name="date<%=list_depenses[id]._id%>" type="date" class="form-control" />
+                                               <input id="date<%=list_depenses[id]._id%>" value="<%=moment(list_depenses[id].thedate).format("YYYY-MM-DD")%>" name="date<%=list_depenses[id]._id%>" type="date" class="form-control" />
                                             </div>
                         
                                             <div class="mb-3">

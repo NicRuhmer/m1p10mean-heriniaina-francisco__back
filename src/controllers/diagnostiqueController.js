@@ -162,6 +162,7 @@ exports.totaleMontant = (reparation_id_) => {
     return new Promise(async (resolve, reject) => {
         var totaleht = 0;
         var totaletva = 0;
+        var totaleHeure = 0;
         var tabTva_ = [];
         Diagnonstiquedb.aggregate(
             [
@@ -170,6 +171,7 @@ exports.totaleMontant = (reparation_id_) => {
                     $group:
                     {
                         _id: { reparation: '$reparation' },
+                        'totaleDuration':{$sum:'$duration'},
                         'totaleHt': { $sum: { $multiply: ['$pu', '$qte'] } },
                         'totalTvaInit': { $sum: { $multiply: ['$pu', '$qte', '$tva'] } }
                     }
@@ -179,7 +181,7 @@ exports.totaleMontant = (reparation_id_) => {
                         reparation: '$_id.reparation',
                          totaleHt: 1,
                          totalTvaInit:1,
-                        // qte: 1,
+                         totaleDuration: 1,
                         // tva: 1,
                         // pu: 1,
                         totaleTva: { $divide: [ "$totalTvaInit", 100 ] } 
@@ -193,6 +195,7 @@ exports.totaleMontant = (reparation_id_) => {
             ]
         ).then((totale) => {
           //  resolve(totale);
+          totaleHeure = totale[0].totaleDuration;
             totaleht = totale[0].totaleHt;
             totaletva = totale[0].totaleTva;
             Diagnonstiquedb.aggregate([
@@ -217,7 +220,7 @@ exports.totaleMontant = (reparation_id_) => {
                 for (var id = 0; id < totale2.length; id++) {
                     tabTva_.push({ description: "TVA " + totale2[id]._id.tva + "%", totaleTva: totale2[id].totaleTva });
                 }
-                resolve({ totaleHT: totaleht, totaleTTC: (totaleht + totaletva), totaleTVA: totaletva, tabTva: tabTva_ });
+                resolve({ totaleReparation:totaleHeure,totaleHT: totaleht, totaleTTC: (totaleht + totaletva), totaleTVA: totaletva, tabTva: tabTva_ });
             });
 
         }).catch((err) => {

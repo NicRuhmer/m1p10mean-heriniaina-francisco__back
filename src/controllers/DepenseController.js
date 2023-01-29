@@ -5,15 +5,39 @@ var Depensedb = require('../models/Depense');
 var OtherDepensedb = require('../models/Other_depense');
 
 
+exports.findAllDepenseById = (req,res) => {
+    console.log(req.params);
+        Depensedb.findById(req.params.id).then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            res.send({ status: 400, message: err.message });
+        });
+};
+
 exports.findAllDepense = () => {
     return new Promise((resolve, reject) => {
         Depensedb.find().then((result) => {
             resolve(result);
         }).catch((err) => {
-            reject({ status: 400, message: err.message });
+            reject({ status: 400,moment:moment, message: err.message });
         });
     });
 };
+
+exports.findAllOtherDepenseById = async (req,res) => {
+    var $this = this;
+    const dep = await $this.findAllDepense();
+        OtherDepensedb.findById(req.params.id)
+            .populate({ path: 'depense' })
+            .exec((err, result) => {
+                if (err) {
+                    res.send({ status: 400, message: err.message });
+                } else {
+                    res.send({data:result,moment:moment,depenses:dep});
+                }
+            });
+};
+
 
 exports.findAllOtherDepense = () => {
     return new Promise((resolve, reject) => {
@@ -98,24 +122,24 @@ exports.statistiqueFilter = (req, res) => {
                 }
             },
             {
-                    $match:{    $and:filter   }
+                $match: { $and: filter }
             },
             {
-                $group: {  _id: { depense: '$depense' },   'totale': { $sum: '$totale' }  }
+                $group: { _id: { depense: '$depense' }, 'totale': { $sum: '$totale' } }
             }, {
-                $sort: {  depense: 1   }
+                $sort: { depense: 1 }
             }
         ]
     ).exec(async (err, result) => {
         if (err) {
             res.send({ status: 400, message: err.message });
         } else {
-          /*  var tab = [];
-            for (let index = 0; index < result.length; index++) {
-                const element = await Depensedb.findById(result[index].depense);
-                tab.push({ depense: element, totale: result[index].totale });
-            }
-            res.send(tab);*/
+            /*  var tab = [];
+              for (let index = 0; index < result.length; index++) {
+                  const element = await Depensedb.findById(result[index].depense);
+                  tab.push({ depense: element, totale: result[index].totale });
+              }
+              res.send(tab);*/
             res.send(result);
         }
     });
@@ -174,15 +198,17 @@ exports.listOtherDepenseFilter = (date, categorie) => {
 };
 
 exports.saveDepense = (req, res) => {
+    var $this = this;
     if (req.body.description != null) {
         const new__ = new Depensedb({ description: req.body.description });
-        new__.save((err, docs) => {
+        new__.save(async (err, docs) => {
             if (err) {
                 console.log(err.message);
                 res.send({ status: 400, message: err.message });
             } else {
                 console.log("success ");
-                res.send({ status: 200, data: docs, message: "Success !" });
+                const depenses_ = await $this.findAllDepense();
+                res.send({ status: 200, data: depenses_, message: "Success !" });
             }
         });
     } else {
@@ -193,16 +219,18 @@ exports.saveDepense = (req, res) => {
 
 
 exports.saveOtherDepense = (req, res) => {
-
+    var $this = this;
     if (req.body.depense != null && req.body.categorie != null && req.body.totale != null) {
         const new__ = new OtherDepensedb({ depense: req.body.depense, description: req.body.description, thedate: req.body.date, categorie: req.body.categorie, totale: req.body.totale });
-        new__.save((err, docs) => {
+        new__.save(async (err, docs) => {
             if (err) {
                 console.log(err.message);
                 res.send({ status: 400, message: err.message });
             } else {
+                const other_depenses_ = await $this.findAllOtherDepense();
+                const depense = await Depensedb.findById(req.params.id);
                 console.log("success ");
-                res.send({ status: 200, data: docs, message: "Success !" });
+                res.send({ status: 200,moment:moment, depenses: depense, data: other_depenses_, message: "Success !" });
             }
         });
     } else {
@@ -213,14 +241,17 @@ exports.saveOtherDepense = (req, res) => {
 
 
 exports.updateDepense = (req, res) => {
+    var $this = this;
     if (req.body.description != null) {
         const dataUpdated = { description: req.body.description };
-        Depensedb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
+        Depensedb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, async function (err, doc) {
             if (err) {
                 res.send({ status: 404, message: "La modification a échoué!" });
             } else {
                 console.log("success ");
-                res.send({ status: 200, message: 'Success' });
+                const depenses_ = await $this.findAllDepense();
+
+                res.send({ status: 200, data: depenses_, message: 'Success' });
             }
         });
     } else {
@@ -231,14 +262,17 @@ exports.updateDepense = (req, res) => {
 
 
 exports.updateOtherDepense = (req, res) => {
+    var $this = this;
     if (req.body.depense != null && req.body.categorie != null && req.body.totale != null) {
         const dataUpdated = { depense: req.body.depense, description: req.body.description, thedate: req.body.date, categorie: req.body.categorie, totale: req.body.totale };
-        OtherDepensedb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
+        OtherDepensedb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, async function (err, doc) {
             if (err) {
                 res.send({ status: 404, message: "La modification a échoué!" });
             } else {
                 console.log("success ");
-                res.send({ status: 200, message: 'Success' });
+                const other_depenses_ = await $this.findAllOtherDepense();
+                const depense = await Depensedb.findById(req.params.id);
+                res.send({ status: 200,moment:moment, depenses: depense, data: other_depenses_, message: 'Success' });
             }
         });
     } else {
@@ -249,18 +283,24 @@ exports.updateOtherDepense = (req, res) => {
 
 
 exports.deleteDepense = async (req, res) => {
+    var $this = this;
     const depense = await Depensedb.findById(req.params.id);
     await Depensedb.findByIdAndDelete(depense._id);
-    OtherDepensedb.findByIdAndDelete(depense._id).then((result) => {
-        res.send({ status: 200, message: 'Suppression terminé !' })
+    OtherDepensedb.findByIdAndDelete(depense._id).then(async (result) => {
+        const depenses_ = await $this.findAllDepense();
+
+        res.send({ status: 200, data: depenses_, message: 'Suppression terminé !' })
     }).catch((err) => {
         res.send({ status: 404, message: err.message });
     });
 };
 
-exports.deleteOtherDepense = async (req, res) => {
-    OtherDepensedb.findByIdAndDelete(req.params.id).then((result) => {
-        res.send({ status: 200, message: 'Suppression terminé !' })
+exports.deleteOtherDepense = (req, res) => {
+    var $this = this;
+    OtherDepensedb.findByIdAndDelete(req.params.id).then(async (result) => {
+        const other_depenses_ = await $this.findAllOtherDepense();
+        const depense = await Depensedb.findById(req.params.id);
+        res.send({ status: 200,moment:moment, depenses: depense, data: other_depenses_, message: 'Suppression terminé !' })
     }).catch((err) => {
         res.send({ status: 404, message: err.message });
     });
