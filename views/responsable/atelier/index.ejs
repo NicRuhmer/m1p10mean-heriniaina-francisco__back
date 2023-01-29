@@ -18,7 +18,6 @@
                             <th scope="col">Déposition</th>
                             <th scope="col">Voiture</th>
                             <th scope="col">Matricule</th>
-                            <th scope="cool">N°série</th>
                             <th scope="cool">Genre</th>
                             <th scope="col">Client</th>
                             <th scope="col">Action</th>
@@ -30,7 +29,7 @@
                                 <td><%=moment(reparations[id].createdAt).format('DD MMMM YYYY')%></td>
                                 <td><%=reparations[id].voiture.description%></td>
                                 <td><%=reparations[id].voiture.matricule%></td>
-                                <td><%=reparations[id].voiture.num_serie%></td>
+                                <!--<td><%=reparations[id].voiture.num_serie%></td>-->
                                 <td> <span class="text-primary"><%=reparations[id].voiture.genre%></span></td>
                                 <td> <div>
                                         <p><%=reparations[id].voiture.client.name+" "+reparations[id].voiture.client.username%><br>

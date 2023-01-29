@@ -38,62 +38,60 @@ route.put('/resp.update/:id', employeController.update);
 route.delete('/resp.delete', employeController.delete);
 
 
-//=========== Api voiture =============================
+
+
+
+
+
+//=========== API voiture =============================
+//  id client
 route.get('/list/:id/voiture', voitureController.findAll);
+route.get('/detail/:id/voiture', voitureController.findById);
+//  id client
 route.post('/create/:id/voiture', voitureController.create);
-route.get('/list/:id/voiture-reparation', (req, res) => { });
-route.post('/create/:id/voiture-reparation', (req, res) => { });
+route.put('/update/:id/voiture', voitureController.update);
 
-//=========== Api Client ==============================
-route.post('/new.client', clientController.new_client);
+//=========== API Reparation voiture Client ====================
+//  id client
+route.post('/create/:id/reparation',reparationController.create);
+route.put('/update/:id/reparation',reparationController.updateReparation);
+route.delete('/delete/:id/reparation',reparationController.deleteReparation);
+//  id client
+route.get('/list/:id/reparation-client-accepter',reparationController.findAllReparationAccepter);
+//  id client
+route.get('/list/:id/reparation-client-attente',reparationController.findAllReparationAttente);
 
-/*===================== APIT TESTE ===================*/
+// id reparation
+route.get('/etat-avancement/:id/reparation-client',async (req,res)=>{
 
-route.get('/form-new-client', (req, res) => {
-    res.render('client/new_client');
+    const detail_ = await reparationController.findById(req.params.id);
+    const tasks_ = await diagnostiqueController.findData(req.params.id, "isTask");
+    const progress_ = await diagnostiqueController.findData(req.params.id, "isProgress");
+    const finish_ = await diagnostiqueController.findData(req.params.id, "isFinish");
+    res.send({
+        detail: detail_, tasks: tasks_.data, task_pourcentage: tasks_.pourcentage,
+        progress: progress_.data, progress_pourcentage: progress_.pourcentage,
+        finish: finish_.data, finish_pourcentage: finish_.pourcentage
+    });
+    
 });
 
+// id voiture
+route.get('/historique/:id/reparation-client',reparationController.findAllHistoriqueReparation);
 
-route.post('/send-mail-teste', (req, res) => {
-    var transport = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'antoenjara1998@gmail.com',
-            pass: 'yzcufbqfsttpwblh'
-        }
-    });
-    var mailOption = {
-        from: 'Projet-Meam-M1<antoenjara1998@gmail.com>',
-        to: 'francisco@constellation-group.co',
-        replyTo: 'francisco@constellation-group.co',
-        subject: 'Teste envoie email',
-        text: 'Bonjour,'
-    };
+//=========== API Client ==============================
+route.post('/client.create', clientController.new_client);
+route.post('/login.user',clientController.login_client);
 
-    /*     html:listing.contenu,
-        attachments: [
-            {
-                filename: entries.cv_.name,
-                path: process.env.URL_HOST + entries.cv_.url,
-                cid: entries.cv_.hash
-            },
-            {
-                filename: entries.lm_.name,
-                path: process.env.URL_HOST + entries.lm_.url,
-                cid: entries.lm_.hash
-            }
-        ]*/
 
-    transport.sendMail(mailOption, (err, info) => {
-        if (err) {
-            console.log(err.message);
-            res.send({ status: 400, message: err.message });
-        } else {
-            console.log(info.response);
-            res.send({ status: 200, message: 'email envoyer', data: info.response });
-        }
-    });
-});
+
+
+
+
+
+
+
+
 
 
 //======================= API Depense ===================
@@ -159,6 +157,51 @@ route.put('/actived/:id/teams', (req, res) => {
         res.send(result);
     }).catch((err) => {
         res.send({ status: 400, message: err.mesage })
+    });
+});
+
+
+
+/*===================== APIT TESTE ===================*/
+
+route.post('/send-mail-teste', (req, res) => {
+    var transport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'antoenjara1998@gmail.com',
+            pass: 'yzcufbqfsttpwblh'
+        }
+    });
+    var mailOption = {
+        from: 'Projet-Meam-M1<antoenjara1998@gmail.com>',
+        to: 'francisco@constellation-group.co',
+        replyTo: 'francisco@constellation-group.co',
+        subject: 'Teste envoie email',
+        text: 'Bonjour,'
+    };
+
+    /*     html:listing.contenu,
+        attachments: [
+            {
+                filename: entries.cv_.name,
+                path: process.env.URL_HOST + entries.cv_.url,
+                cid: entries.cv_.hash
+            },
+            {
+                filename: entries.lm_.name,
+                path: process.env.URL_HOST + entries.lm_.url,
+                cid: entries.lm_.hash
+            }
+        ]*/
+
+    transport.sendMail(mailOption, (err, info) => {
+        if (err) {
+            console.log(err.message);
+            res.send({ status: 400, message: err.message });
+        } else {
+            console.log(info.response);
+            res.send({ status: 200, message: 'email envoyer', data: info.response });
+        }
     });
 });
 
