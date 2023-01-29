@@ -62,7 +62,7 @@ route.get('/api/list/:id/reparation-client-accepter',reparationController.findAl
 route.get('/api/list/:id/reparation-client-attente',reparationController.findAllReparationAttente);
 
 // id reparation
-route.get('/etat-avancement/:id/reparation-client',async (req,res)=>{
+route.get('/api/etat-avancement/:id/reparation-client',async (req,res)=>{
 
     const detail_ = await reparationController.findById(req.params.id);
     const tasks_ = await diagnostiqueController.findData(req.params.id, "isTask");
