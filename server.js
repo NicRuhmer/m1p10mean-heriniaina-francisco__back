@@ -250,7 +250,7 @@ app.get('/facture-attente',connectEnsureLogin.ensureLoggedIn(),redirectionRespFi
 app.get('/etat-davancement/:id/reparation',connectEnsureLogin.ensureLoggedIn(),redirectionRespFinancier.etatAvancementVoiture);
 app.get('/depense',connectEnsureLogin.ensureLoggedIn(),redirectionRespFinancier.listOtherDepense);
 app.get('/ajout-depense',connectEnsureLogin.ensureLoggedIn(),redirectionRespFinancier.nouveauTypeDepense);
-app.post('/depense',redirectionRespFinancier.filterListDepense);
+// app.post('/depense',redirectionRespFinancier.filterListDepense);
 
 
 

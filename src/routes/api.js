@@ -97,6 +97,15 @@ route.post('/send-mail-teste', (req, res) => {
 
 
 //======================= API Depense ===================
+route.post('/depenses',async(req,res)=>{
+    const depenses_ = await depenseController.findAllDepense();
+    depenseController.listOtherDepenseFilter(req.body.date,req.body.categorie).then((list_depenses_) => {
+        res.send({  depenses: depenses_, list_depenses: list_depenses_});
+    }).catch((err) => {
+        res.send({ status: 400, message: err.message });
+    });
+});
+
 route.get('/depense.get/:id', depenseController.findAllDepenseById);
 route.post('/depense.create', depenseController.saveDepense);
 route.put('/depense.update/:id', depenseController.updateDepense);

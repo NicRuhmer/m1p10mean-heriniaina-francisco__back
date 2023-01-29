@@ -156,11 +156,39 @@ function show_modal_other_depense(detail_id){
 
 function show_list_data_oher_depense(list_depenses){
     var html="";
-
     for(var id=0;id<list_depenses.length;id++){
         html+='<tr>';
         html+=    '<td>'+moment(list_depenses[id].thedate).format('DD MMMM YYYY')+'</td>';
         html+=    '<td>'+list_depenses[id].depense.description+'</td>';
+        html+=    '<td>'+list_depenses[id].description+'</td>';
+        html+=    '<td>'+list_depenses[id].totale+'Ar</td>';
+        html+=    '<td>';
+        html+=        '<div class="btn-group">';
+        html+=            '<button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">';
+        html+=               'Plus';
+        html+=          '</button>';
+        html+=            '<ul class="dropdown-menu">';
+                        var show_modal_other_depense = `show_modal_other_depense('${list_depenses[id]._id}')`;
+                        html+=                 '<li><a class="dropdown-item" href="#"  onclick="'+show_modal_other_depense+'">Modifier</a></li>';
+                        var delete_other_depense =`delete_other_depense('${list_depenses[id]._id}')`;
+                        html+=                 '<li><a class="dropdown-item" href="#" onclick="'+delete_other_depense+'">Supprimer';
+                        html+=                 '</a></li>';             
+        html+=                '</ul>';
+        html+=         '</div>';
+        html+=    '</td>';
+        html+='</tr>';
+    }
+
+    $('#show_list_data_other_depense').empty();
+    $('#show_list_data_other_depense').append(html);
+}
+
+function show_list_data_oher_depense_filter(list_depenses){
+    var html="";
+    for(var id=0;id<list_depenses.length;id++){
+        html+='<tr>';
+        html+=    '<td>'+moment(list_depenses[id].thedate).format('DD MMMM YYYY')+'</td>';
+        html+=    '<td>'+list_depenses[id].depense[0].description+'</td>';
         html+=    '<td>'+list_depenses[id].description+'</td>';
         html+=    '<td>'+list_depenses[id].totale+'Ar</td>';
         html+=    '<td>';
@@ -471,4 +499,36 @@ function filtre_list_depense_stat(){
             $('#loading_page').css("display", "none");
             toastError(err.message);
         });
+}
+function filtre_list_other_depense() {
+
+    $('#loading_page').css("display", "block");
+    
+    $('#save_new_other_depense').attr('disabled', true);
+    $('#save_new_other_depense').html("Enregistrement en cours ...");
+   
+    fetch('/depenses', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({date:$('#date_filter').val(),categorie:$('#categorie_filter').val()})
+    })
+        .then(res => {
+            if (res.ok) return res.json()
+        })
+        .then(response => {
+            $('#loading_page').css("display", "none");
+          
+            if (response.status == 400) {
+                toastError(response.message);
+            } else {
+                show_list_data_oher_depense_filter(response.list_depenses,response.depenses);
+            }
+            $('#save_new_other_depense').attr('disabled', false);
+            $('#save_new_other_depense').html("Enregistrer");
+        }).catch(err => {
+            $('#save_new_other_depense').attr('disabled', false);
+            toastError(err.message);
+            $('#save_new_other_depense').html("Enregistrer");
+        });
+
 }

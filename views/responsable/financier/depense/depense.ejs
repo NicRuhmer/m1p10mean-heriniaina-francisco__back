@@ -18,18 +18,18 @@
                 <div class="mb-3  shadow p-3 mb-5 bg-body rounded">
                     <h5>Filtre</h5>
                     <div class="mb-3">
-                        <form action="/depense" method="post">
                         <div class="mb-3 d-flex">
                             <label for="exampleFormControlInput1"
                             class="form-label">Choisir<span
                                 class="text-danger">*</span></label>
-                           <input id="date" name="date" type="date" class="form-control" />
-                           <select class="form-select" id="categorie" name="categorie">
+                           <input id="date_filter" name="date_filter" type="date" class="form-control" />
+                           <select class="form-select" id="categorie_filter" name="categorie_filter">
                                    <option value="YEAR">Année</option>
                                    <option value="MONTH">Mensuelle</option>
                                    <option value="DAY">Journalier</option>
                            </select>
-                           <button type="submit" class="btn btn-success">Filtrer</button>
+                           <button type="button" onclick="filtre_list_other_depense()" class="btn btn-success">Filtrer</button>
+                         
                         </form>
                         </div>
     

@@ -149,9 +149,9 @@ exports.listOtherDepenseFilter = (date, categorie) => {
         var val = null;
 
         if (categorie == "DAY") {
-            val = [{ day: Number(moment(date).format('D')) }, { month: Number(moment(date).format('M')) }, { year: Number(moment(date).format('YYYY')) }];
+            val = [{ day: Number(moment(date).format('DD')) }, { month: Number(moment(date).format('MM')) }, { year: Number(moment(date).format('YYYY')) }];
         } else if (categorie == "MONTH") {
-            val = [{ month: Number(moment(date).format('M')) }, { year: Number(moment(date).format('YYYY')) }];
+            val = [{ month: Number(moment(date).format('MM')) }, { year: Number(moment(date).format('YYYY')) }];
         } else {
             val = [{ year: Number(moment(date).format('YYYY')) }];
         }
