@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/png" href="logo/logo.png"/>
+        <link rel="icon" type="image/png" href="/logo/logo.png"/>
 
 
         <title><%= title%></title>
@@ -24,32 +24,54 @@
 
             <nav class="navbar navbar-expand-lg px-4 py-0 mb-1">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="/"><img src="/logo/logo.png" width="60px" height="60px" alt="">IDEAL <span class="text-danger">AUTO</span></a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-center">
-                      <li class="nav-item ms-5">
-                        <a class="nav-link <%= title === 'Gestion Panel-réception-des-voitures' && 'active' %> lien" aria-current="page" href="/">Voitures déposées</a>
-                      </li>
-                      <li class="nav-item ms-5">
-                        <a class="nav-link <%= title === 'Gestion Panel- voitures-réceptionnners' && 'active' %> lien" aria-current="page" href="/voiture_receptionner">Voitures réceptionnées</a>
-                      </li>
-                      <li class="nav-item mx-5">
-                        <a class="nav-link <%= title === 'Gestion Panel- voitures-terminer' && 'active' %> lien" href="/reparation-terminer">Voitures en Réparations</a>
-                      </li>
-                    </ul>
-                    <div class="d-flex btn-group ">
-                        <div class="nav-item dropdown ">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Nom user connecté
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <li><a class="dropdown-item" href="/reset_password/986874R234657898ZZ54545">Profile</a></li>
-                              <li><hr class="dropdown-divider"></li>
-                              <li><a class="dropdown-item" href="/logout">Déconnexion</a></li>
-                            </ul>
+                    <a class="navbar-brand" href="/"><img
+                            src="/logo/Ostie_Logo_Color1.png" width="60px"
+                            height="60px" alt=""></a>
+                    <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse"
+                        id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex
+                            justify-content-center">
+
+                            <li class="nav-item ms-5">
+                                <a class="nav-link  <%= title === 'Gestion Panel-réception-des-voitures' && 'active' %>" aria-current="page"
+                                    href="/">Voiture déposer</a>
+                            </li>
+                            
+                            <li class="nav-item mx-3">
+                                <a class="nav-link <%= title === 'Gestion Panel- voitures-réceptionnners' && 'active' %>" aria-current="page"
+                                    href="/voiture_receptionner">Voiture réceptionner</a>
+                            </li>
+
+                            <li class="nav-item  mx-3">
+                                <a class="nav-link <%= title === 'Gestion Panel- réparation-terminer' && 'active' %>" href="/reparation-terminer" >
+                                 Réparation en cours
+                                </a>
+                                
+                              </li>
+                        </ul>
+                        <div class="d-flex btn-group ">
+                            <div class="nav-item dropdown ">
+                                <a class="nav-link dropdown-toggle" href="#"
+                                    id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <span id="name-user-connected"></span>
+                                </a>
+                                <ul class="dropdown-menu"
+                                    aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item"
+                                            href="#">Profile</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="/logout">Déconnexion</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                   </div>

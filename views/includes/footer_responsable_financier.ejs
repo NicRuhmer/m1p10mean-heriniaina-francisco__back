@@ -57,13 +57,29 @@
     <script type="text/javascript"
       src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <!--===================================================================-->
-
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"
+      integrity="sha256-5oApc/wMda1ntIEK4qoWJ4YItnV4fBHMwywunj8gPqc="
+      crossorigin="anonymous"></script>
+      
     <script src="/js/responsable/diagnostique.js"></script>
     <script src="/js/responsable/facture.js"></script>
-
+    <script src="/js/responsable/depense.js"></script>
     
     <script>
 
+      $(document).ready(function () {
+        getUserConnected();
+    });
+    
+    
+    
+    async function getUserConnected() {
+        const response = await fetch('/user-connected', { method: 'GET' });
+        const data = await response.json();
+        document.getElementById('name-user-connected').innerHTML = data.nicname;
+    }
+    
   const optionDataTable = {
             "sProcessing": "Traitement en cours ...",
             "sLengthMenu": "Afficher _MENU_ lignes",
@@ -87,10 +103,12 @@
            
             };
       
-              $('#s').DataTable({
+              $('#list_reparation_facturer_financier').DataTable({
                 language: optionDataTable
               });
-
+              $('#list_reparation_atente_financier').DataTable({
+                language: optionDataTable
+              });
     
     </script>
 

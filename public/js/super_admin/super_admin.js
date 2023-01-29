@@ -19,6 +19,8 @@ $(document).ready(function () {
 });
 
 
+
+
 $('#form-new-spa').keyup(function () {
 
     if ($('#name').val().length > 1 &&

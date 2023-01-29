@@ -34,6 +34,20 @@ exports.teste = () => {
 };
 
 
+exports.findUserConnected = (req,res) => {
+        Userdb.findById(req.user._id)
+            .then(data => {
+                if (!data) {
+                    res.send({ status: 404, message: "Donnée non trouvé!" });
+                } else {
+                    res.send(data);
+                }
+            })
+            .catch(err => {
+                res.send({ status: 500, message: "Erreur lors de la récupération du donnée par  l'identifiant :" + id });
+            });
+};
+
 exports.findById = (id) => {
     return new Promise((resolve, reject) => {
         Userdb.findById(id)

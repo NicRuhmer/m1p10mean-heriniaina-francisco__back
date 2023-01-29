@@ -269,6 +269,32 @@ function supp_diagnostique(diag_id) {
 
 
 
+
+function accepter_reparation_client(reparation_id){
+    $('#loading_page').css("display", "block");
+    fetch('/accepter-la-reparation/' + reparation_id, {
+        method: 'put',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+    })
+        .then(res => {
+            if (res.ok) return res.json()
+        })
+        .then(response => {
+            $('#loading_page').css("display", "none");
+            if (response.status == 200) {
+                window.location.replace(window.location.protocol + "//" + window.location.host + "/voiture_receptionner");  
+            }
+            else {
+
+                toastError(response.message);
+            }
+        }).catch(err => {
+
+            toastError(err.message);
+        });
+}
+
 $('#start_reparation').click(function () {
     const reparation_id = $(this).data("id");
 

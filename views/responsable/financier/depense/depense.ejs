@@ -1,0 +1,208 @@
+<%- include('../../../includes/header_responsable_financier') %>
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Dépense</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Liste</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="mb-3  shadow p-3 mb-5 bg-body rounded">
+                    <h5>Filtre</h5>
+                    <div class="mb-3">
+                        <div class="mb-3 d-flex">
+                            <label for="exampleFormControlInput1"
+                            class="form-label">Choisir<span
+                                class="text-danger">*</span></label>
+                           <input id="date_filter" name="date_filter" type="date" class="form-control" />
+                           <select class="form-select" id="categorie_filter" name="categorie_filter">
+                                   <option value="YEAR">Année</option>
+                                   <option value="MONTH">Mensuelle</option>
+                                   <option value="DAY">Journalier</option>
+                           </select>
+                           <button type="button" onclick="filtre_list_other_depense()" class="btn btn-success">Filtrer</button>
+                         
+                        </form>
+                        </div>
+    
+                    </div>
+                </div>
+
+                <h5>Liste Dépence</h5>
+                <div id="show_modal_other_depense"></div>
+                <table class="table table-striped" id="list_reparation">
+                    <thead class="bg-success text-white">
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Object</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Totale</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="show_list_data_other_depense">
+                        <%for(var id=0;id<list_depenses.length;id++){%>
+                            <tr>
+                                <td><%=moment(list_depenses[id].thedate).format('DD MMMM YYYY')%></td>
+                                <td><%=list_depenses[id].depense.description%></td>
+                                <td><%=list_depenses[id].description%></td>
+                                <td><%=list_depenses[id].totale%>Ar</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success
+                                            dropdown-toggle"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Plus
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exs<%=list_depenses[id]._id%>">Modifier</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick='delete_other_depense(<%=JSON.stringify(list_depenses[id]._id)%>)'>Supprimer
+                                             </a></li>
+                                        
+                                            </ul>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <div class="modal fade" id="exs<%=list_depenses[id]._id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Modification</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class=" shadow p-3 mb-5 bg-body rounded" >
+                                            <div class="mb-3 d-flex">
+                                                <label for="exampleFormControlInput1"
+                                                class="form-label">Date<span
+                                                    class="text-danger">*</span></label>
+                                               <input id="date<%=list_depenses[id]._id%>" value="<%=moment(list_depenses[id].thedate).format("YYYY-MM-DD")%>" name="date<%=list_depenses[id]._id%>" type="date" class="form-control" />
+                                            </div>
+                        
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput1"
+                                                class="form-label">Type de dépense...<span
+                                                    class="text-danger">*</span></label>
+                                                <select class="form-select" id="depense<%=list_depenses[id]._id%>" name="depense<%=list_depenses[id]._id%>" aria-label="Default select example">
+                                                    <% for(var ids=0;ids<depenses.length;ids++){%>
+                                                        <%if(""+depenses[ids]._id==""+list_depenses[id].depense._id){%>
+                                                        <option value="<%=depenses[id]._id%>" selected><%=depenses[id].description%></option>
+                                                        <%} else {%>
+                                                            <option value="<%=depenses[id]._id%>"><%=depenses[id].description%></option>
+                                                        <%}%>
+                                                    <%}%>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput1"
+                                                class="form-label">Dépense étant que...<span
+                                                    class="text-danger">*</span></label>
+                                                <select class="form-select" id="categorie<%=list_depenses[id]._id%>" name="categorie<%=list_depenses[id]._id%>">
+                                                    <%if(list_depenses[id].categorie=="DAY"){%>
+                                                        <option value="YEAR">Année</option>
+                                                        <option value="MONTH">Mensuelle</option>
+                                                        <option value="DAY" selected>Journalier</option>
+                                                       
+                                                    <%}%>
+                                                    <%if(list_depenses[id].categorie=="MONTH"){%>
+                                                        <option value="DAY">Journalier</option>
+                                                        <option value="MONTH" selected>Mensuelle</option>
+                                                        <option value="YEAR">Année</option>
+                                                    <%}%>
+                                                    <%if(list_depenses[id].categorie=="YEAR"){%>
+                                                        <option value="YEAR" selected>Année</option>
+                                                        <option value="MONTH">Mensuelle</option>
+                                                        <option value="DAY">Journalier</option>
+                                                    <%}%>
+
+                                                       
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput1"
+                                                    class="form-label">Description</label>
+                                                    <textarea class="form-control" id="description<%=list_depenses[id]._id%>" rows="3"><%=list_depenses[id].description%></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput1"
+                                                    class="form-label">Totale TTC (Ar) <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="number" class="form-control"
+                                                    id="totale<%=list_depenses[id]._id%>" value="<%=list_depenses[id].totale%>" min="1" name="totale<%=list_depenses[id]._id%>" required
+                                                    placeholder="Totale TTC (Ar) ">
+                                                    <span class="text-danger" id="totale_error"></span>
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-between">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                      <button type="button" class="btn btn-primary" onclick='edit_other_depense(<%=JSON.stringify(list_depenses[id]._id)%>)' data-bs-dismiss="modal">Modifier</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        <%}%>
+
+                       
+                
+                    </table>
+            </div>
+            <div class="col-md-4">
+                <div class=" shadow p-3 mb-5 bg-body rounded" >
+                    <div class="mb-3 d-flex">
+                        <label for="exampleFormControlInput1"
+                        class="form-label">Date<span
+                            class="text-danger">*</span></label>
+                       <input id="date" name="date" type="date" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1"
+                        class="form-label">Type de dépense...<span
+                            class="text-danger">*</span></label>
+                        <select class="form-select" id="depense" name="depense" aria-label="Default select example">
+                            <% for(var id=0;id<depenses.length;id++){%>
+                                <option value="<%=depenses[id]._id%>"><%=depenses[id].description%></option>
+                            <%}%>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1"
+                        class="form-label">Dépense étant que...<span
+                            class="text-danger">*</span></label>
+                        <select class="form-select" id="categorie" name="categorie">
+                                <option value="YEAR">Année</option>
+                                <option value="MONTH">Mensuelle</option>
+                                <option value="DAY">Journalier</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1"
+                            class="form-label">Description</label>
+                            <textarea class="form-control" id="description" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1"
+                            class="form-label">Totale TTC (Ar) <span
+                                class="text-danger">*</span></label>
+                        <input type="number" class="form-control"
+                            id="totale" value="1" min="1" name="totale" required
+                            placeholder="Totale TTC (Ar) ">
+                            <span class="text-danger" id="totale_error"></span>
+                    </div>
+                <button id="other_depense" onclick="save_new_other_depense()" class="btn btn-success">Enregistrer</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+    <%- include('../../../includes/footer_responsable_financier') %>

@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 var cUser = require('./userController');
 var Clientdb = require('../models/Client');
 const Userdb = require('../models/User');
@@ -96,15 +98,55 @@ exports.create = (name_, username_, contact_, adrs_, email_, cin_, user_id) => {
 exports.new_client = async (req, res) => {
     const role = await Roledb.findOne({ role: 'isClient' });
 
-    cUser.create(req.body.email, req.body.password, role._id, req.body.name + req.body.username).then((data) => {
-        console.log('success1: ' + data._id);
-        this.create(req.body.name, req.body.username, req.body.contact, req.body.adresse, req.body.email, req.body.cin, data._id).then((val) => {
-            console.log('success');
-            res.send({ status: 200, message: 'Success !' });
-        }).catch((err) => {
-            res.send({ status: 400, message: err.message });
-        });
-    }).catch((err2) => {
-        res.send({ status: 400, message: err2.message });
-    });
+    if (req.body.name != null && req.body.contact != null && req.body.adresse != null && req.body.email != null && req.body.cin != null) {
+        if (req.body.new_password == req.body.confirm_password) {
+            cUser.create(req.body.email, req.body.confirm_password, role._id, req.body.name + req.body.username).then((data) => {
+                console.log('success1: ' + data._id);
+                this.create(req.body.name, req.body.username, req.body.contact, req.body.adresse, req.body.email, req.body.cin, data._id).then((val) => {
+                    console.log('success');
+                    res.send({ status: 200, message: 'Success !' });
+                }).catch((err) => {
+                    res.send({ status: 400, message: err.message });
+                });
+            }).catch((err2) => {
+                res.send({ status: 400, message: err2.message });
+            });
+        } else {
+            res.send({ status: 400, message: 'Votre mot de passe est invalide' });
+        }
+
+    } else {
+        res.send({ status: 400, message: 'Champs invalide !' });
+    }
+};
+
+exports.login_client = (req, res) => {
+
+    if (req.body.username != null && req.body.password != null) {
+        Userdb.findOne({ username: req.body.username, status: true })
+            .populate({
+                path: 'role'
+            }).exec((err, user) => {
+                if (err) {
+                    res.send({ status: 400, message: err.message });
+                }
+                if (!user) {
+                    res.send({ status: 400, message: "Identification incorrecte" });
+                }
+                bcrypt.compare(req.body.password, user.password, async function (err2, res2) {
+                    if (err2) {
+                        res.send({ status: 400, message: err2.message });
+                    }
+                    else if (res2 === false) {
+                        res.send({ status: 400, message: "Mot de passe incorrecte" });
+                    }
+                    else {
+                        const cli = await Clientdb.findOne({ user: user._id });
+                        res.send({ status: 200, data: cli });
+                    }
+                });
+            });
+    } else {
+        res.send({ status: 400, message: 'E-mail ou mot de passe est incorrecte !' });
+    }
 };

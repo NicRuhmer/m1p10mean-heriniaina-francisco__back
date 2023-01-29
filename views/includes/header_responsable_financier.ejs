@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/png" href="logo/logo.png"/>
+        <link rel="icon" type="image/png" href="/logo/logo.png"/>
 
         <title><%= title%></title>
             <link
@@ -56,23 +56,28 @@
                             justify-content-center">
 
                             <li class="nav-item ms-5">
-                                <a class="nav-link active" aria-current="page"
+                                <a class="nav-link <%= title === 'Gestion Panel- dashbord' && 'active' %>" aria-current="page"
                                     href="/">Tableaux de bord</a>
                             </li>
 
                             <li class="nav-item ms-5">
-                                <a class="nav-link active" aria-current="page"
+                                <a class="nav-link <%= title === 'Gestion Panel-Facture-attente' && 'active' %>" aria-current="page"
                                     href="/facture-attente">Facture en attente</a>
                             </li>
 
                             <li class="nav-item mx-3">
-                                <a class="nav-link" aria-current="page"
+                                <a class="nav-link <%= title === 'Gestion Panel- facture' && 'active' %>" aria-current="page"
                                     href="/reparation-payer">Réparation facturer</a>
                             </li>
 
                             <li class="nav-item mx-3">
-                                <a class="nav-link" aria-current="page"
-                                    href="#">Dépence</a>
+                                <a class="nav-link <%= title === 'Gestion Panel- depense' && 'active' %>" aria-current="page"
+                                    href="/depense">Dépence</a>
+                            </li>
+
+                            <li class="nav-item mx-3">
+                                <a class="nav-link <%= title === 'Gestion Panel- ajout-depense' && 'active' %>" aria-current="page"
+                                    href="/ajout-depense">Ajout dépence</a>
                             </li>
 
                         </ul>
@@ -82,7 +87,7 @@
                                     id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    Nom user connecté
+                                    <span id="name-user-connected"></span>
                                 </a>
                                 <ul class="dropdown-menu"
                                     aria-labelledby="navbarDropdown">

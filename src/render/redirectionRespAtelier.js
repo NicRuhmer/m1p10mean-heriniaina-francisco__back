@@ -33,3 +33,11 @@ exports.etatAvancementVoiture = async(req,res)=>{
     finish:finish_.data, finish_pourcentage:finish_.pourcentage,
     role: req.user.role.role, moment: moment, title: "Gestion Panel- état d'avancement" });
 };
+
+exports.detailFacture = async(req,res)=>{
+    const detail_ = await reparationController.findFactureByReparation(req.params.id);
+    const diagnostiques_ = await diagnostiqueController.findAll(req.params.id);
+    const montant_ = await diagnostiqueController.totaleMontant(req.params.id);
+    res.render('responsable/facture/detail_facture_atelier', {role: req.user.role.role,moment: moment,detail:detail_,diagnostiques:diagnostiques_,montant:montant_, title: 'Gestion Panel- facture' });
+};
+

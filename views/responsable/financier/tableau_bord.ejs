@@ -15,17 +15,26 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="shadow p-3 mb-5 bg-body rounded">
-                    <div class="d-flex justify-content-between mb-3">
-                        <h6>Filtre par jour</h6>
-                        <input class="" type="date"/>
+        <div class="row d-flex justify-content-start">
+            <div class="col-md-4">
+                <div class="mb-3  shadow p-3 mb-5 bg-body rounded">
+                    <h5>Filtre</h5>
+                    <div class="mb-3">
+                        <div class="mb-3 d-flex">
+                            <label for="exampleFormControlInput1"
+                            class="form-label">Choisir<span
+                                class="text-danger">*</span></label>
+                           <input id="date_filter" name="date_filter" type="date" class="form-control" />
+                           <select class="form-select" id="categorie_filter" name="categorie_filter">
+                                   <option value="YEAR">Année</option>
+                                   <option value="MONTH">Mensuelle</option>
+                                   <option value="DAY">Journalier</option>
+                           </select>
+                           <button type="button" onclick='filtre_list_depense_stat()' class="btn btn-success" id="filter_stat_">Filtrer</button>
+                        </div>
+    
                     </div>
-                    <div class="d-flex justify-content-between mb-3">
-                        <h6>Filtre par mois</h6>
-                        <input class="" type="date"/>
-                    </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -33,18 +42,22 @@
 
         <div class="row">
             <div class="col-md-6 p-3">
-                <div class="shadow p-3 mb-5 bg-body rounded">
+                <div class="shadow p-3 mb-3 bg-body rounded">
                     <h6 class="text-primary">Chiffre d'affaire</h6>
                
-                <h5>200 000 Ar</h5>
-                <h6 class="text-muted">20 Janvier 2023</h6>
-            </div>
+                    <h5 id="stat_chiffre_affaire"><%=chiffre_affaire%>Ar</h5>
+                </div>
 
-                <div class="shadow p-3 bg-body rounded">
+                <div class="shadow p-3  mb-3 bg-body rounded">
                         <h6 class="text-primary">Bénefice</h6>
                  
-                    <h5>1000 000 000 Ar</h5>
-                    <h6 class="text-muted">Janvier 2023</h6>
+                    <h5 id="stat_benefice"><%=benefice%>Ar</h5>
+                </div>
+
+                <div class="shadow p-3 bg-body rounded">
+                    <h6 class="text-primary">Temps de réparation moyen pour une voiture</h6>
+             
+                    <h5 id="stat_moyen_temps_reparation"><%=moyen_temps_reparation%>heure environt</h5>
                 </div>
                
             </div>
@@ -52,24 +65,15 @@
                 <div class="shadow p-3 mb-5 bg-body rounded">
                         <h6 class="text-primary">Dépense</h6>
                    
-                    <div class="d-flex justify-content-between mb-3">
-                        <h6>Salaire</h6>
-                        <h5>1000 000 000 Ar</h5>
-                    </div>
-                    <div class="d-flex justify-content-between mb-3">
-                        <h6>Loyer</h6>
-                        <h5>1000 000 000 Ar</h5>
-                    </div>
-                    <div class="d-flex justify-content-between mb-3">
-                        <h6>Achat pièce</h6>
-                        <h5>1000 000 000 Ar</h5>
-                    </div>
-                    <div class="d-flex justify-content-between mb-3">
-                        <h6>Autres dépense</h6>
-                        <h5>1000 000 000 Ar</h5>
-                    </div>
-                  
-                    <h6 class="text-muted">Janvier 2023</h6>
+                        <div id="list_depense_data">
+                            <%for(var ids=0;ids<statistiques.length;ids++){%>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h6><%=statistiques[ids].depense.description%></h6>
+                                    <h5><%=statistiques[ids].totale%>Ar</h5>
+                                </div>
+                            <%}%>
+                        </div>
+                       
                 </div>
                
             </div>

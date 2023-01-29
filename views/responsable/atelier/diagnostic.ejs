@@ -1,30 +1,35 @@
 <%- include('../../includes/header_responsable_atelier') %>
 
-    <div class="container-fluid bg-gradient-primary">
-        <div class="row pt-5 justify-content-center">
-            <div class="col-md-4">
-                <div class="row diag">
-                    <div class="col-md-12">
-                        <h3 class="card-title">Véhicule</h3>
-                        <div class="mb-3 mt-3">
-                            <p>Nom : <%=detail.voiture.description%></p>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <p>Matricule : <%=detail.voiture.matricule%></p>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <p>N°série : <%=detail.voiture.num_serie%></p>
-                        </div>
-                        <h3 class="card-title">Client</h3>
-                        <div class="mb-3 mt-3">
-                            <p>Nom : <%=detail.voiture.client.name+" "+detail.voiture.client.username%></p>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <p>Email : <%=detail.voiture.client.email%></p>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <p>Contact : <%=detail.voiture.contact%></p>
-                        </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Voiture
+                                réceptionner</a></li>
+                        <li class="breadcrumb-item"><a href="/"><%=detail.voiture.description%></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Diagnostics</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 mb-5 bg-body rounded">
+                    <div class="card-body">
+                        <h5 class="card-title">Véhicule</h5>
+                        <p class="card-text mt-5"><%=detail.voiture.description%></p>
+                        <p class="card-text">Matricule: <%=detail.voiture.matricule%></p>
+                        <!--<p class="card-text">N°série: <%=detail.voiture.num_serie%></p>-->
+                        <p>Personnel</a>
+
+                        <h5 class="card-title">Client</h5>
+                        <p class="card-text mt-5"><%=detail.voiture.client.name+" "+detail.voiture.client.username%></p>
+                        <p class="card-text">Email: <%=detail.voiture.client.email%></p>
+                        <p class="card-text">Contact: <%=detail.voiture.contact%></p>
                     </div>
                 </div>
             </div>
