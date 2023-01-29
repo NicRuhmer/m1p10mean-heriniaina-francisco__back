@@ -121,6 +121,8 @@ exports.new_client = async (req, res) => {
 };
 
 exports.login_client = (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+
 
     if (req.body.username != null && req.body.password != null) {
         Userdb.findOne({ username: req.body.username, status: true })
@@ -129,22 +131,25 @@ exports.login_client = (req, res) => {
             }).exec((err, user) => {
                 if (err) {
                     res.send({ status: 400, message: err.message });
+                } else {
+                    if(user!=null){
+                        bcrypt.compare(req.body.password, user.password, async function (err2, res2) {
+                            if (err2) {
+                                res.send({ status: 400, message: err2.message });
+                            }
+                            else if (res2 === false) {
+                                res.send({ status: 400, message: "Mot de passe incorrecte" });
+                            }
+                            else {
+                                const cli = await Clientdb.findOne({ user: user._id });
+                                res.send({ status: 200, data: cli });
+                            }
+                        });
+                    } else {
+                        res.send({ status: 400, message: 'E-mail ou mot de passe est incorrecte !' });
+                    }
                 }
-                if (!user) {
-                    res.send({ status: 400, message: "Identification incorrecte" });
-                }
-                bcrypt.compare(req.body.password, user.password, async function (err2, res2) {
-                    if (err2) {
-                        res.send({ status: 400, message: err2.message });
-                    }
-                    else if (res2 === false) {
-                        res.send({ status: 400, message: "Mot de passe incorrecte" });
-                    }
-                    else {
-                        const cli = await Clientdb.findOne({ user: user._id });
-                        res.send({ status: 200, data: cli });
-                    }
-                });
+              
             });
     } else {
         res.send({ status: 400, message: 'E-mail ou mot de passe est incorrecte !' });

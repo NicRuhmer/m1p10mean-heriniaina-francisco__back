@@ -53,16 +53,16 @@ route.put('/update/:id/voiture', voitureController.update);
 
 //=========== API Reparation voiture Client ====================
 //  id client
-route.post('/create/:id/reparation',reparationController.create);
-route.put('/update/:id/reparation',reparationController.updateReparation);
-route.delete('/delete/:id/reparation',reparationController.deleteReparation);
+route.post('/api/create/:id/reparation',reparationController.create);
+route.put('/api/update/:id/reparation',reparationController.updateReparation);
+route.delete('/api/delete/:id/reparation',reparationController.deleteReparation);
 //  id client
-route.get('/list/:id/reparation-client-accepter',reparationController.findAllReparationAccepter);
+route.get('/api/list/:id/reparation-client-accepter',reparationController.findAllReparationAccepter);
 //  id client
-route.get('/list/:id/reparation-client-attente',reparationController.findAllReparationAttente);
+route.get('/api/list/:id/reparation-client-attente',reparationController.findAllReparationAttente);
 
 // id reparation
-route.get('/etat-avancement/:id/reparation-client',async (req,res)=>{
+route.get('/api/etat-avancement/:id/reparation-client',async (req,res)=>{
 
     const detail_ = await reparationController.findById(req.params.id);
     const tasks_ = await diagnostiqueController.findData(req.params.id, "isTask");
@@ -77,11 +77,11 @@ route.get('/etat-avancement/:id/reparation-client',async (req,res)=>{
 });
 
 // id voiture
-route.get('/historique/:id/reparation-client',reparationController.findAllHistoriqueReparation);
+route.get('/api/historique/:id/reparation-client',reparationController.findAllHistoriqueReparation);
 
 //=========== API Client ==============================
-route.post('/client.create', clientController.new_client);
-route.post('/login.user',clientController.login_client);
+route.post('/api/client.create', clientController.new_client);
+route.post('/api/login.user',clientController.login_client);
 
 
 
