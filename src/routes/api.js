@@ -42,7 +42,14 @@ route.delete('/resp.delete', employeController.delete);
 
 
 
+//=========== API Facture ==================
 
+route.get('/api/detail/:id/facture-client',async (req,res)=>{
+    const detail_ = await reparationController.findFactureByReparation(req.params.id);
+    const diagnostiques_ = await diagnostiqueController.findAll(req.params.id);
+    const montant_ = await diagnostiqueController.totaleMontant(req.params.id);
+    res.send({detail:detail_,diagnostiques:diagnostiques_,montant:montant_});
+});
 //=========== API voiture =============================
 //  id client
 route.get('/api/list/:id/voiture', voitureController.findAll);

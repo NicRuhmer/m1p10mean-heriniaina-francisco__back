@@ -204,8 +204,7 @@ exports.totaleMontant = (reparation_id_) => {
                 }
             ]
         ).then((totale) => {
-            //  resolve(totale);
-            console.log(totale);
+         
             if (totale.length > 0) {
                 if (totale[0].totaleDuration != null && totale[0].totaleHt != null && totale[0].totaleTva != null) {
                     totaleHeure = totale[0].totaleDuration;
