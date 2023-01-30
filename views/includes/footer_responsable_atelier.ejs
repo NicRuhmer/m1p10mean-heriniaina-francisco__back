@@ -1,15 +1,15 @@
 <div class="d-flex justify-content-center align-items-between w-auto">
 
   <div id="loading_page" class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: none;">
+    aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: none; top:20%; box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header d-flex justify-content-center">
           <img src="/logo/logo.png" width="60px" height="120px" class="img-fluid" alt="">
         </div>
-        <div class="modal-body d-flex justify-content-center">
-          <span class="text-center spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          <span class="text-center">Chargement...</span>
+        <div class="modal-body d-flex justify-content-center align-items-between">
+          <span class="mt-1 text-center spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span class="text-center ms-3">Chargement...</span>
         </div>
       </div>
     </div>
@@ -25,6 +25,7 @@
     <p>RALISON Heriniaina Rogenico Ruhmer</p>
   </div>
 </footer>
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -132,11 +133,11 @@
         $('#loading_page').css("display", "none");
         if (response.status == 200) {
           document.getElementById('estimation_task').innerHTML = response.pourcent_task + "%";
-          document.getElementById('estimation_task2').innerHTML = response.pourcent_task + "%";
+          document.getElementById('estimation_task2').style.width = response.pourcent_task + "%";
           document.getElementById('estimation_progress').innerHTML = response.pourcent_progress + "%";
-          document.getElementById('estimation_progress2').innerHTML = response.pourcent_progress + "%";
+          document.getElementById('estimation_progress2').style.width = response.pourcent_progress + "%";
           document.getElementById('estimation_finish').innerHTML = response.pourcent_finish + "%";
-          document.getElementById('estimation_finish2').innerHTML = response.pourcent_finish + "%";
+          document.getElementById('estimation_finish2').style.width = response.pourcent_finish + "%";
         } else {
           toastError(response.message);
         }

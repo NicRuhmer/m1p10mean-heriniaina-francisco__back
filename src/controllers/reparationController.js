@@ -24,6 +24,9 @@ exports.findAllReparationAccepter = (req, res) => {
         .populate({
             path: 'employe'
         })
+        .populate({
+            path: 'facture'
+        })
         .exec(async (err, result) => {
             if (err) {
                 console.log(err.message)

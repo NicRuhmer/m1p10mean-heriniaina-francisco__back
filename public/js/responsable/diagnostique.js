@@ -37,7 +37,8 @@ function modif_diagnostique(diag_id) {
     };
 
 
-
+    $('#show_modal_diagnostique').empty();
+    
     fetch('/modif/' + diag_id + '/reparation-diagnostique', {
         method: 'put',
         headers: { 'Content-Type': 'application/json' },
@@ -144,8 +145,7 @@ function show_modal_diagnostique_form(detail_id) {
     // const detail = JOSN.parse(detail_);
     var html = "";
 
-
-    fetch('/diagnostique/get/' + detail_id, {
+fetch('/diagnostique/get/' + detail_id, {
         method: 'get',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -153,7 +153,7 @@ function show_modal_diagnostique_form(detail_id) {
             if (res.ok) return res.json()
         })
         .then(detail => {
-         
+   
             html += '<div class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: block;">';
             html += '<div class="modal-dialog"> <div class="modal-content"> <div class="modal-header">';
                 html += ' <h5 class="modal-title" id="staticBackdropLabel">Modification de "'+detail.title+'" </h5>';
