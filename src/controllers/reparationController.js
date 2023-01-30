@@ -17,6 +17,34 @@ function round(num, decimalPlaces = 0) {
 
 exports.findAllReparationAccepter = (req,res) => {
    
+    Reparationdb.find({ client:req.params.id,employe: { $ne: null }})
+        .populate({
+            path: 'voiture',
+        })
+        .populate({
+            path: 'employe'
+        })
+        .exec(async (err, result) => {
+            if (err) {
+                console.log(err.message)
+                res.send({ status: 400, message: err.message });
+            } else {
+
+                var tab = [];
+                for (var i = 0; i < result.length; i++) {
+                    const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
+                    const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
+                    tab.push({ data: result[i], pourcentage: tmp.pourcentage, montant: tmp2.totaleTTC });
+            
+                }
+                res.send(tab);
+            }
+        });
+
+};
+
+exports.findAllReparationAccepterEncour = (req,res) => {
+   
     Reparationdb.find({ client:req.params.id,employe: { $ne: null }, start: true })
         .populate({
             path: 'voiture',
@@ -420,7 +448,7 @@ exports.findAllReparationReceptionner = (user_id) => {
     return new Promise(async (resolve, reject) => {
         const emp = await Employedb.findOne({ user: user_id });
 
-        Reparationdb.find({ employe: emp._id, start: false })
+        Reparationdb.find({ employe: emp._id, status: true,start:false })
             .populate({
                 path: 'voiture',
                 populate: {
@@ -436,6 +464,7 @@ exports.findAllReparationReceptionner = (user_id) => {
                     reject({ status: 400, message: err.message });
                 } else {
 
+                    console.log(result);
                     resolve(result);
                 }
             });
@@ -519,6 +548,7 @@ exports.startReparation = async (req, res) => {
 
 
 exports.update = async (req, res) => {
+    const emp = await Employedb.findOne({user:req.user._id});
     const dataUpdated = {
         employe: emp._id,
         description: req.body.description,
@@ -527,7 +557,8 @@ exports.update = async (req, res) => {
         facture: null,
         start: false
     };
-    if (emp._id != null && dataUpdated.status != null) {
+    console.log(dataUpdated);
+    if (dataUpdated.employe != null && dataUpdated.status != null) {
         Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
                 res.send({ status: 404, message: "La modification a échoué!" });

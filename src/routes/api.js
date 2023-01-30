@@ -62,6 +62,7 @@ route.put('/api/update/:id/reparation', reparationController.updateReparation);
 route.delete('/api/delete/:id/reparation', reparationController.deleteReparation);
 //  id client
 route.get('/api/list/:id/reparation-client-accepter', reparationController.findAllReparationAccepter);
+// route.get('/api/list/:id/reparation-client-encour', reparationController.findAllReparationAccepterEncour);
 //  id client
 route.get('/api/list/:id/reparation-client-attente', reparationController.findAllReparationAttenteClient);
 

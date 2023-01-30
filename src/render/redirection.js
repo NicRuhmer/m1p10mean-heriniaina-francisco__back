@@ -61,8 +61,8 @@ exports.getData = (req, res) => {
                 else if (connected.role.role == 'isFinancied') { //resp financier
                     this.redirectPageRespFinancier(connected.role.role, res);
                 }
-                else if (connected.role.role == 'isClient') {
-                    this.redirectPageClient(connected.role.role, res);
+                else  {
+                    res.render('/login');
                 }
             }
         });
