@@ -103,8 +103,8 @@ exports.findAllReparationAccepter = (req,res) => {
   
 };
 
-exports.findAllReparationAttente = (req,res) => {
-   
+exports.findAllReparationAttenteClient = (req,res) => {
+   console.log(req.params);
     Reparationdb.find({ client:req.params.id,employe: null, start: false, facture: null })
         .populate({
             path: 'voiture',
@@ -117,12 +117,15 @@ exports.findAllReparationAttente = (req,res) => {
                 console.log(err.message)
                 res.send({ status: 400, message: err.message });
             } else {
-
+console.log(result);
                 var tab = [];
-                for (var i = 0; i < result.length; i++) {
-                    const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
-                    tab.push({ data: result[i], pourcentage: tmp.pourcentage });
-                }
+                if(result!=null){
+                    for (var i = 0; i < result.length; i++) {
+                        const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
+                        tab.push({ data: result[i], pourcentage: tmp.pourcentage });
+                    }
+                } 
+              
                 res.send(tab);
             }
         });

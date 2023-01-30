@@ -104,7 +104,7 @@ exports.new_client = async (req, res) => {
                 console.log('success1: ' + data._id);
                 this.create(req.body.name, req.body.username, req.body.contact, req.body.adresse, req.body.email, req.body.cin, data._id).then((val) => {
                     console.log('success');
-                    res.send({ status: 200, message: 'Success !' });
+                    res.send({ status: 200,data:val, message: 'Success !' });
                 }).catch((err) => {
                     res.send({ status: 400, message: err.message });
                 });

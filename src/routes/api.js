@@ -45,11 +45,11 @@ route.delete('/resp.delete', employeController.delete);
 
 //=========== API voiture =============================
 //  id client
-route.get('/list/:id/voiture', voitureController.findAll);
-route.get('/detail/:id/voiture', voitureController.findById);
+route.get('/api/list/:id/voiture', voitureController.findAll);
+route.get('/api/detail/:id/voiture', voitureController.findById);
 //  id client
-route.post('/create/:id/voiture', voitureController.create);
-route.put('/update/:id/voiture', voitureController.update);
+route.post('/api/create/:id/voiture', voitureController.create);
+route.put('/api/update/:id/voiture', voitureController.update);
 
 //=========== API Reparation voiture Client ====================
 //  id client
@@ -59,7 +59,7 @@ route.delete('/api/delete/:id/reparation',reparationController.deleteReparation)
 //  id client
 route.get('/api/list/:id/reparation-client-accepter',reparationController.findAllReparationAccepter);
 //  id client
-route.get('/api/list/:id/reparation-client-attente',reparationController.findAllReparationAttente);
+route.get('/api/list/:id/reparation-client-attente',reparationController.findAllReparationAttenteClient);
 
 // id reparation
 route.get('/api/etat-avancement/:id/reparation-client',async (req,res)=>{
