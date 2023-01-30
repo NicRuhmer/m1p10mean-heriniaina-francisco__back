@@ -12,8 +12,7 @@ var VoitureSchema = new mongoose.Schema({
     },
     carburant:{
         type: String,
-        require:true,
-        unique: true
+        require:true
     },
     genre:{
         type: String
