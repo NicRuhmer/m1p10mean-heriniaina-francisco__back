@@ -86,8 +86,9 @@
                 </div>
             </div>
             <div class="col-md-12 mt-4">
-                <div class="show_modal_diagnostique"></div>
+               
                 <div class="card shadow-sm p-3 mb-5 bg-body rounded">
+                    <div class="show_modal_diagnostique"></div>
                     <div class="card-body">
 
                         <button class="" id="start_reparation" data-id="<%=detail._id%>">
@@ -160,10 +161,7 @@
                                                         <label for="exampleFormControlInput1"
                                                             class="form-label">Description
                                                         </label>
-                                                        <textarea class="form-control" placeholder="Description"
-                                                            id="descriptiond" name="descriptiond" rows="3">
-                                                    <%=diagnostiques[id].description%>
-                                                    </textarea>
+                                                        <textarea class="form-control" placeholder="Description" id="descriptiond" name="descriptiond" rows="3">  <%=diagnostiques[id].description%>  </textarea>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="exampleFormControlInput1"

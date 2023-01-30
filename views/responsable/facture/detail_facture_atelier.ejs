@@ -49,31 +49,31 @@
                 </div>
                
                 <div class="mb-3 d-flex">
-                    <label for="exampleFormControlInput1" class="form-label">N° facture*:</label>
-                    <label for="exampleFormControlInput1" class="form-label"><%=moment(detail.facture.num_facture).format('DD MMMM YYYY')%></label>
+                    <label for="exampleFormControlInput1" class="form-label">N° facture: </label>
+                    <label for="exampleFormControlInput1" class="form-label">&nbsp;&nbsp; <%=detail.facture.num_facture.format('DD MMMM YYYY')%></label>
                 </div>
                 <span class="text-danger" id="facture_error"></span>
                 <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Date
-                        de la facture*:</label>
-                        <label for="exampleFormControlInput1" class="form-label"><%=moment(detail.facture.invoice_date).format('DD MMMM YYYY')%></label>
+                        de la facture: </label>
+                        <label for="exampleFormControlInput1" class="form-label">&nbsp;&nbsp;<%=moment(detail.facture.invoice_date).format('DD MMMM YYYY')%></label>
                 </div>
                 <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">Date
-                        d'éxpiration*:</label>
+                        d'éxpiration: </label>
                         <label for="exampleFormControlInput1" class="form-label"><%=moment(detail.facture.due_date).format('DD MMMM YYYY')%></label>
                 </div>
                 <div class="mb-3 d-flex">
-                    <label for="exampleFormControlInput1" class="form-label">Mode de paiement*:</label>
-                    <label for="exampleFormControlInput1" class="form-label"><%=detail.facture.paiement%></label>
+                    <label for="exampleFormControlInput1" class="form-label">Mode de paiement: </label>
+                    <label for="exampleFormControlInput1" class="form-label">&nbsp;&nbsp;<%=detail.facture.paiement%></label>
                 </div>
                 <div class="mb-3 d-flex">
-                    <label for="exampleFormControlInput1" class="form-label">Véhicule:</label>
+                    <label for="exampleFormControlInput1" class="form-label">Véhicule: </label>
                     <label for="exampleFormControlInput1" class="form-label"><%=detail.voiture.description%></label>
                 </div>
                 <div class="mb-3 d-flex">
-                    <label for="exampleFormControlInput1" class="form-label">Matricule:</label>
-                    <label for="exampleFormControlInput1" class="form-label"><%=detail.voiture.matricule%></label>
+                    <label for="exampleFormControlInput1" class="form-label">Matricule: </label>
+                    <label for="exampleFormControlInput1" class="form-label">&nbsp;&nbsp;<%=detail.voiture.matricule%></label>
                 </div>
             </div>
         </div>

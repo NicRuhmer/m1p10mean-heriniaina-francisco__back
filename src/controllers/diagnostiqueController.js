@@ -298,6 +298,7 @@ exports.create = async (req, res) => {
 
 
 exports.update = (req, res) => {
+    var $this=this;
     const dataUpdated = {
         title: req.body.title,
         description: req.body.description,
@@ -312,8 +313,11 @@ exports.update = (req, res) => {
             if (err) {
                 res.send({ status: 400, message: "La modification a échoué!" });
             } else {
-
-                res.send({ status: 200, message: 'information a été modifié avec success!' });
+                console.log(doc);
+                $this.findAll(doc.reparation).then((result) => {
+                    res.send({ status: 200, data: result, message: "Success !" });
+                });
+                // res.send({ status: 200, message: 'information a été modifié avec success!' });
             }
         });
     } else {

@@ -47,20 +47,19 @@ function modif_diagnostique(diag_id) {
             if (res.ok) return res.json()
         })
         .then(response => {
+            $('#loading_page').css("display", "none");
             if (response.status == 200) {
-                $('#loading_page').css("display", "none");
-                document.location.reload();
+             list_diagnostique(response.data);
+                // document.location.reload();
                 //      document.getElementById("message_update_success").innerHTML = response.message;
             }
-            if (response.status == 400) {
+            else{
                 toastError(response.message);
-                //   document.getElementById("message_update_error").innerHTML = response.message;
             }
             $(this).attr('disabled', false);
             $(this).html("Modifier");
         }).catch(err => {
             toastError(err.message);
-            //document.getElementById("message_update_error").innerHTML = err.message;
             $(this).attr('disabled', false);
             $(this).html("Modifier");
         });
@@ -154,19 +153,17 @@ function show_modal_diagnostique_form(detail_id) {
             if (res.ok) return res.json()
         })
         .then(detail => {
-            console.log(JSON.stringify(detail));
-          
-                html += ' <div id="show_modal_diagnostique' + detail._id + '" class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: block;">';
-                html += '<div class="modal-dialog">  <div class="modal-content">   <div class="modal-header">';
+         
+            html += '<div class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: block;">';
+            html += '<div class="modal-dialog"> <div class="modal-content"> <div class="modal-header">';
                 html += ' <h5 class="modal-title" id="staticBackdropLabel">Modification de "'+detail.title+'" </h5>';
                 html += '   <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="close_diagnostique()" aria-label="Close"></button>';
                 html += '</div>  <div class="modal-body">  <div class="mb-3 mt-3">';
 
                 html += '<label for="exampleFormControlInput1"   class="form-label">Tâches</label>';
-                html += '<input type="text" class="form-control" id="titled"  name="titled" required value="'+detail.title+'   placeholder="Tâches">';
+                html += '<input type="text" class="form-control" id="titled"  name="titled" required value="'+detail.title+'"   placeholder="Tâches">';
                 html += '</div> <div class="mb-3">   <label for="exampleFormControlInput1" class="form-label">Description </label>';
-                html += '<textarea class="form-control" placeholder="Description"  id="descriptiond" name="descriptiond" rows="3">';
-                html += ''+detail.description%+'</textarea>';
+                html += '<textarea class="form-control" placeholder="Description"  id="descriptiond" name="descriptiond" rows="3">'+detail.description+'</textarea>';
                 html += '</div>  <div class="mb-3"><label for="exampleFormControlInput1"  class="form-label">Estimation du duration(heure) </label>';
                 html += '<input type="number" class="form-control" id="durationd"   name="durationd" min="0" required   value="'+detail.duration+'"  placeholder="En heure">';
                 html += '</div>  <div class="mb-3"> <label for="exampleFormControlInput1"  class="form-label">Quantité </label>';
@@ -180,8 +177,7 @@ function show_modal_diagnostique_form(detail_id) {
 
                 var modif = `modif_diagnostique('${detail._id}')`;
 
-                html += '<button type="button" onclick="'+modif+'"';
-                html += ' class="btn btn-primary">Modifier</button></div> </div> </div>';
+                html += '<button type="button" onclick="'+modif+'" class="btn btn-primary">Modifier</button></div> </div> </div>';
 
                 $('#show_modal_diagnostique').empty();
                 $('#show_modal_diagnostique').append(html);

@@ -13,19 +13,19 @@ function toastError(description) {
 
 
 
-function close_modal(){
+function close_modal() {
     $('#show_modal_depense').empty();
 }
-function close_modal_other(){
+function close_modal_other() {
     $('#show_modal_other_depense').empty();
 }
 
-function show_modal_depense(detail_id){
+function show_modal_depense(detail_id) {
     // const detail = JOSN.parse(detail_);
-    var html="";
+    var html = "";
 
-    
-    fetch('/depense.get/'+detail_id, {
+
+    fetch('/depense.get/' + detail_id, {
         method: 'get',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -34,38 +34,38 @@ function show_modal_depense(detail_id){
         })
         .then(detail => {
             $('#loading_page').css("display", "none");
-        
+
             if (detail.status == 400) {
                 toastError(detail.message);
             } else {
-                html+=' <div id="show_modal_depense'+detail._id+'" class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: block;">';
-                html+='<div class="modal-dialog">  <div class="modal-content">   <div class="modal-header">';
-                html+='<h5 class="modal-title" id="exampleModalLabel">Modification</h5>';
-                html+='<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="close_modal()"></button>';
-                html+='</div><div class="modal-body"><div class="mb-3">';
-                html+='<label for="exampleFormControlInput1"   class="form-label">Description <span class="text-danger">*</span></label>';
-                html+='<input type="text" class="form-control" value="'+detail.description+'" id="description'+detail._id+'" name="description'+detail._id+'" />';
-                html+='</div></div>';
-                html+='<div class="modal-footer d-flex justify-content-between">';
-                html+='<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="close_modal()">Annuler</button>';
-                var edit_depense= `edit_depense('${detail._id}')`;
-                html+='<button type="button" class="btn btn-primary" onclick="'+edit_depense+'"   data-bs-dismiss="modal">Modifier</button>';
-                html+= '</div></div></div></div>';
+                html += ' <div id="show_modal_depense' + detail._id + '" class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: block;">';
+                html += '<div class="modal-dialog">  <div class="modal-content">   <div class="modal-header">';
+                html += '<h5 class="modal-title" id="exampleModalLabel">Modification</h5>';
+                html += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="close_modal()"></button>';
+                html += '</div><div class="modal-body"><div class="mb-3">';
+                html += '<label for="exampleFormControlInput1"   class="form-label">Description <span class="text-danger">*</span></label>';
+                html += '<input type="text" class="form-control" value="' + detail.description + '" id="description' + detail._id + '" name="description' + detail._id + '" />';
+                html += '</div></div>';
+                html += '<div class="modal-footer d-flex justify-content-between">';
+                html += '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="close_modal()">Annuler</button>';
+                var edit_depense = `edit_depense('${detail._id}')`;
+                html += '<button type="button" class="btn btn-primary" onclick="' + edit_depense + '"   data-bs-dismiss="modal">Modifier</button>';
+                html += '</div></div></div></div>';
                 $('#show_modal_depense').empty();
-    $('#show_modal_depense').append(html);
+                $('#show_modal_depense').append(html);
             }
-   
-    
+
+
         }).catch(err => {
             toastError(err.message);
         });
 
 }
 
-function show_modal_other_depense(detail_id){
-    var html="";
- 
-    fetch('/other-depense.get/'+detail_id, {
+function show_modal_other_depense(detail_id) {
+    var html = "";
+
+    fetch('/other-depense.get/' + detail_id, {
         method: 'get',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -77,135 +77,135 @@ function show_modal_other_depense(detail_id){
             if (response.status == 400) {
                 toastError(response.message);
             } else {
-                html+='<div  id="show_modal_other_depense'+detail_id+'" class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: block;">';
-                html+=      '<div class="modal-dialog">';
-                html+=      ' <div class="modal-content">';
-                html+=     '  <div class="modal-header">';
-                html+=    '   <h5 class="modal-title" id="exampleModalLabel">Modification</h5> ';
-                html+=     '<button type="button" class="btn-close" data-bs-dismiss="modal" onclick="close_modal_other()" aria-label="Close"></button>';
-                html+=      '</div>';
-                html+=    '<div class="modal-body">';
-                html+=      '<div class=" shadow p-3 mb-5 bg-body rounded" >';
-                html+=    '<div class="mb-3 d-flex">';
-                html+=      '<label for="exampleFormControlInput1" class="form-label">Date<span class="text-danger">*</span></label>';
-                html+=        '<input id="date'+response.data._id+'" value="'+moment(response.data.thedate).format("YYYY-MM-DD")+'" name="date'+response.data._id+'" type="date" class="form-control" />';
-                html+=    ' </div>';
-                                    
-                html+=     '<div class="mb-3">';
-                html+=   '<label for="exampleFormControlInput1" class="form-label">Type de dépense...<span class="text-danger">*</span></label>';
-                html+=     '<select class="form-select" id="depense'+response.data._id+'" name="depense'+response.data._id+'" aria-label="Default select example">';
-                    for(var id=0;id<response.depenses.length;id++){
-                        if(""+response.depenses[id]._id==""+response.data.depense._id){
-                html+=   '<option value="'+response.depenses[id]._id+'" selected>'+response.depenses[id].description+'</option>';
-                        } else {
-                html+=  '<option value="'+response.depenses[id]._id+'">'+response.depenses[id].description+'</option>';
-                        }
+                html += '<div  id="show_modal_other_depense' + detail_id + '" class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: block;">';
+                html += '<div class="modal-dialog">';
+                html += ' <div class="modal-content">';
+                html += '  <div class="modal-header">';
+                html += '   <h5 class="modal-title" id="exampleModalLabel">Modification</h5> ';
+                html += '<button type="button" class="btn-close" data-bs-dismiss="modal" onclick="close_modal_other()" aria-label="Close"></button>';
+                html += '</div>';
+                html += '<div class="modal-body">';
+                html += '<div class=" shadow p-3 mb-5 bg-body rounded" >';
+                html += '<div class="mb-3 d-flex">';
+                html += '<label for="exampleFormControlInput1" class="form-label">Date<span class="text-danger">*</span></label>';
+                html += '<input id="date' + response.data._id + '" value="' + moment(response.data.thedate).format("YYYY-MM-DD") + '" name="date' + response.data._id + '" type="date" class="form-control" />';
+                html += ' </div>';
+
+                html += '<div class="mb-3">';
+                html += '<label for="exampleFormControlInput1" class="form-label">Type de dépense...<span class="text-danger">*</span></label>';
+                html += '<select class="form-select" id="depense' + response.data._id + '" name="depense' + response.data._id + '" aria-label="Default select example">';
+                for (var id = 0; id < response.depenses.length; id++) {
+                    if ("" + response.depenses[id]._id == "" + response.data.depense._id) {
+                        html += '<option value="' + response.depenses[id]._id + '" selected>' + response.depenses[id].description + '</option>';
+                    } else {
+                        html += '<option value="' + response.depenses[id]._id + '">' + response.depenses[id].description + '</option>';
                     }
-                html+=    '</select>';
-                html+='</div>';
-                html+=    '<div class="mb-3">';
-                html+=    '<label for="exampleFormControlInput1" class="form-label">Dépense étant que...<span class="text-danger">*</span></label>';
-                html+=   '<select class="form-select" id="categorie'+response.data._id+'" name="categorie'+response.data._id+'">';
-                    if(response.data.categorie=="DAY"){
-                html+=       '<option value="YEAR">Année</option>';
-                html+=           '<option value="MONTH">Mensuelle</option>';
-                html+=         '<option value="DAY" selected>Journalier</option>';
-                        
-                    }
-                    if(response.data.categorie=="MONTH"){
-                html+=    '<option value="DAY">Journalier</option>';
-                html+=     '<option value="MONTH" selected>Mensuelle</option>';
-                html+=      '<option value="YEAR">Année</option>';
-                    }
-                    if(response.data.categorie=="YEAR"){
-                        html+=     '<option value="YEAR" selected>Année</option>';
-                        html+=      '<option value="MONTH">Mensuelle</option>';
-                        html+=       '<option value="DAY">Journalier</option>';
-                    }
-                        
-                html+=   '</select>';
-                html+=   '</div>';
-                html+=   '<div class="mb-3">';
-                html+=       '<label for="exampleFormControlInput1"  class="form-label">Description</label>';
-                html+=            '<textarea class="form-control" id="description'+response.data._id+'" rows="3">'+response.data.description+'</textarea>';
-                html+=       '</div>';
-                html+=       '<div class="mb-3">';
-                html+=          '<label for="exampleFormControlInput1" class="form-label">Totale TTC (Ar) <span  class="text-danger">*</span></label>';
-                html+=           '<input type="number" class="form-control"  id="totale'+response.data._id+'" value="'+response.data.totale+'" min="1" name="totale'+response.data._id+'" required placeholder="Totale TTC (Ar) ">';
-                html+=               '<span class="text-danger" id="totale_error"></span>';
-                html+=          '</div>';
-                html+=     '</div>';
-                html+=     '<div class="modal-footer d-flex justify-content-between">';
-                html+=        '<button type="button" class="btn btn-secondary"  onclick="close_modal_other()" data-bs-dismiss="modal">Annuler</button>';
+                }
+                html += '</select>';
+                html += '</div>';
+                html += '<div class="mb-3">';
+                html += '<label for="exampleFormControlInput1" class="form-label">Dépense étant que...<span class="text-danger">*</span></label>';
+                html += '<select class="form-select" id="categorie' + response.data._id + '" name="categorie' + response.data._id + '">';
+                if (response.data.categorie == "DAY") {
+                    html += '<option value="YEAR">Année</option>';
+                    html += '<option value="MONTH">Mensuelle</option>';
+                    html += '<option value="DAY" selected>Journalier</option>';
+
+                }
+                if (response.data.categorie == "MONTH") {
+                    html += '<option value="DAY">Journalier</option>';
+                    html += '<option value="MONTH" selected>Mensuelle</option>';
+                    html += '<option value="YEAR">Année</option>';
+                }
+                if (response.data.categorie == "YEAR") {
+                    html += '<option value="YEAR" selected>Année</option>';
+                    html += '<option value="MONTH">Mensuelle</option>';
+                    html += '<option value="DAY">Journalier</option>';
+                }
+
+                html += '</select>';
+                html += '</div>';
+                html += '<div class="mb-3">';
+                html += '<label for="exampleFormControlInput1"  class="form-label">Description</label>';
+                html += '<textarea class="form-control" id="description' + response.data._id + '" rows="3">' + response.data.description + '</textarea>';
+                html += '</div>';
+                html += '<div class="mb-3">';
+                html += '<label for="exampleFormControlInput1" class="form-label">Totale TTC (Ar) <span  class="text-danger">*</span></label>';
+                html += '<input type="number" class="form-control"  id="totale' + response.data._id + '" value="' + response.data.totale + '" min="1" name="totale' + response.data._id + '" required placeholder="Totale TTC (Ar) ">';
+                html += '<span class="text-danger" id="totale_error"></span>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="modal-footer d-flex justify-content-between">';
+                html += '<button type="button" class="btn btn-secondary"  onclick="close_modal_other()" data-bs-dismiss="modal">Annuler</button>';
                 var edit_other_depense = `edit_other_depense('${response.data._id}')`;
-                html+=         '<button type="button" class="btn btn-primary" onclick="'+edit_other_depense+'" data-bs-dismiss="modal">Modifier</button>';
-                html+=      '</div> </div> </div> </div>';
-            
+                html += '<button type="button" class="btn btn-primary" onclick="' + edit_other_depense + '" data-bs-dismiss="modal">Modifier</button>';
+                html += '</div> </div> </div> </div>';
+
                 $('#show_modal_other_depense').empty();
                 $('#show_modal_other_depense').append(html);
             }
-           
-   
+
+
         }).catch(err => {
             toastError(err.message);
         });
 
-    
+
 
 }
 
-function show_list_data_oher_depense(list_depenses){
-    var html="";
-    for(var id=0;id<list_depenses.length;id++){
-        html+='<tr>';
-        html+=    '<td>'+moment(list_depenses[id].thedate).format('DD MMMM YYYY')+'</td>';
-        html+=    '<td>'+list_depenses[id].depense.description+'</td>';
-        html+=    '<td>'+list_depenses[id].description+'</td>';
-        html+=    '<td>'+list_depenses[id].totale+'Ar</td>';
-        html+=    '<td>';
-        html+=        '<div class="btn-group">';
-        html+=            '<button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">';
-        html+=               'Plus';
-        html+=          '</button>';
-        html+=            '<ul class="dropdown-menu">';
-                        var show_modal_other_depense = `show_modal_other_depense('${list_depenses[id]._id}')`;
-                        html+=                 '<li><a class="dropdown-item" href="#"  onclick="'+show_modal_other_depense+'">Modifier</a></li>';
-                        var delete_other_depense =`delete_other_depense('${list_depenses[id]._id}')`;
-                        html+=                 '<li><a class="dropdown-item" href="#" onclick="'+delete_other_depense+'">Supprimer';
-                        html+=                 '</a></li>';             
-        html+=                '</ul>';
-        html+=         '</div>';
-        html+=    '</td>';
-        html+='</tr>';
+function show_list_data_oher_depense(list_depenses) {
+    var html = "";
+    for (var id = 0; id < list_depenses.length; id++) {
+        html += '<tr>';
+        html += '<td>' + moment(list_depenses[id].thedate).format('DD MMMM YYYY') + '</td>';
+        html += '<td>' + list_depenses[id].depense.description + '</td>';
+        html += '<td>' + list_depenses[id].description + '</td>';
+        html += '<td>' + list_depenses[id].totale + 'Ar</td>';
+        html += '<td>';
+        html += '<div class="btn-group">';
+        html += '<button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">';
+        html += 'Plus';
+        html += '</button>';
+        html += '<ul class="dropdown-menu">';
+        var show_modal_other_depense = `show_modal_other_depense('${list_depenses[id]._id}')`;
+        html += '<li><a class="dropdown-item" href="#"  onclick="' + show_modal_other_depense + '">Modifier</a></li>';
+        var delete_other_depense = `delete_other_depense('${list_depenses[id]._id}')`;
+        html += '<li><a class="dropdown-item" href="#" onclick="' + delete_other_depense + '">Supprimer';
+        html += '</a></li>';
+        html += '</ul>';
+        html += '</div>';
+        html += '</td>';
+        html += '</tr>';
     }
 
     $('#show_list_data_other_depense').empty();
     $('#show_list_data_other_depense').append(html);
 }
 
-function show_list_data_oher_depense_filter(list_depenses){
-    var html="";
-    for(var id=0;id<list_depenses.length;id++){
-        html+='<tr>';
-        html+=    '<td>'+moment(list_depenses[id].thedate).format('DD MMMM YYYY')+'</td>';
-        html+=    '<td>'+list_depenses[id].depense[0].description+'</td>';
-        html+=    '<td>'+list_depenses[id].description+'</td>';
-        html+=    '<td>'+list_depenses[id].totale+'Ar</td>';
-        html+=    '<td>';
-        html+=        '<div class="btn-group">';
-        html+=            '<button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">';
-        html+=               'Plus';
-        html+=          '</button>';
-        html+=            '<ul class="dropdown-menu">';
-                        var show_modal_other_depense = `show_modal_other_depense('${list_depenses[id]._id}')`;
-                        html+=                 '<li><a class="dropdown-item" href="#"  onclick="'+show_modal_other_depense+'">Modifier</a></li>';
-                        var delete_other_depense =`delete_other_depense('${list_depenses[id]._id}')`;
-                        html+=                 '<li><a class="dropdown-item" href="#" onclick="'+delete_other_depense+'">Supprimer';
-                        html+=                 '</a></li>';             
-        html+=                '</ul>';
-        html+=         '</div>';
-        html+=    '</td>';
-        html+='</tr>';
+function show_list_data_oher_depense_filter(list_depenses) {
+    var html = "";
+    for (var id = 0; id < list_depenses.length; id++) {
+        html += '<tr>';
+        html += '<td>' + moment(list_depenses[id].thedate).format('DD MMMM YYYY') + '</td>';
+        html += '<td>' + list_depenses[id].depense[0].description + '</td>';
+        html += '<td>' + list_depenses[id].description + '</td>';
+        html += '<td>' + list_depenses[id].totale + 'Ar</td>';
+        html += '<td>';
+        html += '<div class="btn-group">';
+        html += '<button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">';
+        html += 'Plus';
+        html += '</button>';
+        html += '<ul class="dropdown-menu">';
+        var show_modal_other_depense = `show_modal_other_depense('${list_depenses[id]._id}')`;
+        html += '<li><a class="dropdown-item" href="#"  onclick="' + show_modal_other_depense + '">Modifier</a></li>';
+        var delete_other_depense = `delete_other_depense('${list_depenses[id]._id}')`;
+        html += '<li><a class="dropdown-item" href="#" onclick="' + delete_other_depense + '">Supprimer';
+        html += '</a></li>';
+        html += '</ul>';
+        html += '</div>';
+        html += '</td>';
+        html += '</tr>';
     }
 
     $('#show_list_data_other_depense').empty();
@@ -213,31 +213,31 @@ function show_list_data_oher_depense_filter(list_depenses){
 }
 
 
-function show_list_data_depense(depenses){
-    var html="";
+function show_list_data_depense(depenses) {
+    var html = "";
 
-  
-    for(var id=0;id<depenses.length;id++){
-        html+='<tr>';
-        html+=    '<td>'+depenses[id].description+'</td>';
-        html+=    '<td>';
-        html+=        '<div class="btn-group">';
-        html+=            '<button type="button" class="btn btn-success dropdown-toggle"';
-        html+=                'data-bs-toggle="dropdown"';
-        html+=                'aria-expanded="false">';
-        html+=                'Plus';
-        html+=            '</button>'
-        html+=            '<ul class="dropdown-menu">';
-                    var modal = `show_modal_depense('${depenses[id]._id}')`;
-        html+=                 '<li><a class="dropdown-item" href="#" onclick="'+modal+'">Modifier</a></li>';
-                         var supp = `delete_depense('${depenses[id]._id}')`;
-        html+=                '<li><a class="dropdown-item" href="#" onclick="'+supp+'">Supprimer';
-        html+=                 '</a></li>';
 
-        html+=               '</ul>';
-        html+=        '</div>';
-        html+=    '</td>';
-        html+='</tr>';
+    for (var id = 0; id < depenses.length; id++) {
+        html += '<tr>';
+        html += '<td>' + depenses[id].description + '</td>';
+        html += '<td>';
+        html += '<div class="btn-group">';
+        html += '<button type="button" class="btn btn-success dropdown-toggle"';
+        html += 'data-bs-toggle="dropdown"';
+        html += 'aria-expanded="false">';
+        html += 'Plus';
+        html += '</button>'
+        html += '<ul class="dropdown-menu">';
+        var modal = `show_modal_depense('${depenses[id]._id}')`;
+        html += '<li><a class="dropdown-item" href="#" onclick="' + modal + '">Modifier</a></li>';
+        var supp = `delete_depense('${depenses[id]._id}')`;
+        html += '<li><a class="dropdown-item" href="#" onclick="' + supp + '">Supprimer';
+        html += '</a></li>';
+
+        html += '</ul>';
+        html += '</div>';
+        html += '</td>';
+        html += '</tr>';
     }
 
     $('#show_list_data_depense').empty();
@@ -248,7 +248,7 @@ function show_list_data_depense(depenses){
 function save_new_depense() {
 
     $('#loading_page').css("display", "block");
-    
+
     $('#save_new_depense').attr('disabled', true);
     $('#save_new_depense').html("Enregistrement en cours ...");
     const reponse_ = {
@@ -265,7 +265,7 @@ function save_new_depense() {
         })
         .then(response => {
             $('#loading_page').css("display", "none");
-          
+
             if (response.status == 200) {
                 show_list_data_depense(response.data);
             }
@@ -284,11 +284,11 @@ function save_new_depense() {
 
 
 function edit_depense(depense_id) {
-   
+
     $('#loading_page').css("display", "block");
     // const diag_id = $(this).data("id");
     const reponse_ = {
-        description: $('#description'+depense_id).val()
+        description: $('#description' + depense_id).val()
     };
     fetch('/depense.update/' + depense_id, {
         method: 'put',
@@ -300,10 +300,10 @@ function edit_depense(depense_id) {
         })
         .then(response => {
             $('#loading_page').css("display", "none");
-         
+
             if (response.status == 200) {
                 show_list_data_depense(response.data);
-              //  document.location.reload();
+                //  document.location.reload();
             }
             if (response.status == 400) {
                 toastError(response.message);
@@ -315,10 +315,10 @@ function edit_depense(depense_id) {
 }
 
 function delete_depense(depense_id) {
-   
+
     $('#loading_page').css("display", "block");
     // const diag_id = $(this).data("id");
-  
+
     fetch('/depense.delete/' + depense_id, {
         method: 'delete',
         headers: { 'Content-Type': 'application/json' },
@@ -329,10 +329,10 @@ function delete_depense(depense_id) {
         })
         .then(response => {
             $('#loading_page').css("display", "none");
-         
+
             if (response.status == 200) {
                 show_list_data_depense(response.data);
-            //    document.location.reload();
+                //    document.location.reload();
             }
             if (response.status == 400) {
                 toastError(response.message);
@@ -348,15 +348,15 @@ function delete_depense(depense_id) {
 function save_new_other_depense() {
 
     $('#loading_page').css("display", "block");
-    
+
     $('#save_new_other_depense').attr('disabled', true);
     $('#save_new_other_depense').html("Enregistrement en cours ...");
     const reponse_ = {
         depense: $('#depense').val(),
-        description:$('#description').val(),
-        date:$('#date').val(),
-        categorie:$('#categorie').val(),
-        totale:$('#totale').val()
+        description: $('#description').val(),
+        date: $('#date').val(),
+        categorie: $('#categorie').val(),
+        totale: $('#totale').val()
     };
 
     fetch('/other-depense.create', {
@@ -369,11 +369,11 @@ function save_new_other_depense() {
         })
         .then(response => {
             $('#loading_page').css("display", "none");
-          
+
             if (response.status == 200) {
-                show_list_data_oher_depense(response.data,response.depenses);
+                show_list_data_oher_depense(response.data, response.depenses);
                 // document.location.reload();
-             }
+            }
             if (response.status == 400) {
                 toastError(response.message);
             }
@@ -389,15 +389,15 @@ function save_new_other_depense() {
 
 
 function edit_other_depense(other_depense_id) {
-   
+
     $('#loading_page').css("display", "block");
     // const diag_id = $(this).data("id");
     const reponse_ = {
-        depense: $('#depense'+other_depense_id+"").val(),
-        description:$('#description'+other_depense_id).val(),
-        date:$('#date'+other_depense_id).val(),
-        categorie:$('#categorie'+other_depense_id+"").val(),
-        totale:$('#totale'+other_depense_id).val()
+        depense: $('#depense' + other_depense_id + "").val(),
+        description: $('#description' + other_depense_id).val(),
+        date: $('#date' + other_depense_id).val(),
+        categorie: $('#categorie' + other_depense_id + "").val(),
+        totale: $('#totale' + other_depense_id).val()
     };
     fetch('/other-depense.update/' + other_depense_id, {
         method: 'put',
@@ -409,9 +409,9 @@ function edit_other_depense(other_depense_id) {
         })
         .then(response => {
             $('#loading_page').css("display", "none");
-         
+
             if (response.status == 200) {
-                show_list_data_oher_depense(response.data,response.depenses);
+                show_list_data_oher_depense(response.data, response.depenses);
                 // document.location.reload();
             }
             if (response.status == 400) {
@@ -424,10 +424,10 @@ function edit_other_depense(other_depense_id) {
 }
 
 function delete_other_depense(other_depense_id) {
-   
+
     $('#loading_page').css("display", "block");
     // const diag_id = $(this).data("id");
-   
+
     fetch('/other-depense.delete/' + other_depense_id, {
         method: 'delete',
         headers: { 'Content-Type': 'application/json' },
@@ -438,9 +438,9 @@ function delete_other_depense(other_depense_id) {
         })
         .then(response => {
             $('#loading_page').css("display", "none");
-         
+
             if (response.status == 200) {
-                show_list_data_oher_depense(response.data,response.depenses);
+                show_list_data_oher_depense(response.data, response.depenses);
                 // document.location.reload();
             }
             if (response.status == 400) {
@@ -453,47 +453,47 @@ function delete_other_depense(other_depense_id) {
 }
 
 
-function show_data_stat(statistiques){
-   
-    var html="";
-    for(var ids=0;ids<statistiques.length;ids++){
-        html+='<div class="d-flex justify-content-between mb-3">';
-        html+=    '<h6>'+statistiques[ids]._id.depense[0].description+'</h6>';
-        html+=    '<h5>'+statistiques[ids].totale+'Ar</h5>';
-        html+='</div>';
+function show_data_stat(statistiques) {
+
+    var html = "";
+    for (var ids = 0; ids < statistiques.length; ids++) {
+        html += '<div class="d-flex justify-content-between mb-3">';
+        html += '<h6>' + statistiques[ids]._id.depense[0].description + '</h6>';
+        html += '<h5>' + statistiques[ids].totale + 'Ar</h5>';
+        html += '</div>';
     }
 
     $('#list_depense_data').empty();
     $('#list_depense_data').append(html);
 }
 
-function filtre_list_depense_stat(){
-  
+function filtre_list_depense_stat() {
+
     $('#loading_page').css("display", "block");
     fetch('/statistiqueFilter', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({date:$('#date_filter').val(),categorie:$('#categorie_filter').val()})
+        body: JSON.stringify({ date: $('#date_filter').val(), categorie: $('#categorie_filter').val() })
     })
         .then(res => {
             if (res.ok) return res.json()
         })
         .then(response => {
             $('#loading_page').css("display", "none");
-       
+            alert(JSON.stringify(response));
             if (response.status == 400) {
                 toastError(response.message);
             } else {
                 console.log(JSON.stringify(response));
+                { "status": 200, "benefice": -920000, "chiff_affaire": { "status": 200, "totale_temps_reparation": 2, "totale_nb_reparation": 1, "moyen_temps_reparation": 2, "chiffre_daffaire": 1080000 }, "depense": [{ "_id": { "depense": [{ "_id": "63d56f6edbf3bc278381b9f5", "description": "Autre dépenses", "createdAt": "2023-01-28T18:54:38.910Z", "updatedAt": "2023-01-29T12:01:47.619Z", "__v": 0 }] }, "totale": 200000 }, { "_id": { "depense": [{ "_id": "63d56f62dbf3bc278381b9d4", "description": "Achats pièces", "createdAt": "2023-01-28T18:54:26.828Z", "updatedAt": "2023-01-28T18:54:26.828Z", "__v": 0 }] }, "totale": 1300000 }, { "_id": { "depense": [{ "_id": "63d56f52dbf3bc278381b9b3", "description": "Loyer", "createdAt": "2023-01-28T18:54:10.648Z", "updatedAt": "2023-01-28T18:54:10.648Z", "__v": 0 }] }, "totale": 500000 }] }
+                document.getElementById("stat_chiffre_affaire").innerHTML = response.chiff_affaire.chiffre_daffaire + "Ar";
+                document.getElementById("stat_benefice").innerHTML = response.benefice + "Ar";
+                if (response.chiff_affaire.moyen_temps_reparation == null) {
+                    document.getElementById("stat_moyen_temps_reparation").innerHTML = "0 heure environ";
 
-                document.getElementById("stat_chiffre_affaire").innerHTML=response.chiff_affaire.chiffre_daffaire+"Ar";
-                document.getElementById("stat_benefice").innerHTML=response.benefice+"Ar";
-                if(response.chiff_affaire.moyen_temps_reparation==null){
-                    document.getElementById("stat_moyen_temps_reparation").innerHTML="0 heure environ";
-                
                 } else {
-                    document.getElementById("stat_moyen_temps_reparation").innerHTML=response.chiff_affaire.moyen_temps_reparation+"heure environ";
-                
+                    document.getElementById("stat_moyen_temps_reparation").innerHTML = "" + response.chiff_affaire.moyen_temps_reparation + "heure environ";
+
                 }
                 show_data_stat(response.depense);
             }
@@ -505,25 +505,25 @@ function filtre_list_depense_stat(){
 function filtre_list_other_depense() {
 
     $('#loading_page').css("display", "block");
-    
+
     $('#save_new_other_depense').attr('disabled', true);
     $('#save_new_other_depense').html("Enregistrement en cours ...");
-   
+
     fetch('/depenses', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({date:$('#date_filter').val(),categorie:$('#categorie_filter').val()})
+        body: JSON.stringify({ date: $('#date_filter').val(), categorie: $('#categorie_filter').val() })
     })
         .then(res => {
             if (res.ok) return res.json()
         })
         .then(response => {
             $('#loading_page').css("display", "none");
-          
+
             if (response.status == 400) {
                 toastError(response.message);
             } else {
-                show_list_data_oher_depense_filter(response.list_depenses,response.depenses);
+                show_list_data_oher_depense_filter(response.list_depenses, response.depenses);
             }
             $('#save_new_other_depense').attr('disabled', false);
             $('#save_new_other_depense').html("Enregistrer");
