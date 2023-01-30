@@ -103,7 +103,7 @@ exports.findAllReparationAccepter = (req,res) => {
   
 };
 
-exports.findAllReparationAttente = (req,res) => {
+exports.findAllReparationAttenteClient = (req,res) => {
    
     Reparationdb.find({ client:req.params.id,employe: null, start: false, facture: null })
         .populate({
