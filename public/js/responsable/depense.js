@@ -487,10 +487,10 @@ function filtre_list_depense_stat() {
                 document.getElementById("stat_chiffre_affaire").innerHTML = response.chiff_affaire.chiffre_daffaire + "Ar";
                 document.getElementById("stat_benefice").innerHTML = response.benefice + "Ar";
                 if (response.chiff_affaire.moyen_temps_reparation == null) {
-                    document.getElementById("stat_moyen_temps_reparation").innerHTML = "0 heure environ";
+                    document.getElementById("stat_moyen_temps_reparation").innerHTML = "0h en moyenne";
 
                 } else {
-                    document.getElementById("stat_moyen_temps_reparation").innerHTML = "" + response.chiff_affaire.moyen_temps_reparation + "heure environ";
+                    document.getElementById("stat_moyen_temps_reparation").innerHTML = "" + response.chiff_affaire.moyen_temps_reparation + "h en moyenne";
 
                 }
                 show_data_stat(response.depense);
