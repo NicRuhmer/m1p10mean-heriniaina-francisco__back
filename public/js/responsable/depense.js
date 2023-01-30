@@ -480,12 +480,10 @@ function filtre_list_depense_stat() {
         })
         .then(response => {
             $('#loading_page').css("display", "none");
-            alert(JSON.stringify(response));
+         
             if (response.status == 400) {
                 toastError(response.message);
             } else {
-                console.log(JSON.stringify(response));
-                { "status": 200, "benefice": -920000, "chiff_affaire": { "status": 200, "totale_temps_reparation": 2, "totale_nb_reparation": 1, "moyen_temps_reparation": 2, "chiffre_daffaire": 1080000 }, "depense": [{ "_id": { "depense": [{ "_id": "63d56f6edbf3bc278381b9f5", "description": "Autre dépenses", "createdAt": "2023-01-28T18:54:38.910Z", "updatedAt": "2023-01-29T12:01:47.619Z", "__v": 0 }] }, "totale": 200000 }, { "_id": { "depense": [{ "_id": "63d56f62dbf3bc278381b9d4", "description": "Achats pièces", "createdAt": "2023-01-28T18:54:26.828Z", "updatedAt": "2023-01-28T18:54:26.828Z", "__v": 0 }] }, "totale": 1300000 }, { "_id": { "depense": [{ "_id": "63d56f52dbf3bc278381b9b3", "description": "Loyer", "createdAt": "2023-01-28T18:54:10.648Z", "updatedAt": "2023-01-28T18:54:10.648Z", "__v": 0 }] }, "totale": 500000 }] }
                 document.getElementById("stat_chiffre_affaire").innerHTML = response.chiff_affaire.chiffre_daffaire + "Ar";
                 document.getElementById("stat_benefice").innerHTML = response.benefice + "Ar";
                 if (response.chiff_affaire.moyen_temps_reparation == null) {
