@@ -550,23 +550,17 @@ exports.startReparation = async (req, res) => {
 exports.update = async (req, res) => {
     const emp = await Employedb.findOne({user:req.user._id});
     const dataUpdated = {
-        employe: emp._id,
-        description: req.body.description,
-        status: true,
-        release_date: null,
-        facture: null,
-        start: false
+         employe: emp._id,
+        status: true
     };
-    console.log(dataUpdated);
     if (dataUpdated.employe != null && dataUpdated.status != null) {
         Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
                 res.send({ status: 404, message: "La modification a échoué!" });
             } else {
                 Voituredb.findById(doc.voiture).then((vtre) => {
-
                     Clientdb.findById(vtre.client).then((cli) => {
-                        authentificationMail.sendMailAcceptReparationVehicule(cli.email, cli.name + " " + cli.username, vtre.matricule, "http://localhost:3000/login", emp.name)
+                       authentificationMail.sendMailAcceptReparationVehicule(cli.email, cli.name + " " + cli.username, vtre.matricule, "http://localhost:3000/login", emp.name)
                             .then((val) => {
                                 res.send(val);
                             }).catch((errS) => {

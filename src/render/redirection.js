@@ -17,11 +17,13 @@ exports.loginRoutes = (req, res) => {
     res.render('login', response);
 };
 
-exports.redirectPageSPA = async (role_, res) => {
-    employeController.findAll().then((empl) => {
-        res.render('index', { role: role_, moment: moment, employes: empl, title: 'Gestion Panel-Responsable' });
-    });
-
+exports.redirectPageSPA =async (role_, res) => {
+   const resp =await employeController.getResponsable();
+      employeController.findAll().then((empl) => {
+            res.render('index', {responsable_inactif: resp.responsable_inactive, responsable_active: resp.responsable_active,role: role_, moment: moment, employes: empl, title: 'Gestion Panel-Responsable' });
+        }).catch((err) => {
+            res.send(err);
+        });
 };
 
 exports.redirectPageClient = async (role_, res) => {
@@ -61,7 +63,7 @@ exports.getData = (req, res) => {
                 else if (connected.role.role == 'isFinancied') { //resp financier
                     this.redirectPageRespFinancier(connected.role.role, res);
                 }
-                else  {
+                else {
                     res.render('/login');
                 }
             }
