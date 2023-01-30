@@ -2,6 +2,7 @@ var Diagnonstiquedb = require('../models/Diagnostique');
 var cReparation = require('./reparationController');
 var StatutReparationdb = require('../models/StatutReparation');
 const { ObjectId } = require("mongodb");
+const Reparationdb = require('../models/Reparation');
 
 exports.findAll = (reparation_id) => {
     return new Promise((resolve, reject) => {
@@ -13,6 +14,9 @@ exports.findAll = (reparation_id) => {
             });
     });
 };
+
+
+
 
 function round(num, decimalPlaces = 0) {
     num = Math.round(num + "e" + decimalPlaces);
@@ -61,15 +65,15 @@ exports.estimationReparation = (reparation_id_) => {
         var totaleInit = await Diagnonstiquedb.countDocuments({ reparation: reparation_id_ });
         var pourcentInit = 100;
         var pourcentage_finish = 0;
-        var pourcent=0;
+        var pourcent = 0;
         const finish = await Diagnonstiquedb.countDocuments({ reparation: reparation_id_, status_reparation: finish_._id });
-       if(finish>0 && totaleInit>0){
-        pourcentage_finish = ((finish * pourcentInit) / totaleInit);
-        var tmp = round(pourcentage_finish, 2) ;
-        if(tmp!=null){
-            var pourcent=tmp;
+        if (finish > 0 && totaleInit > 0) {
+            pourcentage_finish = ((finish * pourcentInit) / totaleInit);
+            var tmp = round(pourcentage_finish, 2);
+            if (tmp != null) {
+                var pourcent = tmp;
+            }
         }
-       } 
         resolve({ reparation_id: reparation_id_, pourcentage: pourcent });
 
     }).catch(err => {
@@ -172,12 +176,12 @@ exports.totaleMontant = (reparation_id_) => {
         var tabTva_ = [];
         Diagnonstiquedb.aggregate(
             [
-              
+
                 {
                     $group:
                     {
                         _id: { reparation: '$reparation' },
-                        'totaleDuration':{$sum:'$duration'},
+                        'totaleDuration': { $sum: '$duration' },
                         'totaleHt': { $sum: { $multiply: ['$pu', '$qte'] } },
                         'totalTvaInit': { $sum: { $multiply: ['$pu', '$qte', '$tva'] } }
                     }
@@ -185,34 +189,36 @@ exports.totaleMontant = (reparation_id_) => {
                 {
                     $project: {
                         reparation: '$_id.reparation',
-                         totaleHt: 1,
-                         totalTvaInit:1,
-                         totaleDuration: 1,
+                        totaleHt: 1,
+                        totalTvaInit: 1,
+                        totaleDuration: 1,
                         // tva: 1,
                         // pu: 1,
-                        totaleTva: { $divide: [ "$totalTvaInit", 100 ] } 
+                        totaleTva: { $divide: ["$totalTvaInit", 100] }
                     }
                 },
-                  {
+                {
                     $match: {
-                        reparation: new ObjectId(""+reparation_id_)
+                        reparation: new ObjectId("" + reparation_id_)
                     }
                 }
             ]
         ).then((totale) => {
-          //  resolve(totale);
-          if(totale[0].totaleDuration!=null && totale[0].totaleHt!=null &&  totale[0].totaleTva!=null){
-            totaleHeure = totale[0].totaleDuration;
-            totaleht = totale[0].totaleHt;
-            totaletva = totale[0].totaleTva;
-          }
-        
+            //  resolve(totale);
+            console.log(totale);
+            if (totale.length > 0) {
+                if (totale[0].totaleDuration != null && totale[0].totaleHt != null && totale[0].totaleTva != null) {
+                    totaleHeure = totale[0].totaleDuration;
+                    totaleht = totale[0].totaleHt;
+                    totaletva = totale[0].totaleTva;
+                }
+            }
             Diagnonstiquedb.aggregate([
-                  {
+                {
                     $match: {
-                        reparation: new ObjectId(""+reparation_id_)
+                        reparation: new ObjectId("" + reparation_id_)
                     }
-                },{
+                }, {
                     $group:
                     {
                         _id: { tva: "$tva" },
@@ -229,7 +235,7 @@ exports.totaleMontant = (reparation_id_) => {
                 for (var id = 0; id < totale2.length; id++) {
                     tabTva_.push({ description: "TVA " + totale2[id]._id.tva + "%", totaleTva: totale2[id].totaleTva });
                 }
-                resolve({ totaleReparation:totaleHeure,totaleHT: totaleht, totaleTTC: (totaleht + totaletva), totaleTVA: totaletva, tabTva: tabTva_ });
+                resolve({ totaleReparation: totaleHeure, totaleHT: totaleht, totaleTTC: (totaleht + totaletva), totaleTVA: totaletva, tabTva: tabTva_ });
             });
 
         }).catch((err) => {
@@ -337,12 +343,15 @@ exports.updateFacture = (req, res) => {
     }
 };
 
-exports.delete = (req, res) => {
-    Diagnonstiquedb.findByIdAndDelete(req.params.id).then((result) => {
-        res.send({ status: 200, message: 'Suppression terminé !' })
-    }).catch((err) => {
-        res.send({ status: 400, message: err.message });
+exports.delete = (id) => {
+    return new Promise((resolve, reject) => {
+        Diagnonstiquedb.findByIdAndDelete(id).then((result) => {
+            resolve({ status: 200, message: 'Suppression terminé !' })
+        }).catch((err) => {
+            reject({ status: 400, message: err.message });
+        });
     });
+
 };
 
 exports.updateTask = async (index_, req, res) => {

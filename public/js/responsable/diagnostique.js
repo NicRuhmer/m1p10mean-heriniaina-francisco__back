@@ -20,9 +20,9 @@ $(document).ready(function () {
 
 
 
-$('#modif_diagnostique').click(function () {
+function modif_diagnostique(diag_id) {
     $('#loading_page').css("display", "block");
-    const diag_id = $(this).data("id");
+
     document.getElementById('message_update_error').innerHTML = "";
     document.getElementById("message_update_success").innerHTML = "";
     $(this).attr('disabled', true);
@@ -65,7 +65,7 @@ $('#modif_diagnostique').click(function () {
             $(this).html("Modifier");
         });
 
-});
+}
 
 
 function list_diagnostique(listes) {
@@ -136,12 +136,17 @@ function valid_release_date(id) {
     // }
 }
 
-function show_modal_diagnostique(detail_id){
-    // const detail = JOSN.parse(detail_);
-    var html="";
 
-    
-    fetch('/depense.get/'+detail_id, {
+function close_diagnostique(){
+    $('#show_modal_diagnostique').empty();
+}
+
+function show_modal_diagnostique_form(detail_id) {
+    // const detail = JOSN.parse(detail_);
+    var html = "";
+
+
+    fetch('/diagnostique/get/' + detail_id, {
         method: 'get',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -149,52 +154,65 @@ function show_modal_diagnostique(detail_id){
             if (res.ok) return res.json()
         })
         .then(detail => {
-            $('#loading_page').css("display", "none");
-        
-            if (detail.status == 400) {
-                toastError(detail.message);
-            } else {
-                html+=' <div id="show_modal_depense'+detail._id+'" class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: block;">';
-                html+='<div class="modal-dialog">  <div class="modal-content">   <div class="modal-header">';
-                html+='<h5 class="modal-title" id="exampleModalLabel">Modification</h5>';
-                html+='<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="close_modal()"></button>';
-                html+='</div><div class="modal-body"><div class="mb-3">';
-                html+='<label for="exampleFormControlInput1"   class="form-label">Description <span class="text-danger">*</span></label>';
-                html+='<input type="text" class="form-control" value="'+detail.description+'" id="description'+detail._id+'" name="description'+detail._id+'" />';
-                html+='</div></div>';
-                html+='<div class="modal-footer d-flex justify-content-between">';
-                html+='<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="close_modal()">Annuler</button>';
-                var edit_depense= `edit_depense('${detail._id}')`;
-                html+='<button type="button" class="btn btn-primary" onclick="'+edit_depense+'"   data-bs-dismiss="modal">Modifier</button>';
-                html+= '</div></div></div></div>';
-                $('#show_modal_depense').empty();
-    $('#show_modal_depense').append(html);
-            }
-   
-    
+            console.log(JSON.stringify(detail));
+          
+                html += ' <div id="show_modal_diagnostique' + detail._id + '" class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: block;">';
+                html += '<div class="modal-dialog">  <div class="modal-content">   <div class="modal-header">';
+                html += ' <h5 class="modal-title" id="staticBackdropLabel">Modification de "'+detail.title+'" </h5>';
+                html += '   <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="close_diagnostique()" aria-label="Close"></button>';
+                html += '</div>  <div class="modal-body">  <div class="mb-3 mt-3">';
+
+                html += '<label for="exampleFormControlInput1"   class="form-label">Tâches</label>';
+                html += '<input type="text" class="form-control" id="titled"  name="titled" required value="'+detail.title+'   placeholder="Tâches">';
+                html += '</div> <div class="mb-3">   <label for="exampleFormControlInput1" class="form-label">Description </label>';
+                html += '<textarea class="form-control" placeholder="Description"  id="descriptiond" name="descriptiond" rows="3">';
+                html += ''+detail.description%+'</textarea>';
+                html += '</div>  <div class="mb-3"><label for="exampleFormControlInput1"  class="form-label">Estimation du duration(heure) </label>';
+                html += '<input type="number" class="form-control" id="durationd"   name="durationd" min="0" required   value="'+detail.duration+'"  placeholder="En heure">';
+                html += '</div>  <div class="mb-3"> <label for="exampleFormControlInput1"  class="form-label">Quantité </label>';
+                html += '<input type="number" class="form-control" id="qted" name="qted"   min="0" required value="'+detail.qte+'"  placeholder="Quantité">';
+                html += '</div> <div class="mb-3"> <label for="exampleFormControlInput1" class="form-label">Unité </label>';
+                html += '<input type="text" class="form-control" id="united"  name="united" min="0" required  value="'+detail.unite+'" placeholder="Unité">';
+                html += '</div>  <div class="mb-3"> <label for="exampleFormControlInput1"   class="form-label">Estimation du prix   </label>';
+                html += '<input type="number" class="form-control" id="montantd"  name="montantd" required value="'+detail.pu+'" placeholder="En Ar">';
+                html += ' </div>  </div>   <div class="modal-footer d-flex justify-content-between">';
+                html += '<button type="button" class="btn btn-secondary" onclick="close_diagnostique()" >Close</button>';
+
+                var modif = `modif_diagnostique('${detail._id}')`;
+
+                html += '<button type="button" onclick="'+modif+'"';
+                html += ' class="btn btn-primary">Modifier</button></div> </div> </div>';
+
+                $('#show_modal_diagnostique').empty();
+                $('#show_modal_diagnostique').append(html);
+
         }).catch(err => {
             toastError(err.message);
         });
 
 }
 
-function list_diagnostique(diagnostiques){
-    var html="";
-    for(var id=0;id<diagnostiques.length;id++){
-   
-    html+='<tr><td><div><p>';
-            <span class="">'+diagnostiques[id].title+'</span> <br>  '+diagnostiques[id].description;
-    '</p>  </div> </td>';
-      '  <td>';
-    '<p>durée:'+diagnostiques[id].duration+' heure<br>  quantité pièce: '+diagnostiques[id].qte;
-    '</p> </td> <td>'+diagnostiques[id].pu+'Ar</td>';
-    '<td> <div class="d-flex  justify-content-between">';
-    var tmp = `show_modal_diagnostique(`${diagnostiques[id]._id}`)`;
-    <button type="button" class="btn    btn-success" id="#edit<%=diagnostiques[id]._id%>">Modifier</button>
-    '<button type="button"  onclick="'+diagnostiques[id]._id+'"  id="delete_diagnostique" class="btn btn-warning delete_diagnostique">Rétirer</button>';
-    '</div>   </td>  </tr>';
+function list_diagnostique(diagnostiques) {
+    var html = "";
+    for (var id = 0; id < diagnostiques.length; id++) {
+
+        html += '<tr><td><div><p>';
+        html += '        <span class="">' + diagnostiques[id].title + '</span> <br>  ' + diagnostiques[id].description;
+        html += '</p>  </div> </td>';
+        html += '  <td>';
+        html += '<p>durée:' + diagnostiques[id].duration + ' heure<br>  quantité pièce: ' + diagnostiques[id].qte;
+        html += '</p> </td> <td>' + diagnostiques[id].pu + 'Ar</td>';
+        html += '<td> <div class="d-flex  justify-content-between">';
+        var tmp = `show_modal_diagnostique_form('${diagnostiques[id]._id}')`;
+        var sup = `supp_diagnostique('${diagnostiques[id]._id}')`;
+        html += '<button type="button" class="btn    btn-success" onclick="' + tmp + '">Modifier</button>';
+        html += '<button type="button"  onclick="' + sup + '"  class="btn btn-warning delete_diagnostique">Rétirer</button>';
+        html +='</div>   </td>  </tr>';
     }
+    $('#list_data_diagnostique').empty();
+    $('#list_data_diagnostique').append(html);
 }
+
 
 $('#submit_diagnostique').click(function () {
     $('#loading_page').css("display", "block");
@@ -223,17 +241,14 @@ $('#submit_diagnostique').click(function () {
         })
         .then(response => {
             $('#loading_page').css("display", "none");
-            document.location.reload();
+          
             if (response.status == 200) {
-                document.getElementById("message_success").innerHTML = response.message;
+                list_diagnostique(response.data);
             }
-            if (response.status == 400) {
-                document.getElementById("message_error").innerHTML = response.message;
-                // list_diagnostique(response.data);
+            else{
+                toastError(response.message);
             }
-            /*setInterval(() => {
-                document.location.reload();
-            }, 2000);*/
+          
             $(this).attr('disabled', false);
             $(this).html("Ajout");
         }).catch(err => {
@@ -245,6 +260,7 @@ $('#submit_diagnostique').click(function () {
 
 });
 
+/*
 $('#submit_diagnostique').click(function () {
     $('#loading_page').css("display", "block");
 
@@ -279,9 +295,7 @@ $('#submit_diagnostique').click(function () {
                 document.getElementById("message_error").innerHTML = response.message;
                 // list_diagnostique(response.data);
             }
-            /*setInterval(() => {
-                document.location.reload();
-            }, 2000);*/
+           
             $(this).attr('disabled', false);
             $(this).html("Ajout");
         }).catch(err => {
@@ -291,7 +305,7 @@ $('#submit_diagnostique').click(function () {
             $(this).html("Ajout");
         });
 
-});
+});*/
 
 
 function supp_diagnostique(diag_id) {
@@ -309,13 +323,9 @@ function supp_diagnostique(diag_id) {
         .then(response => {
             $('#loading_page').css("display", "none");
             if (response.status == 200) {
-                /* setInterval(() => {
-                     document.location.reload();
-                 }, 2000);*/
-                //    alert(response.message);
-                // toastSuccess(response.message);
+              list_diagnostique(response.data);
             }
-            if (response.status == 400) {
+           else {
 
                 toastError(response.message);
             }

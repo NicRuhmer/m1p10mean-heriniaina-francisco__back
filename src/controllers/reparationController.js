@@ -33,7 +33,7 @@ exports.findAllReparationAccepter = (req, res) => {
                 var tab = [];
                 for (var i = 0; i < result.length; i++) {
                     const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
-                    const solde = 0;
+                    var solde = 0;
                     diagnostiqueController.totaleMontant(result[i]._id).then((tmp2) => {
                         solde = tmp2.totaleTTC;
                     }).catch((err) => {

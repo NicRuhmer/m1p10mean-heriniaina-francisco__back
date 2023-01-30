@@ -77,6 +77,7 @@ app.use('/fonts', express.static("public/fonts"));
 // ================================ IMPORTATION =========================
 // Use connection Database
 const connectDB = require('./src/database/connection');
+const Diagnostiquedb = require('./src/models/Diagnostique');
 connectDB();
 
 // Use router
@@ -97,7 +98,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(new localStrategy(function (email, password, done) {
-   Userdb.findOne({ username: email,status:true })
+  Userdb.findOne({ username: email, status: true })
     .populate({
       path: 'role'
     }).exec((err, user) => {
@@ -154,30 +155,30 @@ app.post("/login", passport.authenticate("local", {
 
 //================== API Reset Password ===============
 
-app.put('/reset_password/:id/user',async(req,res)=>{
+app.put('/reset_password/:id/user', async (req, res) => {
 
-    if(req.body.new_password == req.body.confirm_password){
-        const user = await Userdb.findById(req.params.id);
-        bcrypt.compare(req.body.last_password, user.password, function (err2, res2) {
-          if (err2) {
-              res.send({status:400,message:"Votre mot de passe précedent est incorrect"});
-          }
-          else if (res2 === false) {
-            res.send({ status:400,message: "Mot de passe incorrecte" });
-          }
-          else {
-            userController.reset_password(req.params.id,req.body.confirm_password).then((result)=>{
-                res.send(result);
-            }).catch((err)=>{
-                res.send(err);
-            });
-          }
+  if (req.body.new_password == req.body.confirm_password) {
+    const user = await Userdb.findById(req.params.id);
+    bcrypt.compare(req.body.last_password, user.password, function (err2, res2) {
+      if (err2) {
+        res.send({ status: 400, message: "Votre mot de passe précedent est incorrect" });
+      }
+      else if (res2 === false) {
+        res.send({ status: 400, message: "Mot de passe incorrecte" });
+      }
+      else {
+        userController.reset_password(req.params.id, req.body.confirm_password).then((result) => {
+          res.send(result);
+        }).catch((err) => {
+          res.send(err);
         });
-    
-    } else {
-      res.send({status:400,message:' Votre nouveau mot de passe est incorrect'});
-    }
-    
+      }
+    });
+
+  } else {
+    res.send({ status: 400, message: ' Votre nouveau mot de passe est incorrect' });
+  }
+
 });
 
 //================== API User Connected =====================
@@ -186,34 +187,52 @@ app.get('/user-connected', connectEnsureLogin.ensureLoggedIn(), userController.f
 
 //================== API Reparation atelier ===================
 
-app.get('/accepter-la-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.update)
-app.put('/start-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.startReparation);
-app.get('/list-reparation',(req,res)=>{
-      reparationController.findAllReparationEnCour("63ca97231a809713932b5ff0").then((tmp)=>{
-      res.send(tmp);  
-      });
+app.get('/accepter-la-reparation/:id', connectEnsureLogin.ensureLoggedIn(), reparationController.update)
+app.put('/start-reparation/:id', connectEnsureLogin.ensureLoggedIn(), reparationController.startReparation);
+app.get('/list-reparation', (req, res) => {
+  reparationController.findAllReparationEnCour("63ca97231a809713932b5ff0").then((tmp) => {
+    res.send(tmp);
+  });
 });
 
 
 //================== API Reparation financier ===================
 
-app.post('/valide/:id/sortit-vehicule',reparationController.valider_sortir);
-app.post('/valide/:id/facture',connectEnsureLogin.ensureLoggedIn(),reparationController.valider_facture);
+app.post('/valide/:id/sortit-vehicule', reparationController.valider_sortir);
+app.post('/valide/:id/facture', connectEnsureLogin.ensureLoggedIn(), reparationController.valider_facture);
 
 //=================== API Diagnotique ==============================================
-app.put('/modif/:id/reparation-diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.update)
-app.post('/create/:id/reparation-diagnostique',diagnostiqueController.create);
-app.delete('/delete/:id/reparation-diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.delete)
-app.post('/progress-reparation-diagnostiques',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.isProgress);
+app.get('/diagnostique/get/:id', (req, res) => {
+  diagnostiqueController.findById(req.params.id).then((val) => {
+    res.send(val);
+  }).catch((err)=>{
+    res.send(err);
+  });
+});
+app.put('/modif/:id/reparation-diagnostique', connectEnsureLogin.ensureLoggedIn(), diagnostiqueController.update);
+app.post('/create/:id/reparation-diagnostique', diagnostiqueController.create);
+app.delete('/delete/:id/reparation-diagnostique', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+  const tmp = await Diagnostiquedb.findById(req.params.id);
+  diagnostiqueController.delete(req.params.id).then((rsult) => {
+    diagnostiqueController.findAll(tmp.reparation).then((result) => {
+      res.send({ status: 200, message: "Success !", data: result });
+    }).catch((err2) => {
+      res.send({ status: 400, message: err2.message });
+    });
+  }).catch((err) => {
+    res.send(err); f
+  });
+});
+app.post('/progress-reparation-diagnostiques', connectEnsureLogin.ensureLoggedIn(), diagnostiqueController.isProgress);
 
 //=================== API Facture =================================================
-app.put('/edit/:id/diagnostique',connectEnsureLogin.ensureLoggedIn(),diagnostiqueController.updateFacture);
-app.post('/verify-facture',connectEnsureLogin.ensureLoggedIn(),factureController.verifyNumFacture);
-app.post('/save/:id/new-facture',connectEnsureLogin.ensureLoggedIn(),factureController.saveFacture);
-app.get('/detail/:id/teste',(req,res)=>{
-  diagnostiqueController.totaleMontant(req.params.id).then((v)=>{
+app.put('/edit/:id/diagnostique', connectEnsureLogin.ensureLoggedIn(), diagnostiqueController.updateFacture);
+app.post('/verify-facture', connectEnsureLogin.ensureLoggedIn(), factureController.verifyNumFacture);
+app.post('/save/:id/new-facture', connectEnsureLogin.ensureLoggedIn(), factureController.saveFacture);
+app.get('/detail/:id/teste', (req, res) => {
+  diagnostiqueController.totaleMontant(req.params.id).then((v) => {
     res.send(v);
-  }).catch((err)=>{
+  }).catch((err) => {
     res.send(err.message);
   })
 });
@@ -225,29 +244,29 @@ app.get('/detail/:id/teste',(req,res)=>{
 //=================== Redirection Page Web ==========================
 
 //  1- Redirection Super Admin
-app.get('/', connectEnsureLogin.ensureLoggedIn(),redirectionWeb.getData);
+app.get('/', connectEnsureLogin.ensureLoggedIn(), redirectionWeb.getData);
 app.get('/8767545233123456787654SDFGKJXSgvgdey53636', redirectionWebSuperAdmin.new_spa);
-app.get('/reset_password/986874R234657898ZZ54545', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.reset_password);
+app.get('/reset_password/986874R234657898ZZ54545', connectEnsureLogin.ensureLoggedIn(), redirectionWebSuperAdmin.reset_password);
 app.get('/liste_responsable', connectEnsureLogin.ensureLoggedIn(), redirectionWebSuperAdmin.listResponsable);
 // app.get('/liste_client', connectEnsureLogin.ensureLoggedIn(), redirectionWebSuperAdmin.listClient);
-app.get('/nouveau_responsable', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.nouveauResponsable);
-app.get('/modification/equipe/:id', connectEnsureLogin.ensureLoggedIn(),redirectionWebSuperAdmin.modificationResponsable);
+app.get('/nouveau_responsable', connectEnsureLogin.ensureLoggedIn(), redirectionWebSuperAdmin.nouveauResponsable);
+app.get('/modification/equipe/:id', connectEnsureLogin.ensureLoggedIn(), redirectionWebSuperAdmin.modificationResponsable);
 
 //  2- Redirection Responsable Atelier
-app.get('/voiture_receptionner',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReceptionner);
-app.get('/reparation-terminer',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureReparationTerminer);
-app.get('/diagnostic/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.voitureDiagnostic);
-app.get('/etat-davancement/:id',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.etatAvancementVoiture);
-app.get('/detail/:id/facture-client',connectEnsureLogin.ensureLoggedIn(),redirectionWebRespAtelier.detailFacture);
+app.get('/voiture_receptionner', connectEnsureLogin.ensureLoggedIn(), redirectionWebRespAtelier.voitureReceptionner);
+app.get('/reparation-terminer', connectEnsureLogin.ensureLoggedIn(), redirectionWebRespAtelier.voitureReparationTerminer);
+app.get('/diagnostic/:id', connectEnsureLogin.ensureLoggedIn(), redirectionWebRespAtelier.voitureDiagnostic);
+app.get('/etat-davancement/:id', connectEnsureLogin.ensureLoggedIn(), redirectionWebRespAtelier.etatAvancementVoiture);
+app.get('/detail/:id/facture-client', connectEnsureLogin.ensureLoggedIn(), redirectionWebRespAtelier.detailFacture);
 
 // 3- Redirection Responsable Financier
-app.get('/nouveau/:id/facture',connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.nouveauFacture);
-app.get('/detail/:id/facture',connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.detailFacture);
-app.get('/reparation-payer',connectEnsureLogin.ensureLoggedIn(),redirectionRespFinancier.reparationFacturer);
-app.get('/facture-attente',connectEnsureLogin.ensureLoggedIn(),redirectionRespFinancier.factureAttente);
-app.get('/etat-davancement/:id/reparation',connectEnsureLogin.ensureLoggedIn(),redirectionRespFinancier.etatAvancementVoiture);
-app.get('/depense',connectEnsureLogin.ensureLoggedIn(),redirectionRespFinancier.listOtherDepense);
-app.get('/ajout-depense',connectEnsureLogin.ensureLoggedIn(),redirectionRespFinancier.nouveauTypeDepense);
+app.get('/nouveau/:id/facture', connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.nouveauFacture);
+app.get('/detail/:id/facture', connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.detailFacture);
+app.get('/reparation-payer', connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.reparationFacturer);
+app.get('/facture-attente', connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.factureAttente);
+app.get('/etat-davancement/:id/reparation', connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.etatAvancementVoiture);
+app.get('/depense', connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.listOtherDepense);
+app.get('/ajout-depense', connectEnsureLogin.ensureLoggedIn(), redirectionRespFinancier.nouveauTypeDepense);
 // app.post('/depense',redirectionRespFinancier.filterListDepense);
 
 

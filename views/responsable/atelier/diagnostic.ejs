@@ -86,6 +86,7 @@
                 </div>
             </div>
             <div class="col-md-12 mt-4">
+                <div class="show_modal_diagnostique"></div>
                 <div class="card shadow-sm p-3 mb-5 bg-body rounded">
                     <div class="card-body">
 
@@ -203,8 +204,8 @@
                                                 <div class="modal-footer d-flex justify-content-between">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" id="modif_diagnostique"
-                                                        data-bs-dismiss="modal" data-id="<%=diagnostiques[id]._id%>"
+                                                    <button type="button" onclick='modif_diagnostique(<%=JSON.stringify(diagnostiques[id]._id)%>)'
+                                                        data-bs-dismiss="modal"
                                                         class="btn btn-primary">Modifier</button>
                                                 </div>
                                             </div>
