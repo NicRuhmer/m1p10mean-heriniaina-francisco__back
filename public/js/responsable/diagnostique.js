@@ -136,6 +136,7 @@ function valid_release_date(id) {
     // }
 }
 
+
 $('#submit_diagnostique').click(function () {
     $('#loading_page').css("display", "block");
 
