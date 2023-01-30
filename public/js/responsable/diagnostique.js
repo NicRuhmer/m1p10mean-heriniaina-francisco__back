@@ -136,6 +136,65 @@ function valid_release_date(id) {
     // }
 }
 
+function show_modal_diagnostique(detail_id){
+    // const detail = JOSN.parse(detail_);
+    var html="";
+
+    
+    fetch('/depense.get/'+detail_id, {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(res => {
+            if (res.ok) return res.json()
+        })
+        .then(detail => {
+            $('#loading_page').css("display", "none");
+        
+            if (detail.status == 400) {
+                toastError(detail.message);
+            } else {
+                html+=' <div id="show_modal_depense'+detail._id+'" class="modal fade show " data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: block;">';
+                html+='<div class="modal-dialog">  <div class="modal-content">   <div class="modal-header">';
+                html+='<h5 class="modal-title" id="exampleModalLabel">Modification</h5>';
+                html+='<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="close_modal()"></button>';
+                html+='</div><div class="modal-body"><div class="mb-3">';
+                html+='<label for="exampleFormControlInput1"   class="form-label">Description <span class="text-danger">*</span></label>';
+                html+='<input type="text" class="form-control" value="'+detail.description+'" id="description'+detail._id+'" name="description'+detail._id+'" />';
+                html+='</div></div>';
+                html+='<div class="modal-footer d-flex justify-content-between">';
+                html+='<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="close_modal()">Annuler</button>';
+                var edit_depense= `edit_depense('${detail._id}')`;
+                html+='<button type="button" class="btn btn-primary" onclick="'+edit_depense+'"   data-bs-dismiss="modal">Modifier</button>';
+                html+= '</div></div></div></div>';
+                $('#show_modal_depense').empty();
+    $('#show_modal_depense').append(html);
+            }
+   
+    
+        }).catch(err => {
+            toastError(err.message);
+        });
+
+}
+
+function list_diagnostique(diagnostiques){
+    var html="";
+    for(var id=0;id<diagnostiques.length;id++){
+   
+    html+='<tr><td><div><p>';
+            <span class="">'+diagnostiques[id].title+'</span> <br>  '+diagnostiques[id].description;
+    '</p>  </div> </td>';
+      '  <td>';
+    '<p>durée:'+diagnostiques[id].duration+' heure<br>  quantité pièce: '+diagnostiques[id].qte;
+    '</p> </td> <td>'+diagnostiques[id].pu+'Ar</td>';
+    '<td> <div class="d-flex  justify-content-between">';
+    var tmp = `show_modal_diagnostique(`${diagnostiques[id]._id}`)`;
+    <button type="button" class="btn    btn-success" id="#edit<%=diagnostiques[id]._id%>">Modifier</button>
+    '<button type="button"  onclick="'+diagnostiques[id]._id+'"  id="delete_diagnostique" class="btn btn-warning delete_diagnostique">Rétirer</button>';
+    '</div>   </td>  </tr>';
+    }
+}
 
 $('#submit_diagnostique').click(function () {
     $('#loading_page').css("display", "block");

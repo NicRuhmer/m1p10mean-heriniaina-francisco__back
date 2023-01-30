@@ -50,6 +50,7 @@ route.get('/api/detail/:id/voiture', voitureController.findById);
 //  id client
 route.post('/api/create/:id/voiture', voitureController.create);
 route.put('/api/update/:id/voiture', voitureController.update);
+route.delete('/api/delete/:id/voiture', voitureController.delete);
 
 //=========== API Reparation voiture Client ====================
 //  id client

@@ -15,9 +15,9 @@ function round(num, decimalPlaces = 0) {
 }
 
 
-exports.findAllReparationAccepter = (req,res) => {
-   
-    Reparationdb.find({ client:req.params.id,employe: { $ne: null }})
+exports.findAllReparationAccepter = (req, res) => {
+
+    Reparationdb.find({ client: req.params.id, employe: { $ne: null } })
         .populate({
             path: 'voiture',
         })
@@ -33,9 +33,15 @@ exports.findAllReparationAccepter = (req,res) => {
                 var tab = [];
                 for (var i = 0; i < result.length; i++) {
                     const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
-                    const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
-                    tab.push({ data: result[i], pourcentage: tmp.pourcentage, montant: tmp2.totaleTTC });
-            
+                    const solde = 0;
+                    diagnostiqueController.totaleMontant(result[i]._id).then((tmp2) => {
+                        solde = tmp2.totaleTTC;
+                    }).catch((err) => {
+                        console.log(err);
+                        reject(err);
+                    });
+                    tab.push({ data: result[i], pourcentage: tmp.pourcentage, montant: solde });
+
                 }
                 res.send(tab);
             }
@@ -43,9 +49,9 @@ exports.findAllReparationAccepter = (req,res) => {
 
 };
 
-exports.findAllReparationAccepterEncour = (req,res) => {
-   
-    Reparationdb.find({ client:req.params.id,employe: { $ne: null }, start: true })
+exports.findAllReparationAccepterEncour = (req, res) => {
+
+    Reparationdb.find({ client: req.params.id, employe: { $ne: null }, start: true })
         .populate({
             path: 'voiture',
         })
@@ -63,7 +69,7 @@ exports.findAllReparationAccepterEncour = (req,res) => {
                     const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
                     const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
                     tab.push({ data: result[i], pourcentage: tmp.pourcentage, montant: tmp2.totaleTTC });
-            
+
                 }
                 res.send(tab);
             }
@@ -72,8 +78,8 @@ exports.findAllReparationAccepterEncour = (req,res) => {
 };
 
 exports.create = (req, res) => {
-    return new Promise((resolve,reject)=>{
-        var $this=this;
+    return new Promise((resolve, reject) => {
+        var $this = this;
         const new_ = {
             voiture: req.body.voiture,
             client: req.params.id,
@@ -84,7 +90,7 @@ exports.create = (req, res) => {
             status: false,
             start: false
         };
-    
+
         if (new_.voiture != null && new_.client != null && new_.status != null) {
             const new__ = new Reparationdb(new_);
             new__.save((err, docs) => {
@@ -101,7 +107,7 @@ exports.create = (req, res) => {
             reject({ status: 400, message: "champs invalide!" })
         }
     });
-    
+
 };
 
 exports.updateReparation = (req, res) => {
@@ -114,8 +120,8 @@ exports.updateReparation = (req, res) => {
         Reparationdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
             if (err) {
                 res.send({ status: 404, message: "La modification a échoué!" });
-            } else { 
-                res.send({status:200,message:"Réparation modifié avec success !"});
+            } else {
+                res.send({ status: 200, message: "Réparation modifié avec success !" });
             }
         });
     } else {
@@ -137,9 +143,9 @@ exports.deleteReparation = (req, res) => {
 };
 
 
-exports.findAllReparationAttenteClient = (req,res) => {
-   
-    Reparationdb.find({ client:req.params.id,employe: null, start: false, facture: null })
+exports.findAllReparationAttenteClient = (req, res) => {
+
+    Reparationdb.find({ client: req.params.id, employe: null, start: false, facture: null })
         .populate({
             path: 'voiture',
         })
@@ -163,9 +169,9 @@ exports.findAllReparationAttenteClient = (req,res) => {
 
 };
 
-exports.findAllHistoriqueReparation = (req,res) => {
-   
-    Reparationdb.find({ voiture:req.params.id })
+exports.findAllHistoriqueReparation = (req, res) => {
+
+    Reparationdb.find({ voiture: req.params.id })
         .populate({
             path: 'voiture',
         })
@@ -448,7 +454,7 @@ exports.findAllReparationReceptionner = (user_id) => {
     return new Promise(async (resolve, reject) => {
         const emp = await Employedb.findOne({ user: user_id });
 
-        Reparationdb.find({ employe: emp._id, status: true,start:false })
+        Reparationdb.find({ employe: emp._id, status: true, start: false })
             .populate({
                 path: 'voiture',
                 populate: {
@@ -548,9 +554,9 @@ exports.startReparation = async (req, res) => {
 
 
 exports.update = async (req, res) => {
-    const emp = await Employedb.findOne({user:req.user._id});
+    const emp = await Employedb.findOne({ user: req.user._id });
     const dataUpdated = {
-         employe: emp._id,
+        employe: emp._id,
         status: true
     };
     if (dataUpdated.employe != null && dataUpdated.status != null) {
@@ -560,14 +566,14 @@ exports.update = async (req, res) => {
             } else {
                 Voituredb.findById(doc.voiture).then((vtre) => {
                     Clientdb.findById(vtre.client).then((cli) => {
- /*                     
-                      authentificationMail.sendMailAcceptReparationVehicule(cli.email, cli.name + " " + cli.username, vtre.matricule, "http://localhost:3000/login", emp.name)
-                            .then((val) => {
-                                res.send(val);
-                            }).catch((errS) => {
-                                res.send(errS);
-                            });
-*/
+                        /*                     
+                                             authentificationMail.sendMailAcceptReparationVehicule(cli.email, cli.name + " " + cli.username, vtre.matricule, "http://localhost:3000/login", emp.name)
+                                                   .then((val) => {
+                                                       res.send(val);
+                                                   }).catch((errS) => {
+                                                       res.send(errS);
+                                                   });
+                       */
                     }).catch((er) => {
                         console.log(er.message)
                         res.send({ status: 400, message: "Une erreur s'est produit lors du retournement du donnée client" });

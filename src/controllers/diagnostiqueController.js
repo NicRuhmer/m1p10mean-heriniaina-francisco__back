@@ -61,10 +61,16 @@ exports.estimationReparation = (reparation_id_) => {
         var totaleInit = await Diagnonstiquedb.countDocuments({ reparation: reparation_id_ });
         var pourcentInit = 100;
         var pourcentage_finish = 0;
+        var pourcent=0;
         const finish = await Diagnonstiquedb.countDocuments({ reparation: reparation_id_, status_reparation: finish_._id });
+       if(finish>0 && totaleInit>0){
         pourcentage_finish = ((finish * pourcentInit) / totaleInit);
-
-        resolve({ reparation_id: reparation_id_, pourcentage: round(pourcentage_finish, 2) });
+        var tmp = round(pourcentage_finish, 2) ;
+        if(tmp!=null){
+            var pourcent=tmp;
+        }
+       } 
+        resolve({ reparation_id: reparation_id_, pourcentage: pourcent });
 
     }).catch(err => {
         reject({ status: 400, message: err.message });
@@ -195,9 +201,12 @@ exports.totaleMontant = (reparation_id_) => {
             ]
         ).then((totale) => {
           //  resolve(totale);
-          totaleHeure = totale[0].totaleDuration;
+          if(totale[0].totaleDuration!=null && totale[0].totaleHt!=null &&  totale[0].totaleTva!=null){
+            totaleHeure = totale[0].totaleDuration;
             totaleht = totale[0].totaleHt;
             totaletva = totale[0].totaleTva;
+          }
+        
             Diagnonstiquedb.aggregate([
                   {
                     $match: {
