@@ -184,7 +184,8 @@ app.put('/reset_password/:id/user', async (req, res) => {
 //================== API User Connected =====================
 app.get('/user-connected', connectEnsureLogin.ensureLoggedIn(), userController.findUserConnected);
 
-//================== API
+//================== API autocomplete ===========================
+app.get('/auto-complete',userController.autoCompleteUser);
 //================== API Reparation atelier ===================
 
 app.get('/accepter-la-reparation/:id', connectEnsureLogin.ensureLoggedIn(), reparationController.update)
