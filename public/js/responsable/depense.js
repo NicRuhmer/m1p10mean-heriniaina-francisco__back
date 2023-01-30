@@ -484,6 +484,8 @@ function filtre_list_depense_stat(){
             if (response.status == 400) {
                 toastError(response.message);
             } else {
+                console.log(JSON.stringify(response));
+
                 document.getElementById("stat_chiffre_affaire").innerHTML=response.chiff_affaire.chiffre_daffaire+"Ar";
                 document.getElementById("stat_benefice").innerHTML=response.benefice+"Ar";
                 if(response.chiff_affaire.moyen_temps_reparation==null){

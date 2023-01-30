@@ -14,33 +14,66 @@ function round(num, decimalPlaces = 0) {
     return Number(num + "e" + -decimalPlaces);
 }
 
-exports.create = (req, res) => {
-    const new_ = {
-        voiture: req.body.voiture,
-        client: req.params.id,
-        description: req.body.description,
-        employe: null,
-        facture: null,
-        release_date: null,
-        status: false,
-        start: false
-    };
 
-    if (new_.voiture != null && new_.client != null && new_.status != null) {
-        const new__ = new Reparationdb(new_);
-        new__.save((err, docs) => {
+exports.findAllReparationAccepter = (req,res) => {
+   
+    Reparationdb.find({ client:req.params.id,employe: { $ne: null }, start: true })
+        .populate({
+            path: 'voiture',
+        })
+        .populate({
+            path: 'employe'
+        })
+        .exec(async (err, result) => {
             if (err) {
-                console.log(err.message);
+                console.log(err.message)
                 res.send({ status: 400, message: err.message });
             } else {
-                console.log('Success !');
-                res.send({ status: 200, data: docs, message: "Success !" });
+
+                var tab = [];
+                for (var i = 0; i < result.length; i++) {
+                    const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
+                    const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
+                    tab.push({ data: result[i], pourcentage: tmp.pourcentage, montant: tmp2.totaleTTC });
+            
+                }
+                res.send(tab);
             }
         });
-    } else {
-        console.log('Champs invalide !');
-        res.send({ status: 400, message: "champs invalide!" })
-    }
+
+};
+
+exports.create = (req, res) => {
+    return new Promise((resolve,reject)=>{
+        var $this=this;
+        const new_ = {
+            voiture: req.body.voiture,
+            client: req.params.id,
+            description: req.body.description,
+            employe: null,
+            facture: null,
+            release_date: null,
+            status: false,
+            start: false
+        };
+    
+        if (new_.voiture != null && new_.client != null && new_.status != null) {
+            const new__ = new Reparationdb(new_);
+            new__.save((err, docs) => {
+                if (err) {
+                    console.log(err.message);
+                    reject({ status: 400, message: err.message });
+                } else {
+                    console.log('Success !');
+                    resolve({ status: 200, data: docs, message: "Success !" });
+                }
+            });
+        } else {
+            console.log('Champs invalide !');
+            reject({ status: 400, message: "champs invalide!" })
+        }
+    });
+    
 };
 
 exports.updateReparation = (req, res) => {
@@ -75,35 +108,8 @@ exports.deleteReparation = (req, res) => {
     }
 };
 
-exports.findAllReparationAccepter = (req,res) => {
-   
-        Reparationdb.find({ client:req.params.id,employe: { $ne: null }, start: true })
-            .populate({
-                path: 'voiture',
-            })
-            .populate({
-                path: 'employe'
-            })
-            .exec(async (err, result) => {
-                if (err) {
-                    console.log(err.message)
-                    res.send({ status: 400, message: err.message });
-                } else {
 
-                    var tab = [];
-                    for (var i = 0; i < result.length; i++) {
-                        const tmp = await diagnostiqueController.estimationReparation(result[i]._id);
-                        const tmp2 = await diagnostiqueController.totaleMontant(result[i]._id);
-                        tab.push({ data: result[i], pourcentage: tmp.pourcentage, montant: tmp2.totaleTTC });
-                
-                    }
-                    res.send(tab);
-                }
-            });
-  
-};
-
-exports.findAllReparationAttente = (req,res) => {
+exports.findAllReparationAttenteClient = (req,res) => {
    
     Reparationdb.find({ client:req.params.id,employe: null, start: false, facture: null })
         .populate({

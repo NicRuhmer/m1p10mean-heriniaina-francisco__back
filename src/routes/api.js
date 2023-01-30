@@ -45,24 +45,28 @@ route.delete('/resp.delete', employeController.delete);
 
 //=========== API voiture =============================
 //  id client
-route.get('/list/:id/voiture', voitureController.findAll);
-route.get('/detail/:id/voiture', voitureController.findById);
+route.get('/api/list/:id/voiture', voitureController.findAll);
+route.get('/api/detail/:id/voiture', voitureController.findById);
 //  id client
-route.post('/create/:id/voiture', voitureController.create);
-route.put('/update/:id/voiture', voitureController.update);
+route.post('/api/create/:id/voiture', voitureController.create);
+route.put('/api/update/:id/voiture', voitureController.update);
 
 //=========== API Reparation voiture Client ====================
 //  id client
-route.post('/api/create/:id/reparation',reparationController.create);
-route.put('/api/update/:id/reparation',reparationController.updateReparation);
-route.delete('/api/delete/:id/reparation',reparationController.deleteReparation);
+route.post('/api/create/:id/reparation', (req, res) => {
+    reparationController.create(req, res).then((result) => {
+        reparationController.findAllReparationAttenteClient(req, res);
+    })
+});
+route.put('/api/update/:id/reparation', reparationController.updateReparation);
+route.delete('/api/delete/:id/reparation', reparationController.deleteReparation);
 //  id client
-route.get('/api/list/:id/reparation-client-accepter',reparationController.findAllReparationAccepter);
+route.get('/api/list/:id/reparation-client-accepter', reparationController.findAllReparationAccepter);
 //  id client
-route.get('/api/list/:id/reparation-client-attente',reparationController.findAllReparationAttente);
+route.get('/api/list/:id/reparation-client-attente', reparationController.findAllReparationAttenteClient);
 
 // id reparation
-route.get('/api/etat-avancement/:id/reparation-client',async (req,res)=>{
+route.get('/api/etat-avancement/:id/reparation-client', async (req, res) => {
 
     const detail_ = await reparationController.findById(req.params.id);
     const tasks_ = await diagnostiqueController.findData(req.params.id, "isTask");
@@ -73,15 +77,24 @@ route.get('/api/etat-avancement/:id/reparation-client',async (req,res)=>{
         progress: progress_.data, progress_pourcentage: progress_.pourcentage,
         finish: finish_.data, finish_pourcentage: finish_.pourcentage
     });
-    
+
 });
 
 // id voiture
-route.get('/api/historique/:id/reparation-client',reparationController.findAllHistoriqueReparation);
+route.get('/api/historique/:id/reparation-client', reparationController.findAllHistoriqueReparation);
 
 //=========== API Client ==============================
+route.get('/api/client/:id', (req, res) => {
+    clientController.findById(req.params.id).then((resul) => {
+        res.send(resul);
+    }).catch((err) => {
+        res.send({ status: 400, message: err.mesage });
+    });
+});
+
 route.post('/api/client.create', clientController.new_client);
-route.post('/api/login.user',clientController.login_client);
+route.post('/api/client.update/:id', clientController.update_client);
+route.post('/api/login.user', clientController.login_client);
 
 
 
@@ -95,10 +108,10 @@ route.post('/api/login.user',clientController.login_client);
 
 
 //======================= API Depense ===================
-route.post('/depenses',async(req,res)=>{
+route.post('/depenses', async (req, res) => {
     const depenses_ = await depenseController.findAllDepense();
-    depenseController.listOtherDepenseFilter(req.body.date,req.body.categorie).then((list_depenses_) => {
-        res.send({  depenses: depenses_, list_depenses: list_depenses_});
+    depenseController.listOtherDepenseFilter(req.body.date, req.body.categorie).then((list_depenses_) => {
+        res.send({ depenses: depenses_, list_depenses: list_depenses_ });
     }).catch((err) => {
         res.send({ status: 400, message: err.message });
     });
@@ -113,31 +126,31 @@ route.post('/other-depense.create', depenseController.saveOtherDepense);
 route.put('/other-depense.update/:id', depenseController.updateOtherDepense);
 route.delete('/other-depense.delete/:id', depenseController.deleteOtherDepense);
 
-route.post('/statistiqueFilter',statistiqueController.statistiqueFilter);
+route.post('/statistiqueFilter', statistiqueController.statistiqueFilter);
 
 /*
 route.post('/statistiqueFilter',depenseController.statistiqueFilter);
 route.post('/chiffre-affaire-filter',reparationController.totaleChiffreAffaireFilter);
 */
-route.get('/test-statistiques',(req,res)=>{
-    depenseController.statistiques().then(result=>{
+route.get('/test-statistiques', (req, res) => {
+    depenseController.statistiques().then(result => {
         res.send(result);
-    }).catch(err=>{
-        res.send({status:400,message:err.mesage});
+    }).catch(err => {
+        res.send({ status: 400, message: err.mesage });
     })
 });
-route.get('/test-statistique-chiffre-affaire',(req,res)=>{
-    reparationController.totaleChiffreAffaire().then((result)=>{
-            res.send(result)
-    }).catch((err)=>{
+route.get('/test-statistique-chiffre-affaire', (req, res) => {
+    reparationController.totaleChiffreAffaire().then((result) => {
+        res.send(result)
+    }).catch((err) => {
         res.send(err);
     });
 });
 
-route.get('/test-montant-diagnostique/:id',(req,res)=>{
-    diagnostiqueController.totaleMontant(req.params.id).then((result)=>{
-            res.send(result)
-    }).catch((err)=>{
+route.get('/test-montant-diagnostique/:id', (req, res) => {
+    diagnostiqueController.totaleMontant(req.params.id).then((result) => {
+        res.send(result)
+    }).catch((err) => {
         res.send(err);
     });
 });

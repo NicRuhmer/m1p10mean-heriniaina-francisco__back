@@ -89,7 +89,7 @@ exports.create = (name_, username_, contact_, adrs_, email_, cin_, user_id) => {
             if (err) {
                 reject({ status: 400, message: err.message });
             } else {
-                resolve({ status: 200, data: docs, message: "Success !" });
+                resolve({ status: 200, id: new_._id, message: "Success !" });
             }
         });
     });
@@ -101,10 +101,10 @@ exports.new_client = async (req, res) => {
     if (req.body.name != null && req.body.contact != null && req.body.adresse != null && req.body.email != null && req.body.cin != null) {
         if (req.body.new_password == req.body.confirm_password) {
             cUser.create(req.body.email, req.body.confirm_password, role._id, req.body.name + req.body.username).then((data) => {
-                console.log('success1: ' + data._id);
-                this.create(req.body.name, req.body.username, req.body.contact, req.body.adresse, req.body.email, req.body.cin, data._id).then((val) => {
-                    console.log('success');
-                    res.send({ status: 200, message: 'Success !' });
+               
+                this.create(req.body.name, req.body.username, req.body.contact, req.body.adresse, req.body.email, req.body.cin, data._id).then(async(val) => {
+                   const cli = await Clientdb.findOne({email:req.body.email});
+                    res.send({ status: 200,data:cli, message: 'Success !' });
                 }).catch((err) => {
                     res.send({ status: 400, message: err.message });
                 });
@@ -120,9 +120,38 @@ exports.new_client = async (req, res) => {
     }
 };
 
+
+exports.update_client = async (req, res) => {
+    const cli = await Clientdb.findById(req.params.id);
+    const dataUpdated = {
+        name: req.body.name,
+        username: req.body.username,
+        cin: req.body.cin,
+        contact: req.body.contact,
+        adresse: req.body.adresse,
+        email: req.body.email
+    };
+   
+    if (req.body.name != null && req.body.contact != null && req.body.adresse != null && req.body.email != null && req.body.cin != null) {
+        Clientdb.findByIdAndUpdate(req.params.id, dataUpdated, { upsert: true }, function (err, doc) {
+            if (err) {
+                res.send({ status: 400, message: "La modification a échoué!" });
+            } else {
+                cUser.update(cli.user,req.body.name+" "+req.body.username,req.body.email).then((data) => { 
+                    res.send({ status: 200,data:doc, message: 'information a été modifié avec success!' });
+                }).catch((err2) => {
+                    res.send({ status: 400, message: err2.message });
+                });
+            }
+        });
+    } else {
+        res.send({ status: 400, message: 'Champs invalide !' });
+    }
+};
+
+
 exports.login_client = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-
 
     if (req.body.username != null && req.body.password != null) {
         Userdb.findOne({ username: req.body.username, status: true })

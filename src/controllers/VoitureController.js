@@ -20,6 +20,7 @@ exports.findById = (req, res) => {
 };
 
 exports.create = async (req, res) => {
+    console.log(req.body,req.params);
     const new_ = {
         description: req.body.name,
         carburant: req.body.carburant,
@@ -35,13 +36,14 @@ exports.create = async (req, res) => {
             res.send({ status: 400, message: "Matricule déjà utilisé !" })
         } else {
             const new__ = new Voituredb(new_);
-            new__.save((err, docs) => {
+            new__.save(async (err, docs) => {
                 if (err) {
                     console.log(err.message);
                     res.send({ status: 400, message: err.message });
                 } else {
-                    console.log('Success !');
-                    res.send({ status: 200, data: docs, message: "Success !" });
+                  
+                    var voiture = await Voituredb.find({ client: req.params.id });
+                    res.send({ status: 200, data: voiture, message: "Success !" });
                 }
             });
         }
