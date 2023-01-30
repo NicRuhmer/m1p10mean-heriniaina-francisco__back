@@ -560,13 +560,14 @@ exports.update = async (req, res) => {
             } else {
                 Voituredb.findById(doc.voiture).then((vtre) => {
                     Clientdb.findById(vtre.client).then((cli) => {
-                       authentificationMail.sendMailAcceptReparationVehicule(cli.email, cli.name + " " + cli.username, vtre.matricule, "http://localhost:3000/login", emp.name)
+ /*                     
+                      authentificationMail.sendMailAcceptReparationVehicule(cli.email, cli.name + " " + cli.username, vtre.matricule, "http://localhost:3000/login", emp.name)
                             .then((val) => {
                                 res.send(val);
                             }).catch((errS) => {
                                 res.send(errS);
                             });
-
+*/
                     }).catch((er) => {
                         console.log(er.message)
                         res.send({ status: 400, message: "Une erreur s'est produit lors du retournement du donnée client" });

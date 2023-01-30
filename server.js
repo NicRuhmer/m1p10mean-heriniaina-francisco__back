@@ -186,7 +186,7 @@ app.get('/user-connected', connectEnsureLogin.ensureLoggedIn(), userController.f
 
 //================== API Reparation atelier ===================
 
-app.put('/accepter-la-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.update)
+app.get('/accepter-la-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.update)
 app.put('/start-reparation/:id',connectEnsureLogin.ensureLoggedIn(),reparationController.startReparation);
 app.get('/list-reparation',(req,res)=>{
       reparationController.findAllReparationEnCour("63ca97231a809713932b5ff0").then((tmp)=>{

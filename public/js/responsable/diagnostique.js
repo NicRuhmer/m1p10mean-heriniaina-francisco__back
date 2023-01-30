@@ -103,34 +103,34 @@ function list_diagnostique(listes) {
 }
 
 function valid_release_date(id) {
-    const reponse_ = { 
+    const reponse_ = {
         release_date: $('#release_date').val()
-     };
+    };
 
-    
+
     $('#loading_page').css("display", "block");
     // if (release_date.release_date!=null) {
-        fetch('/valide/' + id + '/sortit-vehicule', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(reponse_)
+    fetch('/valide/' + id + '/sortit-vehicule', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reponse_)
+    })
+        .then(res => {
+            if (res.ok) return res.json()
         })
-            .then(res => {
-                if (res.ok) return res.json()
-            })
-            .then(response => {
-                $('#loading_page').css("display", "none");
+        .then(response => {
+            $('#loading_page').css("display", "none");
 
-                if (response.status == 200) {
-                    document.location.reload();
-                } else {
-                    toastError(response.message);
-                }
+            if (response.status == 200) {
+                document.location.reload();
+            } else {
+                toastError(response.message);
+            }
 
-            }).catch(err => {
-                $('#loading_page').css("display", "none");
-                toastError(err.message);
-            });
+        }).catch(err => {
+            $('#loading_page').css("display", "none");
+            toastError(err.message);
+        });
     // } else {
     //     toastError("champs invalide !");
     // }
@@ -270,12 +270,11 @@ function supp_diagnostique(diag_id) {
 
 
 
-function accepter_reparation_client(reparation_id){
+function accepter_reparation_client(reparation_id) {
     $('#loading_page').css("display", "block");
     fetch('/accepter-la-reparation/' + reparation_id, {
-        method: 'put',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({})
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' }
     })
         .then(res => {
             if (res.ok) return res.json()
@@ -283,7 +282,11 @@ function accepter_reparation_client(reparation_id){
         .then(response => {
             $('#loading_page').css("display", "none");
             if (response.status == 200) {
-                window.location.replace(window.location.protocol + "//" + window.location.host + "/voiture_receptionner");  
+
+                setInterval(() => {
+                    window.location.replace(window.location.protocol + "//" + window.location.host + "/voiture_receptionner");
+
+                }, 2000);
             }
             else {
 
