@@ -50,7 +50,7 @@
                
                 <div class="mb-3 d-flex">
                     <label for="exampleFormControlInput1" class="form-label">N° facture: </label>
-                    <label for="exampleFormControlInput1" class="form-label">&nbsp;&nbsp; <%=detail.facture.num_facture.format('DD MMMM YYYY')%></label>
+                    <label for="exampleFormControlInput1" class="form-label">&nbsp;&nbsp; <%=moment(detail.facture.num_facture).format('DD MMMM YYYY')%></label>
                 </div>
                 <span class="text-danger" id="facture_error"></span>
                 <div class="mb-3 d-flex">
