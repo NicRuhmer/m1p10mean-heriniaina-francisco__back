@@ -493,7 +493,7 @@ exports.valider_sortir = (req, res) => {
             Voituredb.findById(doc.voiture).then((vtre) => {
 
                 Clientdb.findById(vtre.client).then((cli) => {
-                    authentificationMail.sendMailSortirVehicule(cli.email, cli.name + " " + cli.username, "Sortir du voiture le " + dataUpdated.release_date, vtre.matricule, "http://localhost:3000/liste-reparation/" + "terminer", dataUpdated.release_date)
+                    authentificationMail.sendMailSortirVehicule(cli.email, cli.name + " " + cli.username, "Sortir du voiture le " + dataUpdated.release_date, vtre.matricule, "http://51.178.17.54:3001/liste-reparation/" + "terminer", dataUpdated.release_date)
                         .then((val) => {
                             res.send(val);
                         }).catch((errS) => {

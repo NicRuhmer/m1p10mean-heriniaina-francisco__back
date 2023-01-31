@@ -53,7 +53,7 @@ exports.saveFacture = async(req, res) => {
 	const reparation = await reparationController.findById(req.params.id);
     $this.save(new_).then((result)=>{
 		reparationController.valider_facture(req.params.id,result.data._id).then((finish)=>{
-			authentificationMail.sendMailCreationFacture(reparation.voiture.client.email,  reparation._id,reparation.voiture.matricule, "http://localhost:3000/detail/" +req.params.id+ "/facture")
+			authentificationMail.sendMailCreationFacture(reparation.voiture.client.email,  reparation._id,reparation.voiture.matricule, "http://51.178.17.54:3001/detail/" +req.params.id+ "/facture")
             .then((val) => {
                 res.send(val);
                 }).catch((errS) => {
