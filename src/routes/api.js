@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 
 
 const userController = require('../controllers/userController');
-const employeController = require('../controllers/employerController');
+const employeController = require('../controllers/EmployerController');
 const defaultDataController = require('../controllers/DefaultDataController');
 const clientController = require('../controllers/ClientController');
 const voitureController = require('../controllers/VoitureController');
